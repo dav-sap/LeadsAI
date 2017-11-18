@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "set PORT=3010 && node ./bin/www"
+    "prestart-windows": "start mongod --port 3006 --dbpath ./localDB ",
+    "start-windows": "set PORT=3010 && nodemon ./bin/www",
+    "poststart-windows": "mongo admin --eval 'db.shutdownServer()'",
+    "prestart-linux": "mongod --port 3006 --dbpath ./localDB --fork",
+    "start-linux": "set PORT=3010 && node ./bin/www",
+    "poststart-linux": "mongo admin --eval 'db.shutdownServer()'"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
@@ -11,7 +16,10 @@
     "debug": "~2.6.9",
     "express": "~4.15.5",
     "jade": "~1.11.0",
+    "mongoose": "^4.13.4",
+    "mongoose-validators": "^0.1.0",
     "morgan": "~1.9.0",
     "serve-favicon": "~2.4.5"
-  }
+  },
+  "devDependencies": {}
 }

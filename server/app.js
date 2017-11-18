@@ -7,7 +7,10 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-
+var consultants = require('./routes/consultants');
+var photographers = require('./routes/photographers');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:3006/localDB');
 var app = express();
 
 // view engine setup
@@ -24,6 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/consultants', consultants);
+app.use('/photographers', photographers);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
