@@ -4,21 +4,28 @@
   "private": true,
   "scripts": {
     "prestart-windows": "start mongod --port 3006 --dbpath ./localDB ",
-    "start-windows": "set PORT=3010 && nodemon ./bin/www",
+    "start-windows": "set PORT=3010 && nodemon ./src/StartServer.js",
     "poststart-windows": "mongo admin --eval 'db.shutdownServer()'",
     "prestart-linux": "mongod --port 3006 --dbpath ./localDB --fork",
-    "start-linux": "set PORT=3010 && node ./bin/www",
+    "start-linux": "set PORT=3010 && node ./src/StartServer.js",
     "poststart-linux": "mongo admin --eval 'db.shutdownServer()'"
   },
   "dependencies": {
+    "async": "^2.6.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.15.5",
+    "gridfs-stream": "^1.1.1",
     "jade": "~1.11.0",
     "mongoose": "^4.13.4",
     "mongoose-validators": "^0.1.0",
     "morgan": "~1.9.0",
+    "multer": "^1.3.0",
+    "multer-gridfs-storage": "^2.1.0",
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {}

@@ -1,0 +1,13 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 10px;
+    width:80%;
+    margin: auto;
+}
+.header-separator {
+    width: 80%;
+    background-color: gray;
+    border: 1px solid gray;
+    margin: auto;
+}
