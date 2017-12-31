@@ -1,7 +1,16 @@
 .home {
     font-family: Alef-Bold, sans-serif;
+    height: 100%;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+
 }
 .all-body {
     width: 60%;
     margin: auto;
+   flex: 8;
+    display: flex;
+    flex-direction: column;
+    transition: top 3s ease-in-out 0.2s;
 }

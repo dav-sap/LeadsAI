@@ -65,6 +65,7 @@ export default class ConsultantsBody extends Component {
         return (
 
             <div className="consultants">
+
                 {this.state.consultants.map((consultantProp, index) =>
                     <ConsultantCard index={index} key={index} switchConsultant={this.switchConsultant} info={consultantProp.consultant} opacity={consultantProp.opacity}/>)}
 

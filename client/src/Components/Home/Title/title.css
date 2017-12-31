@@ -6,8 +6,21 @@
     margin-top: 25px;
     text-align: center;
     margin-bottom: 25px;
+    flex: 3;
+    height: fit-content;
 }
 .first-line {
     font-size: 50px;
     font-weight: 500;
+}
+@media only screen and (max-width: 1400px)
+{
+    .first-line {
+        font-size: 40px;
+        font-weight: 500;
+    }
+    .title {
+        font-size: 16px;
+        display: flex;
+    }
 }

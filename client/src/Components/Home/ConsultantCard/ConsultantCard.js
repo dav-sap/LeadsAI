@@ -3,7 +3,9 @@ import './consultant-card.css'
 import {TITLES} from './../../Consts';
 import {Icon} from 'antd';
 export default class ConsultantCard extends Component {
+    state = {
 
+    };
     render() {
         return (
 
