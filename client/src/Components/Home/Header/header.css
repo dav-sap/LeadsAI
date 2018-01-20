@@ -4,11 +4,19 @@
     padding-bottom: 10px;
     width:80%;
     margin: auto;
-    flex: 1;
+    /*flex: 1;*/
+    height: 7%;
+    padding-top: 15px;
 }
 .header-separator {
     width: 80%;
     background-color: gray;
     border: 1px solid gray;
+    margin: auto;
+}
+.Logo {
+    width: 134px;
+    height: 33px;
+    object-fit: contain;
     margin: auto;
 }

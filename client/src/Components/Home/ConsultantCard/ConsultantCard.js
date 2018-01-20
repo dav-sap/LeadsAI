@@ -3,24 +3,24 @@ import './consultant-card.css'
 import {TITLES} from './../../Consts';
 import {Icon} from 'antd';
 export default class ConsultantCard extends Component {
-    state = {
 
-    };
     render() {
         return (
 
             <div style={{opacity: this.props.opacity, zIndex: this.props.opacity === 1 ? 1 : 0}} className="consultant-card">
-                {this.props.info.picture ? <img height="280" width="550" src={"data:" + (this.props.info.picture.contentType) + ";" + "base64," + (new Buffer(this.props.info.picture.data).toString('base64'))}/> : ""}
+                <div className="consultant-wrapper">
+                    {this.props.info.picture ? <img className="consultant-img"  src={"data:" + (this.props.info.picture.contentType) + ";" + "base64," + (new Buffer(this.props.info.picture.data).toString('base64'))}/> : ""}
 
-                <Icon className="arrow arrow-left" type="arrow-left" onClick={() => this.props.switchConsultant("left", this.props.index)}/>
-                <div className="name-button-wrapper">
-                    <div className="consultant-name">{this.props.info.name.split(' ').map(name => <div>{name}</div>)}</div>
-                    <div className="start-convo-button">
-                        <div className="button-text">{TITLES.BUTTON_START_CONVO}</div>
-                        <div className="button-fade"/>
+
+                    <div className="name-arrow-wrapper">
+                        <div className="position-wrapper">
+                        <Icon className="arrow arrow-left" type="arrow-left" onClick={() => this.props.switchConsultant("left", this.props.index)}/>
+                        <div className="consultant-name">{this.props.info.name.split(' ').map((name, index) => <div key={index}>{name}</div>)}</div>
+                        <Icon className="arrow arrow-right" type="arrow-right" onClick={() =>this.props.switchConsultant("right", this.props.index)}/>
+                        </div>
                     </div>
                 </div>
-                <Icon className="arrow" type="arrow-right" onClick={() =>this.props.switchConsultant("right", this.props.index)}/>
+
             </div>
         );
     }

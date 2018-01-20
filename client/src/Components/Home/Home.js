@@ -5,25 +5,27 @@ import Title from './Title/Title';
 import Header from './Header/Header'
 import Footer from './Footer/Footer'
 import ConsultantsBody from "./ConsultantsBody/ConsultantsBody";
+import ChatBox from "../ChatBox/ChatBox";
 
 export default class Home extends Component {
     state = {
-        position: "relative",
-        top: "0px",
+
+        chating: false,
     };
-    switchScreen() {
+    switchScreen = () => {
         this.setState({
-            top: "2500px",
+            chating: true,
         })
-    }
+    };
     render() {
         return (
             <div className="home" >
                 <Header/>
-                <div className="all-body" style={{top:this.state.top}}>
+                <div className="all-body" style={{top:this.state.chating ? "-1000px" : "0px"}}>
                     <Title/>
                     <ConsultantsBody />
                 </div>
+                <ChatBox chating={this.state.chating} switchScreenFunc={this.switchScreen} />
                 <Footer/>
             </div>
         );

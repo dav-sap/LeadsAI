@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "./chat-box.css"
-
+import {TITLES} from './../Consts'
 import Message from "./Message";
 export default class ChatBox extends Component {
     constructor(props) {
@@ -49,22 +49,19 @@ export default class ChatBox extends Component {
         this.allMessagesNum++;
 
     }
+    goToChat = () => {
+        this.props.switchScreenFunc()
+    };
     render() {
         // let numOfMsgs = this.state.botMessages.length + this.state.userMessages.length;
 
         return (
-            <div>
-                <div  className="chat-box" ref="chatBox" id="chatBox">
-                {this.state.botMessages.map((msg, index) => {
-                    return <Message className="bot-message" key={index} text={msg.text} msgNum={msg.msgNum+ 1}/>
-                })};
-                {this.state.userMessages.map((msg, index) => {
-                    return <Message className="user-message" key={index} text={msg.text} msgNum={msg.msgNum+ 1}/>
-                })};
-                </div>
-                <div>
-                <input type="text" id="currentMsg" name="currentMsg"/>
-                <button onClick={this.addMsg.bind(this,document.getElementById("currentMsg"))}>Enter</button>
+            <div  className="chat-box" ref="chatBox" id="chatBox">
+                <div className="start-convo-button" onClick={this.goToChat}
+                     style={{borderRadius: this.props.chating ? "24px 24px 24px 4px": "24px"}}>
+
+                    <div className="button-text">{TITLES.BUTTON_START_CONVO}</div>
+                    <div className="button-fade"/>
                 </div>
             </div>
         );

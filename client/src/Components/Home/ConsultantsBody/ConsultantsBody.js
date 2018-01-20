@@ -65,10 +65,10 @@ export default class ConsultantsBody extends Component {
         return (
 
             <div className="consultants">
-
+                <div className="cards-wrapper">
                 {this.state.consultants.map((consultantProp, index) =>
                     <ConsultantCard index={index} key={index} switchConsultant={this.switchConsultant} info={consultantProp.consultant} opacity={consultantProp.opacity}/>)}
-
+                </div>
             </div>
         );
     }

@@ -1,26 +1,55 @@
 .title {
-    font-size: 18px;
+    /*font-size: 3.2vw;*/
     display: flex;
     flex-direction: column;
-    margin-right: 15px;
-    margin-top: 25px;
     text-align: center;
-    margin-bottom: 25px;
-    flex: 3;
-    height: fit-content;
+    margin: auto;
 }
-.first-line {
-    font-size: 50px;
-    font-weight: 500;
+.header-title {
+    overflow-x: auto;
+    margin-bottom: 5px;
+    font-weight: bold;
+    width: 850px;
+    height: 117px;
+    font-size: 60px;
+    line-height: 0.8;
+    letter-spacing: 0.1px;
+    text-align: center;
+    color: #2a2a2a;
+    margin-right: auto;
+    margin-left: auto;
 }
-@media only screen and (max-width: 1400px)
+.header-sub-title {
+    width: 850px;
+    height: 58px;
+    font-size: 25px;
+    line-height: 1.16;
+    letter-spacing: normal;
+    font-weight: normal;
+    text-align: center;
+    color: #2a2a2a;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 90px;
+
+}
+@media only screen and (min-width: 1400px)
 {
     .first-line {
-        font-size: 40px;
-        font-weight: 500;
+        /*font-size: 38px;*/
+        /*font-weight: 500;*/
     }
     .title {
-        font-size: 16px;
-        display: flex;
+        /*font-size: 32px;*/
+    }
+}
+@media only screen and (min-width: 1900px)
+{
+    .first-line {
+        /*font-size: 50px;*/
+        /*font-weight: 500;*/
+    }
+    .title {
+        /*font-size: 40px;*/
     }
 }

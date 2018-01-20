@@ -10,9 +10,8 @@ export default class Title extends Component {
     render() {
         return (
             <div className="title">
-                <div className="first-line">{TITLES.TOP}</div>
-                <div className="second-line">{TITLES.MIDDLE}</div>
-                <div className="third-line">{TITLES.BOTTOM}</div>
+                <div className="header-title">{TITLES.TOP}</div>
+                <div className="header-sub-title">{TITLES.MIDDLE}</div>
             </div>
         );
     }

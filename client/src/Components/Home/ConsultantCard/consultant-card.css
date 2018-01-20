@@ -1,67 +1,72 @@
 .consultant-card {
-    display: flex;
-    flex-direction: row;
+
     position: absolute;
     top: 0;
     left: 0;
+    width: inherit;
+    height: 100%;
+
 }
 .consultant-name {
-    text-align: center;
-    font-size: 48px;
-    font-weight: 600;
-    width: 100%;
+    /*font-size: 2.5vw;*/
     margin: auto;
     color: #000000;
-}
-.name-button-wrapper {
-    /*width: 100%;*/
-    margin: auto;
-}
-.start-convo-button {
-    width: 229.2px;
-    height: 48px;
-    border-radius: 24px;
-    background-color: #1f1063;
-    color: white;
-    margin-right: auto;
-    margin-left:auto;
-    margin-top: 25px;
-    display: inline-block;
-    cursor: pointer;
-
-    /*min-width: 125px;*/
-}
-.button-fade {
-    width: 164.4px;
-    height: 26.4px;
-    opacity: 0.63;
-    border-radius: 24px;
-    -webkit-filter: blur(9.6px);
-    filter: blur(9.6px);
-    background-color: #1f1063;
-    position: relative;
-    margin: auto;
-    bottom: -9px;
-    z-index: -1;
-}
-.button-text {
-    width: 100%;
-    height: fit-content;
-    font-family: Alef-Bold, sans-serif;
-    font-size: 19.2px;
+    /*width: 97px;*/
+    height: 92px;
+    /*font-family: Alef;*/
+    font-size: 48px;
     font-weight: bold;
-    color: #f5f5f5;
-    display: inline-block;
-    vertical-align: middle;
+    line-height: 0.95;
+    letter-spacing: normal;
     text-align: center;
+}
+.consultant-img {
+    width: 530px;
+    height: 280px;
+}
+@media only screen and (max-width: 900px)
+{
+    .consultant-img {
 
+    }
+    .name-arrow-wrapper {
+
+    }
+}
+.name-arrow-wrapper {
+
+    padding-top: 50px;
+    width:300px;
+    padding-left: 50px;
+}
+.consultant-wrapper {
+    display: flex;
+    flex-direction: row;
+    /*flex-wrap: wrap-reverse;*/
+    /*height: 100%;*/
+    width: inherit;
+}
+@media only screen and (min-width: 1200px) {
+    .name-arrow-wrapper {
+        /*font-size: 40px;*/
+    }
 }
 .arrow {
-    width: 100%;
-    font-size: 50px;
+    font-size: 40px;
     text-align: center;
-    margin: auto;
+    position: absolute;
+    top: 30px;
+    height: fit-content;
 }
 .arrow-left {
-    margin-left: 60px;
+    left: 0;
+}
+.arrow-right {
+    right: 0;
+}
+.position-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
