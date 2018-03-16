@@ -3,16 +3,8 @@ var router = express.Router();
 var users = require('./../db/users.js');
 var consultants = require('./../db/consultants');
 var photographers = require('./../db/photographers');
+// import BOT_LOGIC from './../src/BotLogic'
 
-router.post('/new_user', function (req, res, next) {
-    var newUserJson = req.body;
-    users.create(newUserJson).then( (newUser) => {
-        res.send({info:"New User saved!", user: newUser})
-    }).catch((err) => {
-        res.send.status(500)({error: "New User error", info:err.message})
-    })
-
-});
 router.post('/referenced_user', function (req, res, next) {
     let reqBody = req.body;
     Promise.all([ photographers.findOne({phoneNumber: reqBody.referencedPhotographer}), consultants.findOne({phoneNumber: reqBody.referred})])
@@ -23,18 +15,18 @@ router.post('/referenced_user', function (req, res, next) {
             let reference = {photographer: photographer._id, consultant: consultant._id, date: new Date()};
              return users.findOneAndUpdate({phoneNumber: reqBody.phoneNumber, email: reqBody.email}, {$push: {references: reference}});
         } else throw {message: "Could not find consultant or photographer"}
-    }).then((user) => {F
+    }).then((user) => {
         if (user) {
             res.send({info: "User " + reqBody.email + " updated", user: user})
         } else throw {message: "Could not find user to update"}
     }).catch( (err) => {
-        res.send.status(500)({error:"Can't update user",  info: err.message});
+        res.status.send(500)({error:"Can't update user",  info: err.message});
     })
 });
 router.get('/get_users', function (req, res, next) {
     users.find({}).then( (users) =>{
         res.send({info: "User Found: ", users: users})
-    }).catch(err => res.send.status(500)({error: "Error find users", info: "User Founod"}));
+    }).catch(err => res.status(500).send({error: "Error find users", info: "User Founod"}));
 
 
 });
@@ -71,8 +63,44 @@ router.post('/remove_user', function (req, res, next) {
             res.send({info: "User Found and removed"})
         } else throw {message: "No user found for email: " + userToRemoveJson.email + ": ,and phone number: " + userToRemoveJson.phoneNumber}
     }).catch( (err) => {
-        res.send.status(500)({error: "User not removed!", info: err.message})
+        res.status.send(500)({error: "User not removed!", info: err.message})
     })
+});
+// router.get('/bot_logic', function (req, res, next) {
+//     res.send({bot:BOT_LOGIC})
+// });
+router.post('/add_user', function (req, res, next) {
+    let userJson = req.body;
+    let startDate = new Date();
+    users.create({name:userJson.name, chat: {data: [], date: startDate}}).then( (newUser) => {
+        res.send({info:"User saved!", user: newUser, chatStartDate: startDate})
+    }).catch((err) => {
+        res.status(500).send({error: "User error", info:err.message})
+    })
+
+});
+router.post('/add_chat_answer', function (req, res, next) {
+    let userJson = req.body;
+    users.findOne({_id: userJson._id})
+        .then((user) => {
+            if (!user) throw "No user found";
+            let indexToAdd = null;
+            user.chat.find((val, index) => {
+                let dateFromReq = new Date(userJson.startDate);
+                if(val.date.getTime() === dateFromReq.getTime()) {
+                    indexToAdd = index;
+                    return true;
+                }
+            });
+            if (indexToAdd !== null) {
+                user.chat[indexToAdd].data.push({question: userJson.question, answer: userJson.answer});
+                user.save((user) => {
+                    res.send({info: "User Found and question answer added"})
+                })
+            } else throw "No chat matching attribs found";
+        }).catch(err => {
+            res.status(500).send({error: "Chat Answer not added", info: err.toString()})
+        })
 });
 
 module.exports = router;

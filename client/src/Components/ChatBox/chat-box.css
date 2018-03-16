@@ -1,14 +1,69 @@
 .chat-box{
     /*width: 30%;*/
-    height: 13%;
+    height: 0;
     /*background-color: #00B7FF;*/
     display: flex;
     flex-direction: column;
     width: 830px;
     position: relative;
     margin: auto;
-    transition: height 2s ease-in-out 0.2s;
+    /*transition: top 2s ease-in-out 0.2s;*/
     z-index: 5;
+}
+
+.message {
+    margin-top: 30px;
+    min-width: 130px;
+    min-height: 52px;
+    /*max-width: 150px;*/
+    /*width: fit-content;*/
+    /*transition: width 1s linear;*/
+
+}
+.message-text {
+    margin: auto;
+    padding: 10px 50px 15px 40px;
+}
+.close-bot-message {
+    margin-top: 5px !important;
+    border-radius: 0px 50px 50px 50px !important;
+}
+.bot-message {
+     max-height: 90px;
+     background-image: linear-gradient(to bottom, #34247e, #1f1063);
+     font-size: 20px;
+     font-weight: bold;
+     font-style: normal;
+     font-stretch: normal;
+     line-height: normal;
+     letter-spacing: normal;
+     text-align: right;
+     color: #f5f5f5;
+     max-width: 60%;
+     margin-right: auto;
+     margin-left: 0;
+    border-radius: 50px 50px 50px 0px;
+    position: relative;
+    overflow:hidden;
+    transition:max-width 1.3s ease-in-out;
+    width:auto;
+ }
+.user-message {
+    max-height: 80px;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: #f5f5f5;
+    max-width: 60%;
+    margin-right: 0;
+    margin-left: auto;
+    background-color: #1f1063;
+    border-radius: 24px;
+
 }
 .start-convo-button {
 
@@ -19,12 +74,19 @@
     cursor: pointer;
     position: absolute;
     right:0;
-    top:-180px;
-    transition: top 2s ease-in-out 0.2s, border-radius 2s ease-in-out 0.2s, width 2s ease-in-out 0.2s;
+    top:-185px;
+    transition: top 2s ease-in-out 0.2s,width 2s ease-in-out 0.2s;
     /*min-width: 125px;*/
     width: 250px;
     height: 48px;
     border: solid 4px #1f1063;
+
+}
+#start-convo-button {
+    transition: width 2s;
+    position: relative;
+    margin-right: 0;
+    margin-left: auto;
 }
 .button-fade {
     max-width: 180px;
@@ -45,16 +107,144 @@
     width: 100%;
     height: fit-content;
     font-family: Alef-Bold, sans-serif;
-    font-size: 1.7vw;
+    font-size: 20px;
     font-weight: bold;
     color: #f5f5f5;
     display: inline-block;
     vertical-align: middle;
     text-align: center;
 }
-@media only screen and (min-width: 1300px)
-{
-    .button-text {
-        font-size: 20px;
-    }
+.answer-options-wrapper {
+    position: fixed;
+    bottom: 60px;
+    right: 50%;
+    transform: translate(50%);
+    display: flex;
+    flex-direction: row;
 }
+.answer-options {
+    width: 154px;
+    height: 48px;
+    border-radius: 14px;
+    border: solid 4px #1f1063;
+    font-size: 25px;
+    text-align: center;
+    cursor: pointer;
+
+}
+.option-1 {
+    background-color: #263385;
+    color: white;
+    margin-right: 20px;
+}
+.option-2 {
+    color: #263385;
+}
+.input-wrapper {
+    position: fixed;
+    bottom: 120px;
+    right: 50%;
+    transform: translate(50%);
+    border: 0;
+    background-color: #f0f0f0;
+}
+textarea:focus {
+    outline:none;
+}
+.user-input {
+    width: 343px;
+    height: 66px;
+    border-radius: 35px;
+    border: solid 4px #1f1063;
+    font-family: Alef, Alef-Bold, sans-serif;
+    font-size: 25px;
+    color: #1f1063;
+    letter-spacing: 4px;
+    padding-right: 35px;
+    padding-top: 9px;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #1f1063;
+    opacity: 1; /* Firefox */
+}
+
+user-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #1f1063;
+}
+
+user-input::-ms-input-placeholder { /* Microsoft Edge */
+    color: #1f1063;
+}
+.input-text {
+    width: 138px;
+    height: 25px;
+    font-family: Alef, Alef-Bold, sans-serif;
+    font-size: 25px;
+    letter-spacing: 4px;
+    text-align: center;
+    color: #1f1063;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 35px;
+    border-left: 1px solid #1f1063;
+    vertical-align: middle;
+    line-height: 25px;
+    direction: rtl;
+}
+.text-input {
+    position: relative;
+
+}
+.submit-button {
+    width: 268px;
+    height: 69px;
+    border-radius: 24px;
+    background-color: #8f8f8f;
+    color: white;
+    font-family: Alef, Alef-Bold, sans-serif;
+    font-size: 25px;
+    position: fixed;
+    bottom: -95px;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+    vertical-align: middle;
+    line-height: 65px;
+    cursor: pointer;
+}
+.start-convo-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 160px;
+}
+.msg-wrapper {
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-start;
+    /*width:130px;*/
+}
+/*.bot-message .message-text {*/
+    /*overflow: hidden; !* Ensures the content is not revealed until the animation *!*/
+    /*border-right: .15em solid orange; !* The typwriter cursor *!*/
+    /*white-space: nowrap; !* Keeps the content on a single line *!*/
+    /*margin: 0 auto; !* Gives that scrolling effect as the typing happens *!*/
+    /*letter-spacing: .15em; !* Adjust as needed *!*/
+    /*animation:*/
+            /*typing 3.5s steps(40, end),*/
+            /*blink-caret .75s step-end infinite;*/
+/*}*/
+
+/*!* The typing effect *!*/
+/*@keyframes typing {*/
+    /*from { width: 0 }*/
+    /*to { width: 100% }*/
+/*}*/
+
+/*!* The typewriter cursor effect *!*/
+/*@keyframes blink-caret {*/
+    /*from, to { border-color: transparent }*/
+    /*50% { border-color: orange; }*/
+/*}*/

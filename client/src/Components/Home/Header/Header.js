@@ -10,7 +10,7 @@ export default class Header extends Component {
         return (
 
             <div className="header">
-                <img src={process.env.PUBLIC_URL + "/images/logo.png"} className="Logo"/>
+                <img alt="logo" src={"/images/logo.png"} className="Logo"/>
             </div>
         );
     }

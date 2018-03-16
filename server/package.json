@@ -17,6 +17,7 @@
     "babel-register": "^6.26.0",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
+    "data-tree": "^1.2.4",
     "debug": "~2.6.9",
     "express": "~4.15.5",
     "gridfs-stream": "^1.1.1",

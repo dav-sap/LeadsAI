@@ -9,23 +9,22 @@ import ChatBox from "../ChatBox/ChatBox";
 
 export default class Home extends Component {
     state = {
-
-        chating: false,
+        chatClicked: false,
     };
     switchScreen = () => {
         this.setState({
-            chating: true,
+            chatClicked: true,
         })
     };
     render() {
         return (
             <div className="home" >
                 <Header/>
-                <div className="all-body" style={{top:this.state.chating ? "-1000px" : "0px"}}>
+                <div className="all-body" style={{top:this.state.chatClicked ? "-1000px" : "0px"}}>
                     <Title/>
                     <ConsultantsBody />
                 </div>
-                <ChatBox chating={this.state.chating} switchScreenFunc={this.switchScreen} />
+                <ChatBox chatClicked={this.state.chatClicked} switchScreenFunc={this.switchScreen} />
                 <Footer/>
             </div>
         );

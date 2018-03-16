@@ -6,13 +6,13 @@
     /*flex-direction: column;*/
     min-width: 400px;
     min-height: 500px;
-    overflow: auto;
+    overflow: hidden;
 
 }
 .all-body {
     /*width: 80%;*/
     margin: auto;
-   height: 80%;
+   height: 600px;
     transition: top 2s ease-in-out 0.2s,opacity 2s ease-in-out 0.2s;
     position: relative;
 
