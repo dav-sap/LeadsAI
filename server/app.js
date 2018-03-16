@@ -5,10 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var index = require('./../routes/index');
-var users = require('./../routes/users');
-var consultants = require('./../routes/consultants');
-var photographers = require('./../routes/photographers');
+var index = require('./routes/index');
+var users = require('./routes/users');
+var consultants = require('./routes/consultants');
+var photographers = require('./routes/photographers');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:3006/localDB');
 var app = express();
@@ -29,6 +29,13 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/consultants', consultants);
 app.use('/photographers', photographers);
+app.use(express.static(path.join(__dirname, '/../client/build')));
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname+'/../client/build/index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
