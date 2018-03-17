@@ -1,38 +1,15 @@
 import React, { Component } from 'react';
 import './consultants.css'
 import ConsultantCard from "../ConsultantCard/ConsultantCard";
+import {TITLES} from "../../Consts";
 
 export default class ConsultantsBody extends Component {
 
     state = {
-        //{consultant: {}, opacity: 0}
         consultants : [],
     };
     error = "";
-    switchConsultant = (side, index) => {
-        let dupConsultants = this.state.consultants;
-        dupConsultants[index].opacity = 0;
-        let newIndex = 0;
-        if (side === "right") {
-            if (index + 1 === this.state.consultants.length) {
-                newIndex = 0;
-            } else {
-                newIndex = index + 1;
-            }
 
-        } else if (side === "left") {
-            if (index - 1 === -1) {
-                newIndex = this.state.consultants.length - 1;
-            } else {
-                newIndex = index - 1;
-            }
-
-        }
-        dupConsultants[newIndex].opacity = 1;
-        this.setState({
-            consultants: dupConsultants
-        })
-    };
     fetchConsultants() {
         fetch("/consultants/get_consultants")
             .then(
@@ -45,12 +22,8 @@ export default class ConsultantsBody extends Component {
                     }
                     response.json().then(resJson => {
                         this.error = resJson.length > 0 ? "" : "No Results";
-                        this.setState({consultants : resJson.map((consultant, index) => {
-                            if (index === 0) {
-                                this.index = 0;
-                                return {consultant: consultant, opacity: 1}
-                            } else return {consultant: consultant, opacity: 0}
-                        })});
+                        console.log(resJson);
+                        this.setState({consultants : resJson});
                     });
                 }
             )
@@ -65,9 +38,14 @@ export default class ConsultantsBody extends Component {
         return (
 
             <div className="consultants">
+                <div className="consultant-title">{TITLES.CONSULTANT_TITLE}
+                    <img src="images/arrow.png"
+                         srcset="images/arrow@2x.png 2x,images/arrow@3x.png 3x"
+                         className="arrow"/>
+                </div>
                 <div className="cards-wrapper">
-                {this.state.consultants.map((consultantProp, index) =>
-                    <ConsultantCard index={index} key={index} switchConsultant={this.switchConsultant} info={consultantProp.consultant} opacity={consultantProp.opacity}/>)}
+                    {this.state.consultants.map((consultant, index) =>
+                        <ConsultantCard key={index} info={consultant}/>)}
                 </div>
             </div>
         );

@@ -7,6 +7,7 @@ import Typing from 'react-typing-animation';
 import {TITLES} from './../Consts'
 import BOT_LOGIC from './BotLogic';
 import {QUESTION, ANSWER} from './BotLogic';
+import TextBox from "./TextBox";
 const MOVES = {QUESTION: "question", ANSWERS: "answers", INPUT: "input"};
 
 export default class ChatBox extends Component {
@@ -172,53 +173,53 @@ export default class ChatBox extends Component {
     render() {
 
         return (
-            <div  className="chat-box" ref="chatBox" id="chatBox"  style={this.state.chatStarting ? {height: "85%", top: "-600px"} : {}}>
-                <div className="start-convo-button" onClick={this.goToChat} id={this.state.chatStarting ? "start-convo-button" : ""}
-                     style={{top: this.state.chatStarting ? "0px" : this.props.chatClicked ? "-600px" : "-185px"}}>
+            <div  className="chat-box" ref="chatBox" id="chatBox">
+                {/*<div className="start-convo-button" onClick={this.goToChat} id={this.state.chatStarting ? "start-convo-button" : ""}*/}
+                     {/*style={{top: this.state.chatStarting ? "0px" : this.props.chatClicked ? "-600px" : "-185px"}}>*/}
 
-                    <div className="button-text">{TITLES.BUTTON_START_CONVO}</div>
-                    <div className="button-fade"/>
-                </div>
-                {this.state.messages.map((message, index) => {
-                    return <div className="msg-wrapper"><div key={index} className={"message " + (message.type === ANSWER ? "user-message " : "bot-message ")
-                                                    + (message.close ? "close-bot-message" : "")}>
-                            {this.state.loadingMsg && message.type === QUESTION && index === this.state.messages.length - 1? <div id="wave">
-                                <span className="dot"/>
-                                <span className="dot"/>
-                                <span className="dot"/>
-                            </div> : <p className="message-text">
-                                {message.type === ANSWER  ? <span>{message.content}</span> : <Typing onFinishedTyping={this.onFinishType}>
-                                <span>{message.content}</span>
-                                {/*<Typing.Backspace count={20} />*/}
-                            </Typing>}
-                            </p>}
-                    </div></div>
-                })}
-                {this.state.userInput ?
-                <fieldset className="input-wrapper">
-                    <div className="text-input">
-                        {/*<input placeholder={"שם מלא"} type="text" dir="rtl" className="user-input" onKeyDown={this.handleSubmit} onChange={this.inputChanged}/>*/}
-                        {/*<div className="input-text">שם מלא</div>*/}
-                        <form>
-                            <textarea type="text" placeholder="שם מלא |" dir="rtl"  value={this.state.inputText}
-                                      className="user-input" onKeyDown={this.handleKeyDown} onChange={this.inputChanged} id="textbox" />
-                        </form>
-                    </div>
-                    <div className="submit-button" onClick={this.handleSubmit}>
-                        {!this.state.sendLoading ? <div>שלח</div> :
-                            <div className="loader">
-                                <svg className="circular" viewBox="25 25 50 50">
-                                <circle className="path" cx="50" cy="50" r="20"/>
-                                </svg>
-                            </div>}
-                        </div>
-                </fieldset> : ""}
-                {this.state.answerOptions ?
-                    <div className="answer-options-wrapper">
-                        <div className="option-1 answer-options" onClick={() => this.answerClick(0)}>{this.state.optionOne}</div>
-                        <div className="option-2 answer-options" onClick={() => this.answerClick(1)}>{this.state.optionTwo}</div>
-                    </div> : ""}
-
+                    {/*<div className="button-text">{TITLES.BUTTON_START_CONVO}</div>*/}
+                    {/*<div className="button-fade"/>*/}
+                {/*</div>*/}
+                {/*{this.state.messages.map((message, index) => {*/}
+                    {/*return <div className="msg-wrapper"><div key={index} className={"message " + (message.type === ANSWER ? "user-message " : "bot-message ")*/}
+                                                    {/*+ (message.close ? "close-bot-message" : "")}>*/}
+                            {/*{this.state.loadingMsg && message.type === QUESTION && index === this.state.messages.length - 1? <div id="wave">*/}
+                                {/*<span className="dot"/>*/}
+                                {/*<span className="dot"/>*/}
+                                {/*<span className="dot"/>*/}
+                            {/*</div> : <p className="message-text">*/}
+                                {/*{message.type === ANSWER  ? <span>{message.content}</span> : <Typing onFinishedTyping={this.onFinishType}>*/}
+                                {/*<span>{message.content}</span>*/}
+                                {/*/!*<Typing.Backspace count={20} />*!/*/}
+                            {/*</Typing>}*/}
+                            {/*</p>}*/}
+                    {/*</div></div>*/}
+                {/*})}*/}
+                {/*{this.state.userInput ?*/}
+                {/*<fieldset className="input-wrapper">*/}
+                    {/*<div className="text-input">*/}
+                        {/*/!*<input placeholder={"שם מלא"} type="text" dir="rtl" className="user-input" onKeyDown={this.handleSubmit} onChange={this.inputChanged}/>*!/*/}
+                        {/*/!*<div className="input-text">שם מלא</div>*!/*/}
+                        {/*<form>*/}
+                            {/*<textarea type="text" placeholder="שם מלא |" dir="rtl"  value={this.state.inputText}*/}
+                                      {/*className="user-input" onKeyDown={this.handleKeyDown} onChange={this.inputChanged} id="textbox" />*/}
+                        {/*</form>*/}
+                    {/*</div>*/}
+                    {/*<div className="submit-button" onClick={this.handleSubmit}>*/}
+                        {/*{!this.state.sendLoading ? <div>שלח</div> :*/}
+                            {/*<div className="loader">*/}
+                                {/*<svg className="circular" viewBox="25 25 50 50">*/}
+                                {/*<circle className="path" cx="50" cy="50" r="20"/>*/}
+                                {/*</svg>*/}
+                            {/*</div>}*/}
+                        {/*</div>*/}
+                {/*</fieldset> : ""}*/}
+                {/*{this.state.answerOptions ?*/}
+                    {/*<div className="answer-options-wrapper">*/}
+                        {/*<div className="option-1 answer-options" onClick={() => this.answerClick(0)}>{this.state.optionOne}</div>*/}
+                        {/*<div className="option-2 answer-options" onClick={() => this.answerClick(1)}>{this.state.optionTwo}</div>*/}
+                    {/*</div> : ""}*/}
+                <TextBox/>
             </div>
         );
     }

@@ -172,7 +172,7 @@ user-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     color: #1f1063;
 }
 
-user-input::-ms-input-placeholder { /* Microsoft Edge */
+user-input:-ms-input-placeholder { /* Microsoft Edge */
     color: #1f1063;
 }
 .input-text {
@@ -226,25 +226,31 @@ user-input::-ms-input-placeholder { /* Microsoft Edge */
     justify-content:flex-start;
     /*width:130px;*/
 }
-/*.bot-message .message-text {*/
-    /*overflow: hidden; !* Ensures the content is not revealed until the animation *!*/
-    /*border-right: .15em solid orange; !* The typwriter cursor *!*/
-    /*white-space: nowrap; !* Keeps the content on a single line *!*/
-    /*margin: 0 auto; !* Gives that scrolling effect as the typing happens *!*/
-    /*letter-spacing: .15em; !* Adjust as needed *!*/
-    /*animation:*/
-            /*typing 3.5s steps(40, end),*/
-            /*blink-caret .75s step-end infinite;*/
-/*}*/
+.text-typer {
+    text-align: right;
+}
+.text-typer:after {
+    -webkit-animation: 0.95s blink ease-in-out infinite !important;
+    -moz-animation: 0.95s blink ease-in-out infinite !important;
+    /*-ms-animation: 0.95s blink ease-in-out infinite !important;*/
+    -o-animation: 0.95s blink ease-in-out infinite !important;
+    animation: 0.95s blink ease-in-out infinite !important;
+}
+@keyframes blink{
+    from,to{color:transparent}
+    50%{color:#ffe500}}
+@-moz-keyframes blink {
+    from,to{color:transparent}50%{color:#ffe500}}
+@-webkit-keyframes blink {
+    from,to{color:transparent}50%{color:#ffe500}}
+/*@-ms-keyframes "blink"{*/
+    /*from,to{color:transparent}50%{color:#ffe500}}*/
+@-o-keyframes blink {
+    from,to{color:transparent}50%{color:#ffe500}}
 
-/*!* The typing effect *!*/
-/*@keyframes typing {*/
-    /*from { width: 0 }*/
-    /*to { width: 100% }*/
-/*}*/
-
-/*!* The typewriter cursor effect *!*/
-/*@keyframes blink-caret {*/
-    /*from, to { border-color: transparent }*/
-    /*50% { border-color: orange; }*/
-/*}*/
+.text-wrapper {
+    color: white;
+    font-size: 26px;
+    direction: rtl;
+    text-align: right;
+}

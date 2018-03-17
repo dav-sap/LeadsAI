@@ -1,11 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Heebo');
 @font-face {
     font-family: 'Alef-Bold';
     src: local('Alef-Bold'), url(./fonts/Alef-Bold.woff) format('woff');
 }
+@font-face {
+    font-family: 'Alef-Regular';
+    src: local('Alef-Regular'), url(./fonts/Alef-Regular.woff) format('woff');
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: Alef-Bold sans-serif;
+  font-family: 'Heebo', sans-serif;
 }
 #root {
     height: 100%;
