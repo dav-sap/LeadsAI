@@ -13,12 +13,13 @@ let root = BOT_LOGIC.insert({
 let NAME = BOT_LOGIC.insertToNode(root,{
     type: ANSWER_INPUT,
     createUser : true,
+    placeholder: "שם מלא |"
 });
 
 
 let IS_WED_DATE = BOT_LOGIC.insertToNode(NAME, {
     type: QUESTION,
-    content: "?היי צדיק, האם כבר יש תאריך לחתונה"
+    content: "היי צדיק, האם כבר יש תאריך לחתונה?"
 });
 
 
@@ -36,7 +37,11 @@ let NOT_YET = BOT_LOGIC.insertToNode(IS_WED_DATE, {
 
 let GET_WED_DATE = BOT_LOGIC.insertToNode(YES, {
     type: QUESTION,
-    content: "?יופי מתי זה"
+    content: "יופי מתי זה?"
+});
+let WHEN_WED = BOT_LOGIC.insertToNode(GET_WED_DATE, {
+    type: ANSWER_INPUT,
+    placeholder: "something"
 });
 
 let TOO_BAD = BOT_LOGIC.insertToNode(NOT_YET, {
