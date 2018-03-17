@@ -2,34 +2,31 @@ import React, { Component } from 'react';
 import "./chat-box.css"
 import "./send-loader.css"
 import "./loading-dots.css"
-import Typing from 'react-typing-animation';
+import Type from 'react-type';
+
 // import TypeWriter from 'react-typewriter';
 import {TITLES} from './../Consts'
 import BOT_LOGIC from './BotLogic';
-import {QUESTION, ANSWER} from './BotLogic';
+import {QUESTION, ANSWER_OPTION, ANSWER_INPUT} from './BotLogic';
 import TextBox from "./TextBox";
 const MOVES = {QUESTION: "question", ANSWERS: "answers", INPUT: "input"};
 
 export default class ChatBox extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            chatStarting: false,
-            messages: [],
-            userInput: false,
-            answerOptions: false,
-            optionOne: "",
-            optionTwo: "",
-            currentNode: null,
-            inputText: "",
-            sendLoading: false,
-            msgLetter: 0
-        };
 
-        this.dbUser = null;
-        this.bot = null;
+    state = {
+        userInput: false,
+        answerOptions: false,
+        optionOne: "",
+        optionTwo: "",
+        currentNode: null,
+        inputText: "",
+        sendLoading: false,
+        msgLetter: 0,
+        showAnswers: false,
+    };
 
-    }
+    dbUser = null;
+    bot = null;
 
     createUser = async (name) => {
         try {
@@ -76,37 +73,33 @@ export default class ChatBox extends Component {
         }
     };
     addMsg = () => {
-        console.log("ADD MSG");
-        if (this.state.currentNode) {
-            if (this.state.currentNode.parentNode() && this.state.currentNode.parentNode().childNodes().length > 1 && this.state.currentNode.data().type === ANSWER) {
-                this.setState({
-                    answerOptions: true,
-                    optionOne: this.state.currentNode.parentNode().childNodes()[0].data().content,
-                    optionTwo: this.state.currentNode.parentNode().childNodes()[1].data().content,
-                })
-            } else if (this.state.currentNode.data().type === ANSWER && this.state.currentNode.data().content === "") {
-                this.setState({
-                    userInput: true
-                })
-            } else if (this.state.currentNode.data().type === QUESTION) {
-                this.setState({
-                    messages: [...this.state.messages, {
-                        type: this.state.currentNode.data().type,
-                        content: this.state.currentNode.data().content,
-                        close: this.state.currentNode.data().close,
+        // console.log("ADD MSG");
+        // if (this.state.currentNode) {
+        //     if (this.state.currentNode.parentNode() && this.state.currentNode.parentNode().childNodes().length > 1 && this.state.currentNode.data().type === ANSWER) {
+        //         this.setState({
+        //             answerOptions: true,
+        //             optionOne: this.state.currentNode.parentNode().childNodes()[0].data().content,
+        //             optionTwo: this.state.currentNode.parentNode().childNodes()[1].data().content,
+        //         })
+        //     } else if (this.state.currentNode.data().type === ANSWER && this.state.currentNode.data().content === "") {
+        //         this.setState({
+        //             userInput: true
+        //         })
+        //     } else if (this.state.currentNode.data().type === QUESTION) {
+        //         this.setState({
+        //             messages: [...this.state.messages, {
+        //                 type: this.state.currentNode.data().type,
+        //                 content: this.state.currentNode.data().content,
+        //                 close: this.state.currentNode.data().close,
+        //
+        //             }],
+        //             currentNode: this.state.currentNode.childNodes()[0],
+        //             loadingMsg: true,
+        //         }, () => setTimeout(() => this.setState({loadingMsg: false}), 1800));
+        //     }
+        // }
+    };
 
-                    }],
-                    currentNode: this.state.currentNode.childNodes()[0],
-                    loadingMsg: true,
-                }, () => setTimeout(() => this.setState({loadingMsg: false}), 1800));
-            }
-        }
-    };
-    goToChat = () => {
-        this.props.switchScreenFunc();
-        setTimeout(() => this.setState({chatStarting: true}), 2500);
-        setTimeout(() => this.addMsg(), 2800);
-    };
     handleSubmit = () => {
         this.setState({sendLoading: true});
         if (this.state.currentNode.data().createUser) {
@@ -114,15 +107,15 @@ export default class ChatBox extends Component {
         } else {
             this.addDataToDB(this.state.currentNode.parentNode().data().content, this.state.inputText)
         }
-        setTimeout(() => {
-            this.setState({
-                messages: [...this.state.messages, {type:ANSWER, content: this.state.inputText}],
-                currentNode: this.state.currentNode.childNodes()[0],
-            }, () => {
-            this.setState({userInput: false, inputText: "", sendLoading: false,});
-            this.disableInput = false;
-            this.addMsg()
-        })}, 1200);
+        // setTimeout(() => {
+        //     this.setState({
+        //         messages: [...this.state.messages, {type:ANSWER, content: this.state.inputText}],
+        //         currentNode: this.state.currentNode.childNodes()[0],
+        //     }, () => {
+        //     this.setState({userInput: false, inputText: "", sendLoading: false,});
+        //     this.disableInput = false;
+        //     this.addMsg()
+        // })}, 1200);
     };
     handleKeyDown = (event) => {
         if (event.which === 13 || event.keyCode === 13) {
@@ -146,20 +139,20 @@ export default class ChatBox extends Component {
 
     };
     answerClick = (answer) => {
-        this.addDataToDB(this.state.currentNode.parentNode().data().content, this.state.currentNode.parentNode().childNodes()[answer].data().content);
-        this.setState({
-            messages: [...this.state.messages, {type:ANSWER, content: this.state.currentNode.parentNode().childNodes()[answer].data().content}],
-            currentNode: this.state.currentNode.parentNode().childNodes()[answer].childNodes()[0]
-        }, () => {
-             setTimeout(() => this.addMsg(), 2000);
-            this.setState({
-                answerOptions: false,
-                optionOne:"",
-                optionTwo:"",
-            })
-        })
+        // this.addDataToDB(this.state.currentNode.parentNode().data().content, this.state.currentNode.parentNode().childNodes()[answer].data().content);
+        // this.setState({
+        //     messages: [...this.state.messages, {type:ANSWER, content: this.state.currentNode.parentNode().childNodes()[answer].data().content}],
+        //     currentNode: this.state.currentNode.parentNode().childNodes()[answer].childNodes()[0]
+        // }, () => {
+        //      setTimeout(() => this.addMsg(), 2000);
+        //     this.setState({
+        //         answerOptions: false,
+        //         optionOne:"",
+        //         optionTwo:"",
+        //     })
+        // })
     };
-    componentDidMount() {
+    componentWillMount() {
         this.bot = BOT_LOGIC;
         this.setState({
             currentNode : BOT_LOGIC.rootNode()
@@ -167,13 +160,14 @@ export default class ChatBox extends Component {
     }
     onFinishType = () => {
         console.log("FINSIHED TYPE");
-        this.addMsg();
+        this.setState({showAnswers:true})
+        // this.addMsg();
     }
 
     render() {
 
         return (
-            <div  className="chat-box" ref="chatBox" id="chatBox">
+            <div className="chat-box">
                 {/*<div className="start-convo-button" onClick={this.goToChat} id={this.state.chatStarting ? "start-convo-button" : ""}*/}
                      {/*style={{top: this.state.chatStarting ? "0px" : this.props.chatClicked ? "-600px" : "-185px"}}>*/}
 
@@ -196,30 +190,43 @@ export default class ChatBox extends Component {
                     {/*</div></div>*/}
                 {/*})}*/}
                 {/*{this.state.userInput ?*/}
-                {/*<fieldset className="input-wrapper">*/}
-                    {/*<div className="text-input">*/}
-                        {/*/!*<input placeholder={"שם מלא"} type="text" dir="rtl" className="user-input" onKeyDown={this.handleSubmit} onChange={this.inputChanged}/>*!/*/}
-                        {/*/!*<div className="input-text">שם מלא</div>*!/*/}
-                        {/*<form>*/}
-                            {/*<textarea type="text" placeholder="שם מלא |" dir="rtl"  value={this.state.inputText}*/}
-                                      {/*className="user-input" onKeyDown={this.handleKeyDown} onChange={this.inputChanged} id="textbox" />*/}
-                        {/*</form>*/}
-                    {/*</div>*/}
-                    {/*<div className="submit-button" onClick={this.handleSubmit}>*/}
-                        {/*{!this.state.sendLoading ? <div>שלח</div> :*/}
-                            {/*<div className="loader">*/}
-                                {/*<svg className="circular" viewBox="25 25 50 50">*/}
-                                {/*<circle className="path" cx="50" cy="50" r="20"/>*/}
-                                {/*</svg>*/}
-                            {/*</div>}*/}
-                        {/*</div>*/}
-                {/*</fieldset> : ""}*/}
-                {/*{this.state.answerOptions ?*/}
-                    {/*<div className="answer-options-wrapper">*/}
-                        {/*<div className="option-1 answer-options" onClick={() => this.answerClick(0)}>{this.state.optionOne}</div>*/}
-                        {/*<div className="option-2 answer-options" onClick={() => this.answerClick(1)}>{this.state.optionTwo}</div>*/}
-                    {/*</div> : ""}*/}
-                <TextBox/>
+
+                <div className="text-wrapper">
+                    <Type cursorColor={"#ffe500"} cursorWidth={14} className="text-typer" onTypingDone={this.onFinishType}>
+                        {this.state.currentNode.data().content}
+                    </Type>
+                </div>
+                {this.state.currentNode.childNodes()[0].data().type === ANSWER_INPUT && this.state.showAnswers?
+                    <div className="input-wrapper">
+                        <fieldset >
+                            <div className="text-input">
+                                <form>
+                                    <textarea type="text" placeholder="שם מלא |" dir="rtl"  value={this.state.inputText}
+                                            className="user-input" onKeyDown={this.handleKeyDown} onChange={this.inputChanged} id="textbox" />
+                                </form>
+                            </div>
+                        </fieldset>
+                         {!this.state.sendLoading ?
+                        <div className="submit-button" onClick={this.handleSubmit}>
+                            <div className="button-text">שלח</div>
+                        </div>
+
+                         :
+                             <div className="loader">
+                                 <div className="bar1"></div>
+                                 <div className="bar2"></div>
+                                 <div className="bar3"></div>
+                                 <div className="bar4"></div>
+                                 <div className="bar5"></div>
+                                 <div className="bar6"></div>
+                             </div>}
+
+                    </div>: ""}
+                {this.state.answerOptions ?
+                    <div className="answer-options-wrapper">
+                        <div className="option-1 answer-options" onClick={() => this.answerClick(0)}>{this.state.optionOne}</div>
+                        <div className="option-2 answer-options" onClick={() => this.answerClick(1)}>{this.state.optionTwo}</div>
+                    </div> : ""}
             </div>
         );
     }

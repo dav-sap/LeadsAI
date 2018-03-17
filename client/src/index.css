@@ -15,4 +15,6 @@ body {
 }
 #root {
     height: 100%;
+    background-image: radial-gradient(circle at 52% 93%, #023365, #000000);
+    border: solid 1px #979797;
 }
