@@ -4,6 +4,7 @@ import "./send-loader.css"
 import "./loading-dots.css"
 import Type from 'react-type';
 // import TypeWriter from 'react-typewriter';
+import Confetti from 'react-confetti'
 import BOT_LOGIC from './BotLogic';
 import {QUESTION, ANSWER_OPTION, ANSWER_INPUT} from './BotLogic';
 
@@ -89,7 +90,7 @@ export default class ChatBox extends Component {
             if (this.state.currentNode.childNodes()[0].data().createUser) {
                 this.createUser(this.state.inputText);
             } else {
-                this.addDataToDB(this.state.currentNode.data().content, this.state.inputText);
+                this.addDataToDB(this.state.currentNode.data().content, this.state.inputText, this.state.currentNode.childNodes()[0].childNodes()[0]);
             }
 
         }
@@ -181,6 +182,9 @@ export default class ChatBox extends Component {
                         })}
 
                     </div> : ""}
+                {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
+                    <Confetti width={document.body.clientWidth} height={document.body.clientHeight} numberOfPieces={500}/>
+                    : ""}
             </div>
         );
     }

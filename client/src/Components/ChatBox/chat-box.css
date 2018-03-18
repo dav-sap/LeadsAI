@@ -9,6 +9,8 @@
     /*margin: auto;*/
     /*transition: top 2s ease-in-out 0.2s;*/
     /*z-index: 5;*/
+    width: 100%;
+    height: 100%;
 
 }
 
@@ -248,7 +250,7 @@ fieldset {
 
 .text-wrapper {
     direction: rtl;
-    margin-top: 25%;
+    padding-top: 25%;
     margin-right: auto;
     margin-left: auto;
     /*width: 762px;*/
@@ -262,6 +264,9 @@ fieldset {
     letter-spacing: normal;
     text-align: center;
     color: #ffffff;
+}
+textarea {
+    resize: none;
 }
 .button-text {
     position: absolute;
