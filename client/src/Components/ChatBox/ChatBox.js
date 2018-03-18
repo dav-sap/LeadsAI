@@ -11,16 +11,12 @@ import {QUESTION, ANSWER_OPTION, ANSWER_INPUT} from './BotLogic';
 export default class ChatBox extends Component {
 
     state = {
-        userInput: false,
-        answerOptions: false,
-        optionOne: "",
-        optionTwo: "",
         currentNode: null,
         inputText: "",
         sendLoading: false,
-        msgLetter: 0,
         showAnswers: false,
         nodeIndex: 0,
+        hoveringSubmitButton: false,
     };
 
     dbUser = null;
@@ -43,20 +39,20 @@ export default class ChatBox extends Component {
                     this.dbUser = resJson.user;
                     this.chatStartDate = resJson.chatStartDate;
                     console.log(resJson.user);
-                    console.log(this.state.currentNode.childNodes()[0].childNodes()[0]);
+
                     this.setState({
                         sendLoading: false,
                         showAnswers: false,
                         currentNode: this.state.currentNode.childNodes()[0].childNodes()[0],
-                        optionOne: "",
-                        optionTwo: "",
                         inputText: "",
                         nodeIndex: this.state.nodeIndex + 1,
                     });
+                    this.disableInput = false;
                 }
             }
         } catch (error) {
             this.setState({sendLoading: false, showAnswers: false});
+            this.disableInput = false;
             console.error(error);
         }
     };
@@ -75,12 +71,14 @@ export default class ChatBox extends Component {
                 let resJson = await res.json();
                 if (resJson && resJson.info) {
                     this.setState({sendLoading: false, showAnswers: false, currentNode: newNode, optionOne:"", optionTwo:"", inputText:"", nodeIndex: this.state.nodeIndex + 1,});
+                    this.disableInput = false;
                 }
             } else {
                 throw {status: res.status, error: res}
             }
         } catch(error) {
             this.setState({sendLoading: false, showAnswers: false});
+            this.disableInput = false;
             console.error(error);
         }
     };
@@ -93,10 +91,11 @@ export default class ChatBox extends Component {
             } else {
                 this.addDataToDB(this.state.currentNode.data().content, this.state.inputText);
             }
+
         }
     };
     handleKeyDown = (event) => {
-        if (event.which === 13 || event.keyCode === 13 && this.state.inputText !== "") {
+        if (event.which === 13 || event.keyCode === 13) {
             this.disableInput = true;
             this.handleSubmit()
         }
@@ -153,9 +152,11 @@ export default class ChatBox extends Component {
                         </fieldset>
                          {!this.state.sendLoading ?
 
-                            <div className="submit-button" onClick={this.handleSubmit}>
-                                <img className="submit-border-image" src={"/images/send-button-wrapper-lower-opa.png"}/>
-                                <div className="button-text">שלח</div>
+                            <div className="submit-button" onClick={this.handleSubmit} onMouseLeave={() => this.setState({hoveringSubmitButton:false})} onMouseEnter={() => this.setState({hoveringSubmitButton:true})}
+                                                                                        style={{cursor: this.state.inputText !== ""? "pointer":"not-allowed",
+                                                                                        backgroundColor: this.state.inputText !== ""  && this.state.hoveringSubmitButton ? "#828282": "" }}>
+                                <img className="submit-border-image" src={this.state.inputText !== "" ? "/images/send-button-wrapper.png" : "/images/send-button-wrapper-lower-opa.png"}/>
+                                <div className="button-text" style={{opacity: this.state.inputText !== ""? "1":"0.5"}}>שלח</div>
                             </div>
 
                          :
@@ -171,8 +172,14 @@ export default class ChatBox extends Component {
                     </div>: ""}
                 {this.state.currentNode && this.state.currentNode.childNodes()[0] && this.state.currentNode.childNodes()[0].data().type === ANSWER_OPTION && this.state.showAnswers?
                     <div className="answer-options-wrapper">
-                        <div className="option-1 answer-options" onClick={() => this.answerClick(0)}>{this.state.optionOne}</div>
-                        <div className="option-2 answer-options" onClick={() => this.answerClick(1)}>{this.state.optionTwo}</div>
+                        {this.state.currentNode.childNodes().map((option, index) => {
+                            return (
+                            <div className="answer-options" onClick={() => this.answerClick(index)} style={{backgroundColor: option.data().fill ? option.data().fill : ""}}>
+                                <img src="/images/answer-option-border.png"/>
+                                <div className="button-text">{option.data().content}</div>
+                            </div> )
+                        })}
+
                     </div> : ""}
             </div>
         );

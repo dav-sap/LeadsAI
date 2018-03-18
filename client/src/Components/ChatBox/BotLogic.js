@@ -26,7 +26,9 @@ let IS_WED_DATE = BOT_LOGIC.insertToNode(NAME, {
 
 let YES = BOT_LOGIC.insertToNode(IS_WED_DATE, {
     type: ANSWER_OPTION,
-    content: "כן"
+    content: "כן!",
+    fill: "#293f56"
+
 });
 
 let NOT_YET = BOT_LOGIC.insertToNode(IS_WED_DATE, {
@@ -41,12 +43,17 @@ let GET_WED_DATE = BOT_LOGIC.insertToNode(YES, {
 });
 let WHEN_WED = BOT_LOGIC.insertToNode(GET_WED_DATE, {
     type: ANSWER_INPUT,
-    placeholder: "something"
+    placeholder: "תאריך |"
 });
-
+let END = BOT_LOGIC.insertToNode(WHEN_WED, {
+    type: QUESTION,
+    content: "מעולה! היועץ שלנו יצור איתך בקרוב.",
+    completed: true
+});
 let TOO_BAD = BOT_LOGIC.insertToNode(NOT_YET, {
     type: QUESTION,
-    content: "..חבל"
+    content: "חבל..",
+    completed: true
 });
 export {QUESTION, ANSWER_OPTION, ANSWER_INPUT}
 export default BOT_LOGIC;
