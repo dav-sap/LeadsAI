@@ -22,18 +22,16 @@ let IS_WED_DATE = BOT_LOGIC.insertToNode(NAME, {
     content: "היי צדיק, האם כבר יש תאריך לחתונה?"
 });
 
-
+let NOT_YET = BOT_LOGIC.insertToNode(IS_WED_DATE, {
+    type: ANSWER_OPTION,
+    content: "עוד לא"
+});
 
 let YES = BOT_LOGIC.insertToNode(IS_WED_DATE, {
     type: ANSWER_OPTION,
     content: "כן!",
-    fill: "#293f56"
+    fill: "rgba(25, 45, 66, 0.8)"
 
-});
-
-let NOT_YET = BOT_LOGIC.insertToNode(IS_WED_DATE, {
-    type: ANSWER_OPTION,
-    content: "עוד לא"
 });
 
 

@@ -11,6 +11,8 @@
     /*z-index: 5;*/
     width: 100%;
     height: 100%;
+    background-image: radial-gradient(circle at 52% 93%, #023365, #000000);
+    border: solid 1px #979797;
 
 }
 
@@ -109,7 +111,7 @@
 
 .answer-options-wrapper {
 
-    margin-top: 50px;
+    margin-top: 100px;
     margin-right: auto;
     margin-left: auto;
     width: fit-content;
@@ -128,9 +130,11 @@
     position: relative;
     margin-left: 15px;
     margin-right: 15px;
+    color: white;
 }
 .answer-options:hover {
-    background-color: #828282 !important;
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    color: #022b56;
 }
 .option-1 {
 
@@ -143,7 +147,7 @@
 }
 .input-wrapper {
     width: fit-content;
-    margin-top: 50px;
+    margin-top: 100px;
     margin-right: auto;
     margin-left: auto;
 }
@@ -184,6 +188,11 @@ user-input:-ms-input-placeholder { /* Microsoft Edge */
 .text-input {
     position: relative;
     border: 0;
+    -webkit-animation: 0.5s move-input ease-in-out;
+    -moz-animation: 0.5s move-input ease-in-out;
+    -o-animation: 0.5s move-input ease-in-out;
+    animation: 0.5s move-input ease-in-out;
+    animation-fill-mode:forwards;
 }
 fieldset {
     border: 0;
@@ -200,32 +209,96 @@ fieldset {
     margin-right: auto;
     margin-left: auto;
     border-radius: 18px;
+    -webkit-animation: 0.5s move-button-send ease-in-out;
+    -moz-animation: 0.5s move-button-send ease-in-out;
+    -o-animation: 0.5s move-button-send ease-in-out;
+    animation: 0.5s move-button-send ease-in-out;
+    animation-fill-mode:forwards;
 }
 
 .submit-border-image {
 }
 
-/*.button-cover {*/
-    /*position: absolute;*/
-    /*width: 100%;*/
-    /*height: 100%;*/
-    /*border-radius: 18px;*/
-    /*border: solid 2px transparent;*/
-    /*background-image: radial-gradient(circle at 52% 93%, #023365, #000000);*/
-/*}*/
-/*.start-convo-text {*/
-    /*position: absolute;*/
-    /*top: 50%;*/
-    /*left: 50%;*/
-    /*transform: translate(-50%, -50%);*/
-    /*width: 160px;*/
-/*}*/
-/*.msg-wrapper {*/
-    /*display:flex;*/
-    /*flex-direction:row;*/
-    /*justify-content:flex-start;*/
-    /*!*width:130px;*!*/
-/*}*/
+@keyframes move-button-send {
+    from {
+        top: 10px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+@-moz-keyframes move-button-send {
+    from {
+        top: 10px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+@-webkit-keyframes move-button-send {
+    from {
+        top: 10px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+@-o-keyframes move-button-send {
+    from {
+        top: 10px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+@keyframes move-input {
+    from {
+        top: 10px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+@-moz-keyframes move-input {
+    from {
+        top: 10px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+@-webkit-keyframes move-input {
+    from {
+        top: 10px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+@-o-keyframes move-input {
+    from {
+        top: 10px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
 .text-typer {
     text-align: center;
 }
@@ -235,6 +308,7 @@ fieldset {
     /*-ms-animation: 0.95s blink ease-in-out infinite !important;*/
     -o-animation: 0.8s blink ease-in-out infinite !important;
     animation: 0.8s blink ease-in-out infinite !important;
+    padding-right: 10px !important;
 }
 @keyframes blink{
     from,to{color:transparent}
@@ -273,8 +347,9 @@ textarea {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    color: white;
+    /*color: white;*/
     font-family: Heebo, Alef-Regular, sans-serif;
     font-size: 18.8px;
     direction: rtl;
+
 }

@@ -1,22 +1,30 @@
-.home {
-    font-family: Alef-Bold, sans-serif;
-    /*height: 100%;*/
-    /*background-image: radial-gradient(circle at 52% 93%, #023365, #000000);*/
-    /*border: solid 1px #979797;*/
-    /*min-width: 00px;*/
-    /*min-height: 500px;*/
-    /*overflow: hidden;*/
+.home-web {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 52% 93%, #023365, #000000);
+    border: solid 1px #979797;
+    transition-property: transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+    position: absolute;
+    top:0;
+    left:0;
+    z-index: 5;
 }
-/*.all-body {*/
-    /*!*width: 80%;*!*/
-    /*margin: auto;*/
-   /*height: 600px;*/
-    /*transition: top 2s ease-in-out 0.2s,opacity 2s ease-in-out 0.2s;*/
-    /*position: relative;*/
-/*}*/
+.home-wrapper {
+    width: 100%;
+    height: 100%;
+}
+.home-mobile {
+    overflow-y: hidden;
+}
+.trans-loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 @media only screen and (min-width: 1600px)
 {
-    .all-body {
-        /*width:     70%;*/
-    }
+
 }

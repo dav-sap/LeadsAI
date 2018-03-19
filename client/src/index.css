@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Heebo');
+@import url('https://fonts.googleapis.com/css?family=Heebo:100,300,400,500,700&subset=hebrew');
 @font-face {
     font-family: 'Alef-Bold';
     src: local('Alef-Bold'), url(./fonts/Alef-Bold.woff) format('woff');
@@ -15,6 +15,5 @@ body {
 }
 #root {
     height: 100%;
-    background-image: radial-gradient(circle at 52% 93%, #023365, #000000);
-    border: solid 1px #979797;
+    width: 100%;
 }
