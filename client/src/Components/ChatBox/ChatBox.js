@@ -41,13 +41,13 @@ export default class ChatBox extends Component {
                     this.chatStartDate = resJson.chatStartDate;
                     console.log(resJson.user);
 
-                    this.setState({
+                    setTimeout(() => this.setState({
                         sendLoading: false,
                         showAnswers: false,
                         currentNode: this.state.currentNode.childNodes()[0].childNodes()[0],
                         inputText: "",
                         nodeIndex: this.state.nodeIndex + 1,
-                    });
+                    }), 2000);
                     this.disableInput = false;
                 }
             }
@@ -71,7 +71,8 @@ export default class ChatBox extends Component {
             if (res && res.status === 200) {
                 let resJson = await res.json();
                 if (resJson && resJson.info) {
-                    this.setState({sendLoading: false, showAnswers: false, currentNode: newNode, optionOne:"", optionTwo:"", inputText:"", nodeIndex: this.state.nodeIndex + 1,});
+
+                    setTimeout(() => this.setState({sendLoading: false, showAnswers: false, currentNode: newNode, optionOne:"", optionTwo:"", inputText:"", nodeIndex: this.state.nodeIndex + 1,}), 2000);
                     this.disableInput = false;
                 }
             } else {
@@ -122,7 +123,10 @@ export default class ChatBox extends Component {
         this.addDataToDB(this.state.currentNode.data().content, this.state.currentNode.childNodes()[answer].data().content, this.state.currentNode.childNodes()[answer].childNodes()[0]);
     };
     componentWillMount(){
+        console.log(this.props.location.state.name);
+        console.log(this.props.location.state.email);
         this.bot = BOT_LOGIC;
+        BOT_LOGIC.rootNode().data().name = this.props.location.state.name;
         this.setState({
             currentNode : BOT_LOGIC.rootNode()
         })
@@ -140,7 +144,7 @@ export default class ChatBox extends Component {
         return (
             <div className="chat-box">
                 <div className="text-wrapper">
-                    <Type key={this.state.nodeIndex} cursorColor={"#ffe500"} cursorWidth={14} className="text-typer" onTypingDone={this.onFinishType} cycleType="reset">
+                    <Type key={this.state.nodeIndex} cursorColor={"#ffe500"} cursorWidth={14} className="text-typer" startTypingDelay={2000} onTypingDone={this.onFinishType} cycleType="reset">
                         {this.state.currentNode.data().content}
                     </Type>
                 </div>

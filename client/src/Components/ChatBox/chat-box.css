@@ -299,15 +299,16 @@ fieldset {
         opacity: 1;
     }
 }
+.text-wrapper > span:after {
+    -webkit-animation: 0.8s blink ease-in-out infinite !important;
+    -moz-animation: 0.8s blink ease-in-out infinite !important;
+    -o-animation: 0.8s blink ease-in-out infinite !important;
+    animation: 0.8s blink ease-in-out infinite !important;
+}
 .text-typer {
     text-align: center;
 }
 .text-typer:after {
-    -webkit-animation: 0.8s blink ease-in-out infinite !important;
-    -moz-animation: 0.8s blink ease-in-out infinite !important;
-    /*-ms-animation: 0.95s blink ease-in-out infinite !important;*/
-    -o-animation: 0.8s blink ease-in-out infinite !important;
-    animation: 0.8s blink ease-in-out infinite !important;
     padding-right: 10px !important;
 }
 @keyframes blink{

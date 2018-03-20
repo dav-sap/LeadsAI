@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import './home.css';
+import './page-transition.css';
 import 'antd/dist/antd.css';
 import Title from './Title/Title';
 import MobileTitle from './Mobile/Title';
 import MobileFooter from './Mobile/Footer';
+import $ from "jquery";
+import TweenLite from 'gsap'; //TODO::DO Not remove!
+import CSSRulePlugin from "gsap/CSSRulePlugin";
+import TimelineMax from 'gsap/TimelineMax';
+import Power2 from 'gsap'
+
 import ConsultantsBody from "./ConsultantsBody/ConsultantsBody";
 
 export default class Home extends Component {
-    state = {
-        closing: false
-    }
+
     isMobile() {
         window.mobilecheck = function() {
             let check = false;
@@ -19,29 +24,16 @@ export default class Home extends Component {
         return  window.mobilecheck();
     }
 
-    closeScreen = () => {
-        this.setState({
-            closing: true,
-        })
+    closeScreen() {
+        let tl = new TimelineMax();
+        tl.to(CSSRulePlugin.getRule('body:before'), 0.25, {cssRule: {top: '50%' }, ease: Power2.easeOut}, 'close')
+            .to(CSSRulePlugin.getRule('body:after'), 0.25, {cssRule: {bottom: '50%' }, ease: Power2.easeOut}, 'close')
+            .to($('.between-loader'), 0.25, {opacity: 1})
+            .to(CSSRulePlugin.getRule('body:before'), 0.25, {cssRule: {top: '0%' }, ease: Power2.easeOut}, '+=1.9', 'open')
+            .to(CSSRulePlugin.getRule('body:after'), 0.25, {cssRule: {bottom: '0%' }, ease: Power2.easeOut}, '-=0.25', 'open')
+            .to($('.between-loader'), 0.25, {opacity: 0}, '-=0.25');
     }
-    // setTimeout(transition, 1000);
-    //
-    // $('.js-trigger-transition').on('click', function(e) {
-    //     e.preventDefault();
-    //     transition();
-    // });
 
-    // closeScreen() {
-    //     var tl = new TimelineMax();
-    //
-    //     tl.to(CSSRulePlugin.getRule('body:before'), 0.2, {cssRule: {top: '50%' }, ease: Power2.easeOut}, 'close')
-    //         .to(CSSRulePlugin.getRule('body:after'), 0.2, {cssRule: {bottom: '50%' }, ease: Power2.easeOut}, 'close')
-    //         .to($('.loader'), 0.2, {opacity: 1})
-    //         .to(CSSRulePlugin.getRule('body:before'), 0.2, {cssRule: {top: '0%' }, ease: Power2.easeOut}, '+=1.5', 'open')
-    //         .to(CSSRulePlugin.getRule('body:after'), 0.2, {cssRule: {bottom: '0%' }, ease: Power2.easeOut}, '-=0.2', 'open')
-    //         .to($('.loader'), 0.2, {opacity: 0}, '-=0.2');
-    // }
-// style={{transform: this.state.closing ? "scaleY(0)" : "scale(1)"}}
     render() {
         return (
             <div className="home-wrapper">
@@ -49,24 +41,13 @@ export default class Home extends Component {
                     <div className="home-mobile" >
                         <MobileTitle/>
                         <MobileFooter/>
-                    </div> :<div style={{width: "100%", height: "100%"}}>
-                    <div className="home-web" style={{transform: this.state.closing ? "scaleY(0)" : "scale(1)"}}>
+                    </div> :
+
+                    <div className="home-web">
                         <Title/>
                         <ConsultantsBody closeScreen={this.closeScreen} history={this.props.history}/>
-
                     </div>
-                        {this.state.closing ? <div style={{width: "100%", height: "100%", backgroundColor: "#1d1f20", zIndex: 3, position: "absolute", top: 0, left: 0}}>
-                            <div className="loader trans-loader" >
-                                <div className="bar1"/>
-                                <div className="bar2"/>
-                                <div className="bar3"/>
-                                <div className="bar4"/>
-                                <div className="bar5"/>
-                                <div className="bar6"/>
-                            </div>
-                        </div> : ""}
-                    </div>
-                    }
+                }
             </div>
 
         )

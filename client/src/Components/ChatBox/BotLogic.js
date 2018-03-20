@@ -7,7 +7,12 @@ let BOT_LOGIC = dataTree.create();
 
 let root = BOT_LOGIC.insert({
     type: QUESTION,
-    content: " בחירה מצויינת :) כדי שגיא יוכל ליצור איתך קשר, נצטרך כמה פרטים. איך קוראים לך? "
+    name: "",
+    get content() {
+        let start = "בחירה מצויינת :) כדי ש";
+        let end = " יוכל ליצור איתך קשר, נצטרך כמה פרטים. איך קוראים לך";
+        return start + this.name + end;
+    }
 });
 
 let NAME = BOT_LOGIC.insertToNode(root,{
