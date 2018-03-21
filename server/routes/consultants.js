@@ -29,8 +29,13 @@ router.post('/add_pic', (req, res, next) =>{
                     info: "No consultant found for phone number: " + consultantJson.phoneNumber + ", email: " + consultantJson.email + ". Incorrect"
                 });
             } else {
-                consultant.picture.data = fs.readFileSync(consultantJson.imgPath);
-                consultant.picture.contentType = 'image/jpg';
+                if (consultantJson.blackWhite) {
+                    consultant.profile_pic_bw.data = fs.readFileSync(consultantJson.imgPath);
+                    consultant.profile_pic_bw.contentType = 'image/png';
+                } else {
+                    consultant.profile_pic.data = fs.readFileSync(consultantJson.imgPath);
+                    consultant.profile_pic.contentType = 'image/jpg';
+                }
                 return consultant.save();
             }
         }).then(consultant => res.send(consultant)
@@ -62,8 +67,8 @@ router.post('/get_consultant_picture', (req, res, next) =>{
                     info: "No consultant found for phone number: " + consultantJson.phoneNumber + ", email: " + consultantJson.email + ". Incorrect"
                 });
             } else {
-                res.contentType(consultant.picture.contentType);
-                res.send(consultant.picture.data);
+                res.contentType(consultant.profile_pic.contentType);
+                res.send(consultant.profile_pic.data);
             }
         }).catch(err => {
             if (err.status) {

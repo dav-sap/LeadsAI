@@ -59,9 +59,24 @@
     top: 0;
     right: 50%;
     transform: translateX(50%);
-    z-index: 2;
+    z-index: 3;
     cursor: pointer;
     transition: top 0.5s linear;
+}
+.consultant-img-bw {
+    width: 88px;
+    height: 88px;
+    object-fit: contain;
+    background-color: #d8d8d8;
+    border: solid 4px #eeeeee;
+    border-radius: 80%;
+    position: absolute;
+    top: 0;
+    right: 50%;
+    transform: translateX(50%);
+    z-index: 3;
+    cursor: pointer;
+    transition: top 0.5s linear, opacity 0.3s linear;
 }
 .consultant-card {
     position: relative;

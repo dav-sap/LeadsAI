@@ -105,13 +105,6 @@ export default class ChatBox extends Component {
         }
     };
     inputChanged = (event) => {
-        // let val = "";
-        // let key = event.keyCode || event.charCode;
-        // if( key === 8 || key === 46 ) {
-        //     val = event.target.value
-        // } else {
-        //     val = event.target.value.replace("|", "") + " | ";
-        // }
         if (!this.disableInput) {
             this.setState({
                 inputText: event.target.value
@@ -123,17 +116,16 @@ export default class ChatBox extends Component {
         this.addDataToDB(this.state.currentNode.data().content, this.state.currentNode.childNodes()[answer].data().content, this.state.currentNode.childNodes()[answer].childNodes()[0]);
     };
     componentWillMount(){
-        console.log(this.props.location.state.name);
-        console.log(this.props.location.state.email);
+        // console.log(this.props.location.state.name);
+        // console.log(this.props.location.state.email);
         this.bot = BOT_LOGIC;
-        BOT_LOGIC.rootNode().data().name = this.props.location.state.name;
+        BOT_LOGIC.rootNode().data().name = this.props.location.state.name ? this.props.location.state.name : "";
         this.setState({
             currentNode : BOT_LOGIC.rootNode()
         })
     }
 
     onFinishType = () => {
-        console.log("FINSIHED TYPE");
         this.setState({showAnswers:true});
         // this.addMsg();
     };
