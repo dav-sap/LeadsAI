@@ -6,7 +6,7 @@ import Type from 'react-type';
 // import TypeWriter from 'react-typewriter';
 import Confetti from 'react-confetti'
 import BOT_LOGIC from './BotLogic';
-import {ANSWER_OPTION, ANSWER_INPUT} from './BotLogic';
+import {ANSWER_OPTION, ANSWER_INPUT, FEMALE, MALE, NOT_YET_STR, YES_STR} from './BotLogic';
 
 
 export default class ChatBox extends Component {
@@ -23,6 +23,8 @@ export default class ChatBox extends Component {
     dbUser = null;
     bot = null;
     chatStartDate = null;
+    isDate = null;
+    textInputRef = null;
 
     createUser = async (name) => {
         try {
@@ -89,6 +91,7 @@ export default class ChatBox extends Component {
 
     handleSubmit = () => {
         if (this.state.inputText !== "") {
+            this.textInputRef.blur();
             this.setState({sendLoading: true});
             if (this.state.currentNode.childNodes()[0].data().createUser) {
                 this.createUser(this.state.inputText);
@@ -104,8 +107,8 @@ export default class ChatBox extends Component {
             this.handleSubmit()
         }
     };
-    inputChanged = (event) => {
-        if (!this.disableInput) {
+    inputChange = (event) => {
+        if (!this.disableInput && this.state.currentNode.childNodes()[0].data().validator(event.target.value)) {
             this.setState({
                 inputText: event.target.value
             });
@@ -113,13 +116,22 @@ export default class ChatBox extends Component {
 
     };
     answerClick = (answer) => {
+        this.setState({sendLoading: true});
+        if (this.state.currentNode.childNodes()[answer].data().content === NOT_YET_STR) {
+            this.isDate = false;
+        }
+        else if (this.state.currentNode.childNodes()[answer].data().content === YES_STR) {
+            this.isDate = true;
+        }
         this.addDataToDB(this.state.currentNode.data().content, this.state.currentNode.childNodes()[answer].data().content, this.state.currentNode.childNodes()[answer].childNodes()[0]);
     };
     componentWillMount(){
         // console.log(this.props.location.state.name);
         // console.log(this.props.location.state.email);
+        //TODO:: fix gender workaround with DB info
         this.bot = BOT_LOGIC;
         BOT_LOGIC.rootNode().data().name = this.props.location.state.name ? this.props.location.state.name : "";
+        BOT_LOGIC.rootNode().data().gender = this.props.location.state.name === "טלי"? FEMALE : MALE;
         this.setState({
             currentNode : BOT_LOGIC.rootNode()
         })
@@ -127,12 +139,11 @@ export default class ChatBox extends Component {
 
     onFinishType = () => {
         this.setState({showAnswers:true});
-        // this.addMsg();
     };
 
 
     render() {
-
+        let answerNode = this.state.currentNode && this.state.currentNode.childNodes()[0] ? this.state.currentNode.childNodes()[0] : null;
         return (
             <div className="chat-box">
                 <div className="text-wrapper">
@@ -140,24 +151,25 @@ export default class ChatBox extends Component {
                         {this.state.currentNode.data().content}
                     </Type>
                 </div>
-                {this.state.currentNode && this.state.currentNode.childNodes()[0] && this.state.currentNode.childNodes()[0].data().type === ANSWER_INPUT && this.state.showAnswers?
+                {answerNode && answerNode.data().type === ANSWER_INPUT && this.state.showAnswers?
                     <div className="input-wrapper">
                         <fieldset >
                             <div className="text-input">
                                 <form>
-                                    <textarea type="text" onFocus={() => this.setState({textFocus: true})} onBlur={() => this.setState({textFocus: false})} placeholder={this.state.textFocus ? "" : this.state.currentNode.childNodes()[0].data().placeholder} dir="rtl"  value={this.state.inputText}
-                                            className="user-input" onKeyDown={this.handleKeyDown} onChange={this.inputChanged} id="textbox" />
+                                    <textarea type="text" ref={(input) => { this.textInputRef = input; }} onFocus={() => this.setState({textFocus: true})} onBlur={() => this.setState({textFocus: false})}
+                                              placeholder={this.state.textFocus ? "" : this.state.currentNode.childNodes()[0].data().placeholder} dir="rtl"  value={this.state.inputText}
+                                            className={"user-input " + (answerNode.data().validateSubmit(this.state.inputText) ? "user-input-enabled" : "")} onKeyDown={this.handleKeyDown} onChange={this.inputChange} id="textbox" />
                                 </form>
                             </div>
                         </fieldset>
                          {!this.state.sendLoading ?
 
                             <div className="submit-button" onClick={this.handleSubmit} onMouseLeave={() => this.setState({hoveringSubmitButton:false})} onMouseEnter={() => this.setState({hoveringSubmitButton:true})}
-                                                                                        style={{cursor: this.state.inputText !== ""? "pointer":"not-allowed",
-                                                                                        backgroundColor: this.state.inputText !== ""  && this.state.hoveringSubmitButton ? "rgba(255, 255, 255, 0.9)" : "",
-                                                                                            color: this.state.inputText !== ""  && this.state.hoveringSubmitButton ? "#022b56" : "white"}}>
-                                <img className="submit-border-image" alt="submit-border" src={this.state.inputText !== "" ? "/images/send-button-wrapper.png" : "/images/send-button-wrapper-lower-opa.png"}/>
-                                <div className="button-text" style={{opacity: this.state.inputText !== ""? "1":"0.5"}}>הבא</div>
+                                                                                        style={{cursor: answerNode.data().validateSubmit(this.state.inputText) ? "pointer":"not-allowed",
+                                                                                        backgroundColor: answerNode.data().validateSubmit(this.state.inputText)  && this.state.hoveringSubmitButton ? "rgba(255, 255, 255, 0.9)" : "",
+                                                                                            color:answerNode.data().validateSubmit(this.state.inputText)  && this.state.hoveringSubmitButton ? "#022b56" : "white"}}>
+                                <img className="submit-border-image" alt="submit-border" src={answerNode.data().validateSubmit(this.state.inputText) ? "/images/send-button-wrapper.png" : "/images/send-button-wrapper-lower-opa.png"}/>
+                                <div className="button-text" style={{opacity: answerNode.data().validateSubmit(this.state.inputText) ? "1":"0.5"}}>הבא</div>
                             </div>
 
                          :
@@ -172,15 +184,25 @@ export default class ChatBox extends Component {
 
                     </div>: ""}
                 {this.state.currentNode && this.state.currentNode.childNodes()[0] && this.state.currentNode.childNodes()[0].data().type === ANSWER_OPTION && this.state.showAnswers?
-                    <div className="answer-options-wrapper">
-                        {this.state.currentNode.childNodes().map((option, index) => {
-                            return (
-                            <div className="answer-options" onClick={() => this.answerClick(index)} style={{backgroundColor: option.data().fill ? option.data().fill : ""}}>
-                                <img alt="answer-border" src="/images/answer-option-border.png"/>
-                                <div className="button-text">{option.data().content}</div>
-                            </div> )
-                        })}
-
+                    <div className="answer-options-wrapper" >
+                        {!this.state.sendLoading ?
+                        <div style={{display: "flex", flexDirection: "row"}}>
+                            {this.state.currentNode.childNodes().map((option, index) => {
+                                return (
+                                <div className="answer-options" onClick={() => this.answerClick(index)} style={{backgroundColor: option.data().fill ? option.data().fill : ""}}>
+                                    <img alt="answer-border" src="/images/answer-option-border.png"/>
+                                    <div className="button-text">{option.data().content}</div>
+                                </div> )
+                            })}
+                        </div> :
+                        <div className="loader">
+                            <div className="bar1"/>
+                            <div className="bar2"/>
+                            <div className="bar3"/>
+                            <div className="bar4"/>
+                            <div className="bar5"/>
+                            <div className="bar6"/>
+                        </div>}
                     </div> : ""}
                 {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
                     <Confetti width={document.body.clientWidth} height={document.body.clientHeight} numberOfPieces={500}/>
