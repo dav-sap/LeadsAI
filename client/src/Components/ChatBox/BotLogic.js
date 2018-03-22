@@ -8,7 +8,7 @@ const FEMALE = "Female";
 const MALE = "Male";
 const NOT_YET_STR = "עוד לא";
 const YES_STR = "כן!";
-const YOUR_NUM_STR = "דבר אחרון - מה הספר נייד שלך?";
+const YOUR_NUM_STR = "דבר אחרון - מה מספר הנייד שלך?";
 const NO_PRESSURE_STR = "אין לחץ :)";
 
 let BOT_LOGIC = dataTree.create();
@@ -29,6 +29,9 @@ let NAME = BOT_LOGIC.insertToNode(root,{
     type: ANSWER_INPUT,
     createUser : true,
     placeholder: "שם מלא |",
+    changeString: function (oldInput, newInput) {
+        return newInput;
+    },
     validator: function () {
         return true
     },
@@ -40,7 +43,12 @@ let NAME = BOT_LOGIC.insertToNode(root,{
 
 let IS_WED_DATE = BOT_LOGIC.insertToNode(NAME, {
     type: QUESTION,
-    content: "היי צדיק, האם כבר יש תאריך לחתונה?"
+    name: "",
+    get content() {
+        let start = "היי";
+        let end = ", האם כבר יש תאריך לחתונה?";
+        return start + this.name + end;
+    }
 });
 
 let NOT_YET = BOT_LOGIC.insertToNode(IS_WED_DATE, {
@@ -58,24 +66,28 @@ let YES = BOT_LOGIC.insertToNode(IS_WED_DATE, {
 
 let GET_WED_DATE = BOT_LOGIC.insertToNode(YES, {
     type: QUESTION,
-    content: "יופי מתי זה?"
+    content: "קולולו!!! מתי מתחתנים?"
 });
 let WHEN_WED = BOT_LOGIC.insertToNode(GET_WED_DATE, {
     type: ANSWER_INPUT,
+
     get placeholder() {
         let today = new Date();
         return today.getDate().toString() + "/" + (today.getMonth() + 1).toString() + "/" + today.getFullYear().toString()
     },
     validator: function (value) {
-        let reg = /^\d*\/*\d*\/*\d*\/*$/;
-        return reg.test(value);
-
+        // let reg = /^\d*\/*\d*\/*\d*\/*$/;
+        // return reg.test(value);
+        return true;
     },
     validateSubmit: function (value) {
-        let reg = /^\d{1,2}\/\d{1,2}\/\d\d(\d\d)?$/;
-        return reg.test(value);
+        // let reg = /^\d{1,2}\/\d{1,2}\/\d\d(\d\d)?$/;
+        // return reg.test(value);
+        return value.length >= 1;
+    },
+    changeString: function (oldInput, newInput) {
+        return newInput;
     }
-
 });
 let YOUR_NUM = BOT_LOGIC.insertToNode(WHEN_WED, {
     type: QUESTION,
@@ -84,12 +96,29 @@ let YOUR_NUM = BOT_LOGIC.insertToNode(WHEN_WED, {
 let YOUR_NUM_ANSWER = BOT_LOGIC.insertToNode(YOUR_NUM, {
     type: ANSWER_INPUT,
     placeholder: "מספר טלפון",
+    dir:"ltr",
+    changeString: function (oldInput, newInput) {
+        if (oldInput.length === 3 && newInput.length === 4) {
+            return newInput + "-";
+        } else if (oldInput.length === 5 && newInput.length === 4) {
+            return newInput.slice(0, -1)
+        } else if (oldInput.length === 6 && newInput.length === 5) {
+            return newInput.slice(0, -2);
+        } else if (oldInput.length === 7 && newInput.length === 8) {
+            return newInput + "-";
+        } else if (oldInput.length === 10 && newInput.length === 9) {
+            return newInput.slice(0, -2);
+        } else if (oldInput.length === 9 && newInput.length === 8) {
+            return newInput.slice(0, -1);
+        }else return newInput;
+    },
     validator: function (value) {
-        let reg = /^\d+$/;
-        return reg.test(value);
+        let reg = /\d/;
+        let reg1 = /-/;
+        return (reg.test(value[value.length - 1]) || reg1.test(value[value.length - 1])) && value.length <= 12;
     },
     validateSubmit: function (value) {
-        return value.length >= 10
+        return value && value.length >= 12
     }
 });
 let END = BOT_LOGIC.insertToNode(YOUR_NUM_ANSWER, {

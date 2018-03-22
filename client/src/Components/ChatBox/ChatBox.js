@@ -110,8 +110,8 @@ export default class ChatBox extends Component {
     inputChange = (event) => {
         if (!this.disableInput && this.state.currentNode.childNodes()[0].data().validator(event.target.value)) {
             this.setState({
-                inputText: event.target.value
-            });
+                inputText: this.state.currentNode.childNodes()[0].data().changeString(this.state.inputText, event.target.value)
+            })
         }
 
     };
@@ -126,8 +126,6 @@ export default class ChatBox extends Component {
         this.addDataToDB(this.state.currentNode.data().content, this.state.currentNode.childNodes()[answer].data().content, this.state.currentNode.childNodes()[answer].childNodes()[0]);
     };
     componentWillMount(){
-        // console.log(this.props.location.state.name);
-        // console.log(this.props.location.state.email);
         //TODO:: fix gender workaround with DB info
         this.bot = BOT_LOGIC;
         BOT_LOGIC.rootNode().data().name = this.props.location.state.name ? this.props.location.state.name : "";
@@ -157,7 +155,7 @@ export default class ChatBox extends Component {
                             <div className="text-input">
                                 <form>
                                     <textarea type="text" ref={(input) => { this.textInputRef = input; }} onFocus={() => this.setState({textFocus: true})} onBlur={() => this.setState({textFocus: false})}
-                                              placeholder={this.state.textFocus ? "" : this.state.currentNode.childNodes()[0].data().placeholder} dir="rtl"  value={this.state.inputText}
+                                              placeholder={this.state.textFocus ? "" : this.state.currentNode.childNodes()[0].data().placeholder} dir={answerNode.data().dir ? answerNode.data().dir : "rtl"}  value={this.state.inputText}
                                             className={"user-input " + (answerNode.data().validateSubmit(this.state.inputText) ? "user-input-enabled" : "")} onKeyDown={this.handleKeyDown} onChange={this.inputChange} id="textbox" />
                                 </form>
                             </div>
@@ -205,7 +203,7 @@ export default class ChatBox extends Component {
                         </div>}
                     </div> : ""}
                 {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
-                    <Confetti width={document.body.clientWidth} height={document.body.clientHeight} numberOfPieces={500}/>
+                    <Confetti width={document.body.clientWidth} height={document.body.clientHeight} numberOfPieces={500} recycle={false}/>
                     : ""}
             </div>
         );
