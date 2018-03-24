@@ -54,47 +54,59 @@ textarea:focus {
     outline:none;
 }
 .user-input {
-    padding-right: 35px;
+    padding-right: 15px;
     padding-top: 9px;
-    width: 257.3px;
+    width: 210.3px;
     height: 49.5px;
-    border-radius: 26.3px;
-    border: solid 1px #ffffff;
+    /*border-radius: 26.3px;*/
+    /*border: solid 1px #ffffff;*/
     font-family: Heebo, Alef-Regular, sans-serif;
     font-size: 18.8px;
     font-weight: 300;
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
+    position: absolute;
+    right: 0;
     letter-spacing: 3px;
     color: #ffffff;
     background: transparent;
     text-align: right;
+    border: transparent;
 }
 .user-input-enabled {
-    border: solid 2px #ffffff;
+
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #ffffff;
-    opacity: 1; /* Firefox */
+    opacity: 0.5; /* Firefox */
 }
 
 user-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
     color: #ffffff;
+    opacity: 0.5;
 }
 
 user-input:-ms-input-placeholder { /* Microsoft Edge */
     color: #ffffff;
+    opacity: 0.5;
 }
 
 .text-input {
     position: relative;
-    border: 0;
+    /*border: 0;*/
     -webkit-animation: 0.5s move-input ease-in-out;
     -moz-animation: 0.5s move-input ease-in-out;
     -o-animation: 0.5s move-input ease-in-out;
     animation: 0.5s move-input ease-in-out;
     animation-fill-mode:forwards;
+    width: 257.3px;
+    height: 49.5px;
+    border-radius: 26.3px;
+    border: solid 1px #ffffff;
+}
+.text-input-enabled {
+    border: solid 2px #ffffff;
 }
 fieldset {
     border: 0;

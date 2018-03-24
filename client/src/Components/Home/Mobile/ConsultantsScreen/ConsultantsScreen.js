@@ -34,11 +34,12 @@ export default class ConsultantsScreen extends Component {
     }
     render() {
         return (<div className="consultant-screen">
-            <div className="angel-img-wrapper">
-                <img className="floating-head" src="/images/floating-thing.png"/>
-                <img className="angel" src="/images/angel.png"/>
-            </div>
+
             <div className="mobile-title">
+                <div className="angel-img-wrapper">
+                    <img className="floating-head" src="/images/floating-thing.png"/>
+                    <img className="angel" src="/images/angel.png"/>
+                </div>
                 <div className="mobile-top-title">
                     {TITLES.CLICK_TITLE}
                 </div>

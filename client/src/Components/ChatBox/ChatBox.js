@@ -42,8 +42,7 @@ export default class ChatBox extends Component {
                 if (resJson && resJson.user) {
                     this.dbUser = resJson.user;
                     this.chatStartDate = resJson.chatStartDate;
-                    console.log(resJson.user);
-
+                    console.log(resJson.user.name);
                     setTimeout(() => this.setState({
                         sendLoading: false,
                         showAnswers: false,
@@ -130,12 +129,16 @@ export default class ChatBox extends Component {
         //TODO:: fix gender workaround with DB info
         this.bot = BOT_LOGIC;
         BOT_LOGIC.rootNode().data().name = this.props.location.state.name ? this.props.location.state.name : "";
-        BOT_LOGIC.rootNode().data().gender = this.props.location.state.name === "טלי"? FEMALE : MALE;
+        // BOT_LOGIC.rootNode().data().gender = this.props.location.state.name === "טלי"? FEMALE : MALE;
         this.setState({
             currentNode : BOT_LOGIC.rootNode()
         })
     }
-
+    componentWillUpdate(nextProps, nextState) {
+        if (nextState.currentNode.data().getName) {
+            nextState.currentNode.data().name = this.dbUser.name;
+        }
+    }
     onFinishType = () => {
         this.setState({showAnswers:true});
     };
@@ -145,20 +148,20 @@ export default class ChatBox extends Component {
         let answerNode = this.state.currentNode && this.state.currentNode.childNodes()[0] ? this.state.currentNode.childNodes()[0] : null;
         return (
             <div className="chat-box">
-                {this.props.location.state.mobile ? <MobileHeader chat={true}/> : ""}
-                <div className="text-wrapper">
-                    <Type key={this.state.nodeIndex} cursorColor={"#ffe500"} cursorWidth={14} className="text-typer" startTypingDelay={2000} onTypingDone={this.onFinishType} cycleType="reset">
+                {this.props.location.state.mobile ? <MobileHeader/> : ""}
+                <div className="text-wrapper"  style={{direction: this.state.currentNode.data().dir ? this.state.currentNode.data().dir : "rtl"}}>
+                    <Type key={this.state.nodeIndex} cursorColor={"#ffe500"} cursorWidth={14} className="text-typer" startTypingDelay={1500} onTypingDone={this.onFinishType} cycleType="reset">
                         {this.state.currentNode.data().content}
                     </Type>
                 </div>
                 {answerNode && answerNode.data().type === ANSWER_INPUT && this.state.showAnswers?
                     <div className="input-wrapper">
                         <fieldset >
-                            <div className="text-input">
+                            <div className={"text-input" + (this.state.textFocus ? " text-input-enabled" : "")} style={{direction: answerNode.data().dir ? answerNode.data().dir : "rtl"}}>
                                 <form>
                                     <textarea type="text" ref={(input) => { this.textInputRef = input; }} onFocus={() => this.setState({textFocus: true})} onBlur={() => this.setState({textFocus: false})}
-                                              placeholder={this.state.textFocus ? "" : this.state.currentNode.childNodes()[0].data().placeholder} dir={answerNode.data().dir ? answerNode.data().dir : "rtl"}  value={this.state.inputText}
-                                            className={"user-input " + (answerNode.data().validateSubmit(this.state.inputText) ? "user-input-enabled" : "")} onKeyDown={this.handleKeyDown} onChange={this.inputChange} id="textbox" />
+                                              placeholder={this.state.textFocus ? "" : this.state.currentNode.childNodes()[0].data().placeholder}  value={this.state.inputText}
+                                            className={"user-input"} onKeyDown={this.handleKeyDown} onChange={this.inputChange} id="textbox" />
                                 </form>
                             </div>
                         </fieldset>

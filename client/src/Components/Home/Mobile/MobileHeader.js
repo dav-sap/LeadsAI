@@ -5,7 +5,7 @@ import './header.css'
 export default class MobileHeader extends Component {
     render() {
         return (
-            <div className={this.props.chat ? "mobile-header-chat": "mobile-header-basic"}>
+            <div className="mobile-header-chat">
                 <div className="status-wrapper">
                     <div className="dot-wrapper">
                         <div className="status-glow"/>

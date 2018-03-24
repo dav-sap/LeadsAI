@@ -11,7 +11,7 @@ export default class MobileTitle extends Component {
                     <img className="angel" src="/images/angel.png"/>
                 </div>
                 <div className="mobile-top-title">
-                    {TITLES.MOBILE_MAIN_TITLE}
+                    {TITLES.TOP}
                 </div>
                 <div className="mobile-sub-title">
                     {TITLES.MOBIE_MIDDLE}

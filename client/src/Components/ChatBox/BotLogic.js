@@ -1,4 +1,5 @@
 import moment from 'moment';
+import React, { Component } from 'react';
 var dataTree = require('data-tree');
 
 const QUESTION = "question";
@@ -9,29 +10,26 @@ const MALE = "Male";
 const NOT_YET_STR = "עוד לא";
 const YES_STR = "כן!";
 const END_STR = "מעולה! היועץ שלנו יצור איתך בקרוב.";
-const YOUR_NUM_STR = "דבר אחרון - מה מספר הנייד שלך?";
-const NO_PRESSURE_STR = "אין לחץ :)";
+const YOUR_NUM_STR_AFTER_DATE = "תאריך חלום ";
+const NO_PRESSURE_STR = "אין לחץ ";
+const WINK = "😉";
+const HEART_EYES = "😍";
+const END_YOUR_NUMBER_STR = "מה מספר הטלפון שלך?";
 
 
 let BOT_LOGIC = dataTree.create();
 let YOUR_NUM_NODE = {
     type: ANSWER_INPUT,
-    placeholder: "מספר טלפון",
+    placeholder: "הכנס מספר נייד",
     dir:"ltr",
     changeString: function (oldInput, newInput) {
-        if (oldInput.length === 3 && newInput.length === 4) {
+        if (oldInput.length === 2 && newInput.length === 3) {
             return newInput + "-";
-        } else if (oldInput.length === 5 && newInput.length === 4) {
+        } else if (oldInput.length === 4 && newInput.length === 3) {
             return newInput.slice(0, -1)
-        } else if (oldInput.length === 6 && newInput.length === 5) {
+        } else if (oldInput.length === 5 && newInput.length === 4) {
             return newInput.slice(0, -2);
-        } else if (oldInput.length === 7 && newInput.length === 8) {
-            return newInput + "-";
-        } else if (oldInput.length === 10 && newInput.length === 9) {
-            return newInput.slice(0, -2);
-        } else if (oldInput.length === 9 && newInput.length === 8) {
-            return newInput.slice(0, -1);
-        }else return newInput;
+        } else return newInput;
     },
     validator: function (value) {
         let reg = /\d/;
@@ -44,13 +42,21 @@ let YOUR_NUM_NODE = {
 };
 let root = BOT_LOGIC.insert({
     type: QUESTION,
-    name: "",
     gender: "",
     get content() {
-        let start = "בחירה מצויינת :) כדי ש";
-        let middle = this.gender === FEMALE ? " תוכל" : " יוכל";
-        let end = " ליצור איתך קשר, נצטרך כמה פרטים. איך קוראים לך?";
-        return start + this.name + middle +end;
+        let today = new Date().getHours();
+        let start = "";
+        if (today >= 5 && today < 12) {
+            start = "בוקר טוב!"
+        } else if (today >= 12 && today < 18) {
+            start = "צהריים טובים!"
+        } else if (today >= 18 && today < 22) {
+            start = "ערב טוב!"
+        } else if (today >= 22 || today < 5) {
+            start = "לילה טוב!"
+        }
+        let end = " איך קוראים לך?";
+        return start + end;
     }
 });
 
@@ -61,8 +67,9 @@ let NAME = BOT_LOGIC.insertToNode(root,{
     changeString: function (oldInput, newInput) {
         return newInput;
     },
-    validator: function () {
-        return true
+    validator: function (value) {
+        let reg = /^([^0-9]*)$/;
+        return reg.test(value);
     },
     validateSubmit: function (value) {
         return value.length >= 1
@@ -73,9 +80,10 @@ let NAME = BOT_LOGIC.insertToNode(root,{
 let IS_WED_DATE = BOT_LOGIC.insertToNode(NAME, {
     type: QUESTION,
     name: "",
+    getName: true,
     get content() {
-        let start = "היי";
-        let end = ", האם כבר יש תאריך לחתונה?";
+        let start = "נעים מאוד ";
+        let end = ". יש תאריך לחתונה?";
         return start + this.name + end;
     }
 });
@@ -101,8 +109,8 @@ let WHEN_WED = BOT_LOGIC.insertToNode(GET_WED_DATE, {
     type: ANSWER_INPUT,
 
     get placeholder() {
-        let today = new Date();
-        return today.getDate().toString() + "/" + (today.getMonth() + 1).toString() + "/" + today.getFullYear().toString()
+
+        return "בחר תאריך"
     },
     validator: function (value) {
         // let reg = /^\d*\/*\d*\/*\d*\/*$/;
@@ -120,11 +128,13 @@ let WHEN_WED = BOT_LOGIC.insertToNode(GET_WED_DATE, {
 });
 let YOUR_NUM = BOT_LOGIC.insertToNode(WHEN_WED, {
     type: QUESTION,
-    content: YOUR_NUM_STR,
+    content: YOUR_NUM_STR_AFTER_DATE + HEART_EYES +END_YOUR_NUMBER_STR,
 });
 let YOUR_NUM_2 = BOT_LOGIC.insertToNode(NOT_YET, {
     type: QUESTION,
-    content: NO_PRESSURE_STR + " " + YOUR_NUM_STR,
+    content: NO_PRESSURE_STR + WINK + " " + END_YOUR_NUMBER_STR,
+    // dir:"ltr",
+    // content: WINK,
 });
 let YOUR_NUM_ANSWER = BOT_LOGIC.insertToNode(YOUR_NUM, YOUR_NUM_NODE);
 let YOUR_NUM_ASNWER2 = BOT_LOGIC.insertToNode(YOUR_NUM_2, YOUR_NUM_NODE);

@@ -47,7 +47,6 @@ export default class Home extends Component {
                     <div className="home-mobile" >
                         <OwlCarousel ref={(ref) => this.screensRef = ref} startPosition={1} items={1} className="owl-theme owl-height" mouseDrag={false} touchDrag={false} dots={false} >
                             <div style={{width: "100%", height: "100%"}}>
-                                <MobileHeader/>
                                 <ConsultantsScreen closeScreen={this.closeScreen}  history={this.props.history}/>
                             </div>
                             <div className="opening-screen" style={{width: "100%", height: "100%"}}>
