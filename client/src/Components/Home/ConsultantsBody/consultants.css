@@ -49,7 +49,7 @@
     transform: translateX(50%)
 }
 .consultant-img {
-    width: 88px;
+    width: 88px !important;
     height: 88px;
     object-fit: contain;
     background-color: #d8d8d8;
@@ -64,7 +64,7 @@
     transition: top 0.5s linear;
 }
 .consultant-img-bw {
-    width: 88px;
+    width: 88px !important;
     height: 88px;
     object-fit: contain;
     background-color: #d8d8d8;
@@ -83,6 +83,35 @@
     min-height: 128px;
     min-width: 120px;
 }
+@media only screen and (max-width: 600px) {
+    .consultant-img {
+        width: 68px !important;
+        height: 68px;
+    }
+    .consultant-img-bw {
+        width: 68px !important;
+        height: 68px;
+    }
+    .consultant-img-wrapper {
+        height: 100%;
+    }
+    .consultant-card {
+        position: relative;
+        min-height: 90px;
+        min-width: 90px;
+    }
+    .consultant-name {
+        font-family: Alef-Regular, Alef-Bold, sans-serif;
+        font-size: 16.6px;
+        letter-spacing: 0.4px;
+        text-align: right;
+        color: #777777;
+        width: fit-content;
+        padding-top: 10.8px;
+    }
+}
+
+
 .glow-low {
     /*-webkit-filter: blur(6.2px);*/
     /*filter: blur(6.2px);*/

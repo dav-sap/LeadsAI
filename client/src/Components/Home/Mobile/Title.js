@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {TITLES} from "../../Consts";
 import './title.css'
 export default class MobileTitle extends Component {
+
     render() {
         return (
             <div className="mobile-title">
@@ -9,8 +10,9 @@ export default class MobileTitle extends Component {
                     {TITLES.MOBILE_MAIN_TITLE}
                 </div>
                 <div className="mobile-sub-title">
-                    {TITLES.MIDDLE}
+                    {TITLES.MOBIE_MIDDLE}
                 </div>
+                <img className="brush-stroke" src="/images/brush-stroke.png"/>
             </div>
         )
     }

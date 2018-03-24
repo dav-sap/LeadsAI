@@ -86,7 +86,7 @@ body:after {
     left: 50%;
     -webkit-transform: translateY(-50%) translateX(-50%);
     transform: translateY(-50%) translateX(-50%);
-    z-index: 500;
+    /*z-index: 500;*/
     opacity: 0;
 }
 .between-loader > div {

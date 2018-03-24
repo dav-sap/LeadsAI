@@ -7,6 +7,7 @@ import Type from 'react-type';
 import Confetti from 'react-confetti'
 import BOT_LOGIC from './BotLogic';
 import {ANSWER_OPTION, ANSWER_INPUT, FEMALE, MALE, NOT_YET_STR, YES_STR} from './BotLogic';
+import MobileHeader from "../Home/Mobile/MobileHeader";
 
 
 export default class ChatBox extends Component {
@@ -144,6 +145,7 @@ export default class ChatBox extends Component {
         let answerNode = this.state.currentNode && this.state.currentNode.childNodes()[0] ? this.state.currentNode.childNodes()[0] : null;
         return (
             <div className="chat-box">
+                {this.props.location.state.mobile ? <MobileHeader chat={true}/> : ""}
                 <div className="text-wrapper">
                     <Type key={this.state.nodeIndex} cursorColor={"#ffe500"} cursorWidth={14} className="text-typer" startTypingDelay={2000} onTypingDone={this.onFinishType} cycleType="reset">
                         {this.state.currentNode.data().content}
@@ -203,7 +205,7 @@ export default class ChatBox extends Component {
                         </div>}
                     </div> : ""}
                 {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
-                    <Confetti width={document.body.clientWidth} height={document.body.clientHeight} numberOfPieces={500} recycle={false}/>
+                    <Confetti width={document.body.clientWidth} height={document.body.clientHeight} numberOfPieces={250} recycle={false} gravity={0.22}/>
                     : ""}
             </div>
         );

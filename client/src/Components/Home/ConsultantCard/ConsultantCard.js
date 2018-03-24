@@ -10,7 +10,7 @@ export default class ConsultantCard extends Component {
         return (
 
             <div className="consultant-card">
-                {this.props.info.picture ?
+                {this.props.info.profile_pic ?
                     <div className="consultant-img-wrapper"  style={{top: this.state.hover ? "-5px" : "0"}}
                          onClick={ () => {setTimeout( () => this.props.closeScreen(), 40);setTimeout( () => this.props.history.push({pathname:'/chat/' + this.props.info.name,
                                                                         state: { name: this.props.info.name, email:this.props.info.email }}), 1700)}}>

@@ -12,9 +12,14 @@ import TimelineMax from 'gsap/TimelineMax';
 import Power2 from 'gsap'
 
 import ConsultantsBody from "./ConsultantsBody/ConsultantsBody";
+import ConsultantsScreen from "./Mobile/ConsultantsScreen/ConsultantsScreen";
+import MobileHeader from "./Mobile/MobileHeader";
+import OwlCarousel from 'react-owl-carousel';
 
 export default class Home extends Component {
-
+    state = {
+        mobileScreen: 0
+    }
     isMobile() {
         window.mobilecheck = function() {
             let check = false;
@@ -25,10 +30,11 @@ export default class Home extends Component {
     }
 
     closeScreen() {
+        console.log("LOL");
         let tl = new TimelineMax();
         tl.to(CSSRulePlugin.getRule('body:before'), 0.25, {cssRule: {top: '50%' }, ease: Power2.easeOut}, 'close')
             .to(CSSRulePlugin.getRule('body:after'), 0.25, {cssRule: {bottom: '50%' }, ease: Power2.easeOut}, 'close')
-            .to($('.between-loader'), 0.25, {opacity: 1})
+            .to($('.between-loader'), 0.25, {opacity: 1, zIndex: 500})
             .to(CSSRulePlugin.getRule('body:before'), 0.25, {cssRule: {top: '0%' }, ease: Power2.easeOut}, '+=1.9', 'open')
             .to(CSSRulePlugin.getRule('body:after'), 0.25, {cssRule: {bottom: '0%' }, ease: Power2.easeOut}, '-=0.25', 'open')
             .to($('.between-loader'), 0.25, {opacity: 0}, '-=0.25');
@@ -39,8 +45,18 @@ export default class Home extends Component {
             <div className="home-wrapper">
                 {this.isMobile() ?
                     <div className="home-mobile" >
-                        <MobileTitle/>
-                        <MobileFooter/>
+                        <OwlCarousel ref={(ref) => this.screensRef = ref} startPosition={1} items={1} className="owl-theme owl-height" mouseDrag={false} touchDrag={false} dots={false} >
+                            <div style={{width: "100%", height: "100%"}}>
+                                <MobileHeader/>
+                                <ConsultantsScreen closeScreen={this.closeScreen}  history={this.props.history}/>
+                            </div>
+                        <div className="opening-screen" style={{width: "100%", height: "100%"}}>
+
+                            <MobileTitle/>
+                            <MobileFooter nextScreen={() => this.screensRef.prev()}/>
+                        </div>
+
+                        </OwlCarousel >
                     </div> :
 
                     <div className="home-web">
