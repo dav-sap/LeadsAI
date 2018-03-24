@@ -39,9 +39,7 @@ export default class ConsultantsBody extends Component {
 
             <div className="consultants">
                 <div className="consultant-title">{TITLES.CONSULTANT_TITLE}
-                    <img alt="arrow" src="images/arrow.png"
-                         srcSet="images/arrow@2x.png 2x,images/arrow@3x.png 3x"
-                         className="arrow"/>
+                    <img alt="arrow" src="images/arrow.png" className="arrow"/>
                 </div>
                 <div className="cards-wrapper">
                     {this.state.consultants.map((consultant, index) =>

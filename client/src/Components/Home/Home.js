@@ -50,11 +50,11 @@ export default class Home extends Component {
                                 <MobileHeader/>
                                 <ConsultantsScreen closeScreen={this.closeScreen}  history={this.props.history}/>
                             </div>
-                        <div className="opening-screen" style={{width: "100%", height: "100%"}}>
+                            <div className="opening-screen" style={{width: "100%", height: "100%"}}>
 
-                            <MobileTitle/>
-                            <MobileFooter nextScreen={() => this.screensRef.prev()}/>
-                        </div>
+                                <MobileTitle/>
+                                <MobileFooter nextScreen={() => this.screensRef.prev()}/>
+                            </div>
 
                         </OwlCarousel >
                     </div> :

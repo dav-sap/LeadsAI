@@ -51,3 +51,28 @@
     margin-left: auto;
     margin-top: 40px;
 }
+.angel-img-wrapper {
+    width: 65px !important;
+    margin-right: 0;
+    margin-left: auto;
+}
+@keyframes MoveUpDown {
+    0%, 100% {
+        top: 0;
+    }
+    50% {
+        top: -5.2px;
+    }
+}
+.floating-head {
+    width: 65px !important;
+    height: 16px;
+    position: relative;
+
+    animation: MoveUpDown 1.2s ease-in-out infinite;
+}
+.angel {
+    width: 55px !important;
+    height: 74px;
+    margin: auto;
+}
