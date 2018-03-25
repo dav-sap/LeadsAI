@@ -82,6 +82,11 @@
     position: relative;
     min-height: 128px;
     min-width: 120px;
+    -webkit-animation: 0.5s move-input ease-in-out;
+    -moz-animation: 0.5s move-input ease-in-out;
+    -o-animation: 0.5s move-input ease-in-out;
+    animation: 0.5s move-input ease-in-out;
+    animation-fill-mode:forwards;
 }
 @media only screen and (max-width: 600px) {
     .consultant-img {

@@ -5,11 +5,15 @@ import "./loading-dots.css"
 import Type from 'react-type';
 // import TypeWriter from 'react-typewriter';
 import Confetti from 'react-confetti'
-import BOT_LOGIC from './BotLogic';
-import {ANSWER_OPTION, ANSWER_INPUT, FEMALE, MALE, NOT_YET_STR, YES_STR} from './BotLogic';
+// import BOT_LOGIC from './GraphBot';
+import {ANSWER_OPTION, ANSWER_INPUT, FEMALE, MALE, NOT_YET_STR, YES_STR, WEB_BOT, MOBILE_BOT} from './GraphBot';
 import MobileHeader from "../Home/Mobile/MobileHeader";
 
-
+/*<div className="answer-options" onClick={() => this.answerClick(index)} style={{backgroundColor: option.data().fill ? option.data().fill : ""}}>*/
+/*<img alt="answer-border" src="/images/answer-option-border.png"/>*/
+/*<div className="button-text">{option.data().content}</div>*/
+/*</div> )*/
+//}
 export default class ChatBox extends Component {
 
     state = {
@@ -117,26 +121,42 @@ export default class ChatBox extends Component {
     };
     answerClick = (answer) => {
         this.setState({sendLoading: true});
-        if (this.state.currentNode.childNodes()[answer].data().content === NOT_YET_STR) {
-            this.isDate = false;
-        }
-        else if (this.state.currentNode.childNodes()[answer].data().content === YES_STR) {
-            this.isDate = true;
-        }
-        this.addDataToDB(this.state.currentNode.data().content, this.state.currentNode.childNodes()[answer].data().content, this.state.currentNode.childNodes()[answer].childNodes()[0]);
+        let nextNode = this.bot.traverser().searchBFS(function(data){
+            return data.stringToPrint === answer;
+        });
+        this.addDataToDB(this.state.currentNode.data().content, answer, nextNode.childNodes()[0]);
+    };
+    chooseConsultant = ()=> {
+        this.setState({sendLoading: true});
+        setTimeout(() => this.setState({sendLoading: false, showAnswers: false, currentNode: this.state.currentNode.childNodes()[0].childNodes()[0], nodeIndex: this.state.nodeIndex + 1,}), 2000);
     };
     componentWillMount(){
         //TODO:: fix gender workaround with DB info
-        this.bot = BOT_LOGIC;
-        BOT_LOGIC.rootNode().data().name = this.props.location.state.name ? this.props.location.state.name : "";
-        // BOT_LOGIC.rootNode().data().gender = this.props.location.state.name === "טלי"? FEMALE : MALE;
+
+        if (this.props.location.state.mobile) {
+            this.bot = MOBILE_BOT;
+            console.log(this.props.location.state.consultants);
+            this.bot.rootNode().childNodes()[0].data().consultants = this.props.location.state.consultants;
+            this.bot.rootNode().childNodes()[0].data().history = this.props.history;
+            this.bot.rootNode().childNodes()[0].data().onClick = this.chooseConsultant;
+        } else {
+            this.bot = WEB_BOT;
+        }
         this.setState({
-            currentNode : BOT_LOGIC.rootNode()
+            currentNode : this.bot.rootNode()
         })
     }
     componentWillUpdate(nextProps, nextState) {
         if (nextState.currentNode.data().getName) {
             nextState.currentNode.data().name = this.dbUser.name;
+
+        } if (nextState.currentNode.data().getConsultantName) {
+            nextState.currentNode.data().consultantName = this.props.location.state.name === "טלי" ?  "טלי תיצור" : this.props.location.state.name + " יצור";
+        }if (nextState.currentNode.childNodes()[0] && nextState.currentNode.childNodes()[0].data().getFunc) {
+            let node = this.bot.traverser().searchBFS(function(data){
+                return data.content === nextState.currentNode.data().content;
+            });
+            node.childNodes().map(childNode => {console.log(childNode);childNode.data().onClick = this.answerClick;});
         }
     }
     onFinishType = () => {
@@ -190,13 +210,11 @@ export default class ChatBox extends Component {
                     <div className="answer-options-wrapper" >
                         {!this.state.sendLoading ?
                         <div style={{display: "flex", flexDirection: "row"}}>
+                            {/*{this.state.currentNode.childNodes()[0].data().content}*/}
                             {this.state.currentNode.childNodes().map((option, index) => {
-                                return (
-                                <div className="answer-options" onClick={() => this.answerClick(index)} style={{backgroundColor: option.data().fill ? option.data().fill : ""}}>
-                                    <img alt="answer-border" src="/images/answer-option-border.png"/>
-                                    <div className="button-text">{option.data().content}</div>
-                                </div> )
-                            })}
+                                return (option.data().content)}
+                            )}
+
                         </div> :
                         <div className="loader">
                             <div className="bar1"/>
@@ -208,7 +226,10 @@ export default class ChatBox extends Component {
                         </div>}
                     </div> : ""}
                 {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
-                    <Confetti width={document.body.clientWidth} height={document.body.clientHeight} numberOfPieces={250} recycle={false} gravity={0.22}/>
+                    <div>
+                    <Confetti width={document.body.clientWidth} height={document.body.clientHeight} numberOfPieces={200} recycle={false} gravity={0.22}/>
+                    <Confetti width={document.body.clientWidth} height={document.body.clientHeight} numberOfPieces={200} recycle={false} gravity={0.22}/>
+                    </div>
                     : ""}
             </div>
         );

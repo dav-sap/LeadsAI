@@ -18,7 +18,7 @@ import OwlCarousel from 'react-owl-carousel';
 
 export default class Home extends Component {
     state = {
-        mobileScreen: 0
+        consultants: [],
     }
     isMobile() {
         window.mobilecheck = function() {
@@ -28,34 +28,62 @@ export default class Home extends Component {
         };
         return  window.mobilecheck();
     }
-
-    closeScreen() {
-        console.log("LOL");
-        let tl = new TimelineMax();
-        tl.to(CSSRulePlugin.getRule('body:before'), 0.25, {cssRule: {top: '50%' }, ease: Power2.easeOut}, 'close')
-            .to(CSSRulePlugin.getRule('body:after'), 0.25, {cssRule: {bottom: '50%' }, ease: Power2.easeOut}, 'close')
-            .to($('.between-loader'), 0.25, {opacity: 1, zIndex: 500})
-            .to(CSSRulePlugin.getRule('body:before'), 0.25, {cssRule: {top: '0%' }, ease: Power2.easeOut}, '+=1.9', 'open')
-            .to(CSSRulePlugin.getRule('body:after'), 0.25, {cssRule: {bottom: '0%' }, ease: Power2.easeOut}, '-=0.25', 'open')
-            .to($('.between-loader'), 0.25, {opacity: 0}, '-=0.25');
+    fetchConsultants() {
+        fetch("/consultants/get_consultants")
+            .then(
+                (response) => {
+                    if (response.status !== 200) {
+                        console.log(` Status Code: ${response.status}
+                                    Error Getting consultant. Error: ${(response.error ? response.error : "")}`);
+                        this.error = "Error Retrieving Data";
+                        return;
+                    }
+                    response.json().then(resJson => {
+                        this.error = resJson.length > 0 ? "" : "No Results";
+                        console.log(resJson);
+                        this.setState({consultants : resJson});
+                    });
+                }
+            )
+            .catch(function(err) {
+                console.log('Fetch Error :-S', err);
+            });
     }
+    componentWillMount() {
+        this.fetchConsultants();
+    }
+
+    closeScreen = () => {
+        if (this.state.consultants.length > 0) {
+            setTimeout( () => this.props.history.push({pathname:'/chat/', state: { consultants:this.state.consultants, mobile: true }}), 1700);
+            let tl = new TimelineMax();
+            tl.to(CSSRulePlugin.getRule('body:before'), 0.25, {cssRule: {top: '50%'}, ease: Power2.easeOut}, 'close')
+                .to(CSSRulePlugin.getRule('body:after'), 0.25, {
+                    cssRule: {bottom: '50%'},
+                    ease: Power2.easeOut
+                }, 'close')
+                .to($('.between-loader'), 0.25, {opacity: 1, zIndex: 500})
+                .to(CSSRulePlugin.getRule('body:before'), 0.25, {
+                    cssRule: {top: '0%'},
+                    ease: Power2.easeOut
+                }, '+=1.9', 'open')
+                .to(CSSRulePlugin.getRule('body:after'), 0.25, {
+                    cssRule: {bottom: '0%'},
+                    ease: Power2.easeOut
+                }, '-=0.25', 'open')
+                .to($('.between-loader'), 0.25, {opacity: 0}, '-=0.25');
+        } else {
+            console.error("No Consultants");
+        }
+    };
 
     render() {
         return (
             <div className="home-wrapper">
                 {this.isMobile() ?
                     <div className="home-mobile" >
-                        <OwlCarousel ref={(ref) => this.screensRef = ref} startPosition={1} items={1} className="owl-theme owl-height" mouseDrag={false} touchDrag={false} dots={false} >
-                            <div style={{width: "100%", height: "100%"}}>
-                                <ConsultantsScreen closeScreen={this.closeScreen}  history={this.props.history}/>
-                            </div>
-                            <div className="opening-screen" style={{width: "100%", height: "100%"}}>
-
-                                <MobileTitle/>
-                                <MobileFooter nextScreen={() => this.screensRef.prev()}/>
-                            </div>
-
-                        </OwlCarousel >
+                        <MobileTitle/>
+                        <MobileFooter closeScreen={this.closeScreen} />
                     </div> :
 
                     <div className="home-web">
