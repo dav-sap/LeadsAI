@@ -34,7 +34,7 @@ router.post('/add_pic', (req, res, next) =>{
                     consultant.profile_pic_bw.contentType = 'image/png';
                 } else {
                     consultant.profile_pic.data = fs.readFileSync(consultantJson.imgPath);
-                    consultant.profile_pic.contentType = 'image/jpg';
+                    consultant.profile_pic.contentType = 'image/png';
                 }
                 return consultant.save();
             }

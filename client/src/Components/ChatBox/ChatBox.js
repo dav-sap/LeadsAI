@@ -30,6 +30,7 @@ export default class ChatBox extends Component {
     chatStartDate = null;
     isDate = null;
     textInputRef = null;
+    mobile = false;
 
     createUser = async (name) => {
         try {
@@ -131,11 +132,9 @@ export default class ChatBox extends Component {
         setTimeout(() => this.setState({sendLoading: false, showAnswers: false, currentNode: this.state.currentNode.childNodes()[0].childNodes()[0], nodeIndex: this.state.nodeIndex + 1,}), 2000);
     };
     componentWillMount(){
-        //TODO:: fix gender workaround with DB info
-
         if (this.props.location.state.mobile) {
             this.bot = MOBILE_BOT;
-            console.log(this.props.location.state.consultants);
+            this.mobile = true;
             this.bot.rootNode().childNodes()[0].data().consultants = this.props.location.state.consultants;
             this.bot.rootNode().childNodes()[0].data().history = this.props.history;
             this.bot.rootNode().childNodes()[0].data().onClick = this.chooseConsultant;
@@ -168,7 +167,7 @@ export default class ChatBox extends Component {
         let answerNode = this.state.currentNode && this.state.currentNode.childNodes()[0] ? this.state.currentNode.childNodes()[0] : null;
         return (
             <div className="chat-box">
-                {this.props.location.state.mobile ? <MobileHeader/> : ""}
+                {this.mobile ? <MobileHeader/> : ""}
                 <div className="text-wrapper"  style={{direction: this.state.currentNode.data().dir ? this.state.currentNode.data().dir : "rtl"}}>
                     <Type key={this.state.nodeIndex} cursorColor={"#ffe500"} cursorWidth={14} className="text-typer" startTypingDelay={1500} onTypingDone={this.onFinishType} cycleType="reset">
                         {this.state.currentNode.data().content}

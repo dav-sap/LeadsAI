@@ -53,9 +53,18 @@ export default class Home extends Component {
         this.fetchConsultants();
     }
 
-    closeScreen = () => {
+    closeScreen = (mobile, consultant) => {
         if (this.state.consultants.length > 0) {
-            setTimeout( () => this.props.history.push({pathname:'/chat/', state: { consultants:this.state.consultants, mobile: true }}), 1700);
+            if (mobile) {
+                setTimeout(() => this.props.history.push({
+                    pathname: '/chat/',
+                    state: {consultants: this.state.consultants, mobile: mobile}
+                }), 1700);
+            } else {
+                setTimeout( () => this.props.history.push({pathname:'/chat/' + consultant.name,
+                    state: { name: consultant.name, email:consultant.email }
+                }), 1700)
+            }
             let tl = new TimelineMax();
             tl.to(CSSRulePlugin.getRule('body:before'), 0.25, {cssRule: {top: '50%'}, ease: Power2.easeOut}, 'close')
                 .to(CSSRulePlugin.getRule('body:after'), 0.25, {
@@ -88,7 +97,7 @@ export default class Home extends Component {
 
                     <div className="home-web">
                         <Title/>
-                        <ConsultantsBody closeScreen={this.closeScreen} history={this.props.history}/>
+                        <ConsultantsBody closeScreen={this.closeScreen} consultants={this.state.consultants} history={this.props.history}/>
                     </div>
                 }
             </div>
