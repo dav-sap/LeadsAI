@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import React, {Component} from "react";
 import ChatBox from "./Components/ChatBox/ChatBox";
 import Home from "./Components/Home/Home";
-import TransitionGroup from "react-transition-group/TransitionGroup";
 
 export default class App extends Component {
     render() {

@@ -1,4 +1,5 @@
 import React from 'react';
+import answerOptionBorder from './answer-option-border.png'
 var dataTree = require('data-tree');
 
 const QUESTION = "question";
@@ -98,7 +99,7 @@ let is_wed_date_no = {
     stringToPrint:NOT_YET_STR,
     get content() {
         return (<div className="answer-options" onClick={() => this.onClick(this.stringToPrint)}>
-            <img alt="answer-border" src="/images/answer-option-border.png"/>
+            <img alt="answer-border" className="answer-border" src={answerOptionBorder}/>
             <div className="button-text">{this.stringToPrint}</div>
         </div>)
     }
@@ -112,7 +113,7 @@ let is_wed_date_yes = {
     get content() {
         return (<div className="answer-options" onClick={() => this.onClick(this.stringToPrint)}
               style={{backgroundColor: "rgba(25, 45, 66, 0.8)"}}>
-            <img alt="answer-border" src="/images/answer-option-border.png"/>
+            <img alt="answer-border" className="answer-border" src={answerOptionBorder}/>
             <div className="button-text">{this.stringToPrint}</div>
         </div>)
     }
@@ -162,13 +163,13 @@ let get_cell_num_input = {
         return retInput.replace(/[^0-9./-]/g, "");
     },
     validator: function (value) {
-        return true;
+        return value && value.length <= 11;
         // let reg = /\d/;
         // let reg1 = /-/;
         // return (reg.test(value[value.length - 1]) || reg1.test(value[value.length - 1])) && value.length <= 11;
     },
     validateSubmit: function (value) {
-        return value && value.length >= 11
+        return value && value.length === 11
     }
 };
 let get_cell_num_with_date =  {

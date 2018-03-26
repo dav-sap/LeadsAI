@@ -2,7 +2,7 @@
     width: 100%;
     height: 100%;
     background: radial-gradient(circle at 52% 93%, #023365, #000000);
-    border: solid 1px #979797;
+    /*border: solid 1px #979797;*/
     transition-property: transform, width, height;
     transition-duration: 30s;
     transition-timing-function: ease-out;
@@ -30,18 +30,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.owl-height {
-    height: 100% !important;
-}
-.owl-stage-outer {
-    height: 100% !important;
-}
-.owl-stage {
-    height: 100% !important;
-}
-.owl-item{
-    height: 100% !important;
-}
+
 .animated-page-wrapper {
     position: absolute;
     top: 62px;

@@ -102,7 +102,7 @@
     }
     .consultant-card {
         position: relative;
-        min-height: 90px;
+        min-height: 120px;
         min-width: 90px;
     }
     .consultant-name {
@@ -110,7 +110,7 @@
         font-size: 16.6px;
         letter-spacing: 0.4px;
         text-align: right;
-        color: #777777;
+        color: #ffffff;
         width: fit-content;
         padding-top: 10.8px;
     }

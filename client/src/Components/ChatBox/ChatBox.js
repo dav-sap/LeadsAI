@@ -6,14 +6,12 @@ import Type from 'react-type';
 // import TypeWriter from 'react-typewriter';
 import Confetti from 'react-confetti'
 // import BOT_LOGIC from './GraphBot';
-import {ANSWER_OPTION, ANSWER_INPUT, FEMALE, MALE, NOT_YET_STR, YES_STR, WEB_BOT, MOBILE_BOT} from './GraphBot';
+import sendButtonBorderHigh from './send-button-wrapper.png'
+import sendButtonBorderLow from './send-button-wrapper-lower-opa.png'
+import {ANSWER_OPTION, ANSWER_INPUT, WEB_BOT, MOBILE_BOT} from './GraphBot';
 import MobileHeader from "../Home/Mobile/MobileHeader";
+import Loader from "./Loader";
 
-/*<div className="answer-options" onClick={() => this.answerClick(index)} style={{backgroundColor: option.data().fill ? option.data().fill : ""}}>*/
-/*<img alt="answer-border" src="/images/answer-option-border.png"/>*/
-/*<div className="button-text">{option.data().content}</div>*/
-/*</div> )*/
-//}
 export default class ChatBox extends Component {
 
     state = {
@@ -31,6 +29,8 @@ export default class ChatBox extends Component {
     isDate = null;
     textInputRef = null;
     mobile = false;
+    borderTagHighOpacity = <img className="submit-border-image" alt="submit-border" src={sendButtonBorderHigh}/>;
+    borderTagLowOpacity = <img className="submit-border-image" alt="submit-border" src={sendButtonBorderLow}/>;
 
     createUser = async (name) => {
         try {
@@ -79,7 +79,7 @@ export default class ChatBox extends Component {
                 let resJson = await res.json();
                 if (resJson && resJson.info) {
 
-                    setTimeout(() => this.setState({sendLoading: false, showAnswers: false, currentNode: newNode, optionOne:"", optionTwo:"", inputText:"", nodeIndex: this.state.nodeIndex + 1,}), 2000);
+                    setTimeout(() => this.setState({sendLoading: false, showAnswers: false, currentNode: newNode, inputText:"", nodeIndex: this.state.nodeIndex + 1,}), 2000);
                     this.disableInput = false;
                 }
             } else {
@@ -190,19 +190,12 @@ export default class ChatBox extends Component {
                                                                                         style={{cursor: answerNode.data().validateSubmit(this.state.inputText) ? "pointer":"not-allowed",
                                                                                         backgroundColor: answerNode.data().validateSubmit(this.state.inputText)  && this.state.hoveringSubmitButton ? "rgba(255, 255, 255, 0.9)" : "",
                                                                                             color:answerNode.data().validateSubmit(this.state.inputText)  && this.state.hoveringSubmitButton ? "#022b56" : "white"}}>
-                                <img className="submit-border-image" alt="submit-border" src={answerNode.data().validateSubmit(this.state.inputText) ? "/images/send-button-wrapper.png" : "/images/send-button-wrapper-lower-opa.png"}/>
+                                {answerNode.data().validateSubmit(this.state.inputText) ? this.borderTagHighOpacity : this.borderTagLowOpacity}
                                 <div className="button-text" style={{opacity: answerNode.data().validateSubmit(this.state.inputText) ? "1":"0.5"}}>הבא</div>
                             </div>
 
                          :
-                         <div className="loader">
-                             <div className="bar1"/>
-                             <div className="bar2"/>
-                             <div className="bar3"/>
-                             <div className="bar4"/>
-                             <div className="bar5"/>
-                             <div className="bar6"/>
-                         </div>}
+                         <Loader/>}
 
                     </div>: ""}
                 {this.state.currentNode && this.state.currentNode.childNodes()[0] && this.state.currentNode.childNodes()[0].data().type === ANSWER_OPTION && this.state.showAnswers?
@@ -215,14 +208,7 @@ export default class ChatBox extends Component {
                             )}
 
                         </div> :
-                        <div className="loader">
-                            <div className="bar1"/>
-                            <div className="bar2"/>
-                            <div className="bar3"/>
-                            <div className="bar4"/>
-                            <div className="bar5"/>
-                            <div className="bar6"/>
-                        </div>}
+                        <Loader/>}
                     </div> : ""}
                 {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
                     <div>

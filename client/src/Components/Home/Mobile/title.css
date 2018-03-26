@@ -21,8 +21,8 @@
     color: #1a1a1a;
     direction: rtl;
     width: fit-content;
-    /*margin-right: auto;*/
-    /*margin-left: auto;*/
+    margin-right: 0;
+    margin-left: auto;
 }
 .mobile-sub-title {
     /*width: 287px;*/
@@ -41,7 +41,7 @@
 }
 .brush-stroke {
     float: right;
-    width: 70% !important;
+    width: 210px;
 }
 .mobile-consultants-wrapper {
     display: flex;
@@ -52,9 +52,10 @@
     margin-top: 40px;
 }
 .angel-img-wrapper {
-    width: 65px !important;
+    width: 65px;
     margin-right: 0;
     margin-left: auto;
+
 }
 @keyframes MoveUpDown {
     0%, 100% {
@@ -65,14 +66,15 @@
     }
 }
 .floating-head {
-    width: 65px !important;
+    width: 65px;
     height: 16px;
     position: relative;
 
     animation: MoveUpDown 1.2s ease-in-out infinite;
 }
 .angel {
-    width: 55px !important;
+    width: 55px;
     height: 74px;
     margin: auto;
+    display: block;
 }

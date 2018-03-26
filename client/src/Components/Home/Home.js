@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './home.css';
 import './page-transition.css';
-import 'antd/dist/antd.css';
 import Title from './Title/Title';
 import MobileTitle from './Mobile/Title';
 import MobileFooter from './Mobile/Footer';
@@ -14,7 +13,7 @@ import Power2 from 'gsap'
 import ConsultantsBody from "./ConsultantsBody/ConsultantsBody";
 import ConsultantsScreen from "./Mobile/ConsultantsScreen/ConsultantsScreen";
 import MobileHeader from "./Mobile/MobileHeader";
-import OwlCarousel from 'react-owl-carousel';
+
 
 export default class Home extends Component {
     state = {
