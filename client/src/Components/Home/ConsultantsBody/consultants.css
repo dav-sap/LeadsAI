@@ -88,34 +88,6 @@
     animation: 0.5s move-input ease-in-out;
     animation-fill-mode:forwards;
 }
-@media only screen and (max-width: 600px) {
-    .consultant-img {
-        width: 68px !important;
-        height: 68px;
-    }
-    .consultant-img-bw {
-        width: 68px !important;
-        height: 68px;
-    }
-    .consultant-img-wrapper {
-        height: 100%;
-    }
-    .consultant-card {
-        position: relative;
-        min-height: 120px;
-        min-width: 90px;
-    }
-    .consultant-name {
-        font-family: Alef-Regular, Alef-Bold, sans-serif;
-        font-size: 16.6px;
-        letter-spacing: 0.4px;
-        text-align: right;
-        color: #ffffff;
-        width: fit-content;
-        padding-top: 10.8px;
-    }
-}
-
 
 .glow-low {
     /*-webkit-filter: blur(6.2px);*/
@@ -151,3 +123,40 @@
     position: relative;
     transition: top 0.15s linear;
 }
+@media only screen and (max-width: 600px) {
+    .consultant-img {
+        width: 68px !important;
+        height: 68px;
+    }
+    .consultant-img-bw {
+        width: 68px !important;
+        height: 68px;
+    }
+    .consultant-img-wrapper {
+        height: 100%;
+    }
+    .consultant-card {
+        position: relative;
+        min-height: 120px;
+        min-width: 90px;
+    }
+    .consultant-name {
+        font-family: Alef-Regular, Alef-Bold, sans-serif;
+        font-size: 16.6px;
+        letter-spacing: 0.4px;
+        text-align: right;
+        color: #ffffff;
+        width: fit-content;
+        padding-top: 10.8px;
+    }
+    .glow-low {
+        width: 68px !important;
+        height: 68px;
+    }
+    .glow-high {
+        width: 68px !important;
+        height: 68px;
+    }
+}
+
+
