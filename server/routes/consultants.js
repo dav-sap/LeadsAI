@@ -29,13 +29,7 @@ router.post('/add_pic', (req, res, next) =>{
                     info: "No consultant found for phone number: " + consultantJson.phoneNumber + ", email: " + consultantJson.email + ". Incorrect"
                 });
             } else {
-                if (consultantJson.blackWhite) {
-                    consultant.profile_pic_bw.data = fs.readFileSync(consultantJson.imgPath);
-                    consultant.profile_pic_bw.contentType = 'image/png';
-                } else {
-                    consultant.profile_pic.data = fs.readFileSync(consultantJson.imgPath);
-                    consultant.profile_pic.contentType = 'image/png';
-                }
+                consultant.imgPath = consultantJson.imgPath;
                 return consultant.save();
             }
         }).then(consultant => res.send(consultant)
@@ -68,7 +62,7 @@ router.post('/get_consultant_picture', (req, res, next) =>{
                 });
             } else {
                 res.contentType(consultant.profile_pic.contentType);
-                res.send(consultant.profile_pic.data);
+                res.send(consultant.profile_pic.path);
             }
         }).catch(err => {
             if (err.status) {

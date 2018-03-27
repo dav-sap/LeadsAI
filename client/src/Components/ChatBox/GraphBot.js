@@ -18,8 +18,6 @@ const GET_CONSULTANT = "כל המומחים שלנו בעלי ניסיון של 
 const END_YOUR_NUMBER_STR = "מה מספר הטלפון שלך?";
 
 
-
-
 let get_consultant = {
     type: QUESTION,
     content: GET_CONSULTANT
@@ -30,12 +28,12 @@ let get_consultant_options = {
     history: undefined,
     onClick: undefined,
     get content() {
-        return this.consultants.map( consultant =>{
-            return <div className="consultant-card" onClick={() => {this.history.push({pathname:'/chat/' + consultant.name, state: { name: consultant.name, email:consultant.email }}); this.onClick();}}>
-                {consultant.profile_pic ?
+        return this.consultants.map( (consultant, index) =>{
+            return <div className="consultant-card" key={index} onClick={() => {this.history.push({pathname:'/chat/' + consultant.name, state: { name: consultant.name, email:consultant.email }}); this.onClick();}}>
+                {consultant.imgPath ?
                     <div className="consultant-img-wrapper">
                         <img className="consultant-img" alt="Consultant"
-                             src={"data:" + (consultant.profile_pic.contentType) + ";base64," + (new Buffer(consultant.profile_pic.data).toString('base64'))}/>
+                             src={consultant.imgPath}/>
                     </div>  : ""}
                 <div className="consultant-name">{consultant.name}</div>
 

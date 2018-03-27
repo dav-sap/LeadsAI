@@ -10,6 +10,7 @@ import sendButtonBorderHigh from './send-button-wrapper.png'
 import sendButtonBorderLow from './send-button-wrapper-lower-opa.png'
 import {ANSWER_OPTION, ANSWER_INPUT, WEB_BOT, MOBILE_BOT} from './GraphBot';
 import MobileHeader from "../Home/Mobile/MobileHeader";
+import Typist from 'react-typist';
 import Loader from "./Loader";
 
 export default class ChatBox extends Component {
@@ -131,6 +132,7 @@ export default class ChatBox extends Component {
         this.setState({sendLoading: true});
         setTimeout(() => this.setState({sendLoading: false, showAnswers: false, currentNode: this.state.currentNode.childNodes()[0].childNodes()[0], nodeIndex: this.state.nodeIndex + 1,}), 2000);
     };
+
     componentWillMount(){
         if (this.props.location.state.mobile) {
             this.bot = MOBILE_BOT;
@@ -169,9 +171,10 @@ export default class ChatBox extends Component {
             <div className="chat-box">
                 {this.mobile ? <MobileHeader/> : ""}
                 <div className="text-wrapper"  style={{direction: this.state.currentNode.data().dir ? this.state.currentNode.data().dir : "rtl"}}>
-                    <Type key={this.state.nodeIndex} cursorColor={"#ffe500"} cursorWidth={14} className="text-typer" startTypingDelay={1500} onTypingDone={this.onFinishType} cycleType="reset">
+                    <Typist key={this.state.nodeIndex} avgTypingDelay={25} className="text-typer" startDelay={1500} onTypingDone={this.onFinishType} cycleType="reset">
                         {this.state.currentNode.data().content}
-                    </Type>
+                    </Typist>
+
                 </div>
                 {answerNode && answerNode.data().type === ANSWER_INPUT && this.state.showAnswers?
                     <div className="input-wrapper">

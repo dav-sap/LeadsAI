@@ -213,32 +213,42 @@ fieldset {
         opacity: 1;
     }
 }
-.text-wrapper > span:after {
-    -webkit-animation: 0.8s blink ease-in-out infinite !important;
-    -moz-animation: 0.8s blink ease-in-out infinite !important;
-    -o-animation: 0.8s blink ease-in-out infinite !important;
-    animation: 0.8s blink ease-in-out infinite !important;
+
+.Cursor {
+    background-color: #ffe500;
+    width: 15px;
+    padding-right: 7px;
+    margin-right: 10px;
+    color: transparent;
 }
-.text-typer {
-    text-align: center;
-    /*height: 100%;*/
-    /*word-break: break-word;*/
-    /*text-overflow: ellipsis;*/
+.Cursor--blinking {
+    opacity: 1;
+    animation: blink 0.8s ease-in-out infinite;
+    -webkit-animation: 0.8s blink ease-in-out infinite;
+    -moz-animation: 0.8s blink ease-in-out infinite;
+    -o-animation: 0.8s blink ease-in-out infinite;
 }
-.text-typer:after {
-    padding-right: 10px !important;
+
+@keyframes blink {
+    0% {
+        opacity: 1; }
+    50% {
+        opacity: 0; }
+    100% {
+        opacity: 1; }
 }
-@keyframes blink{
-    from,to{color:transparent}
-    50%{color:#ffe500}}
-@-moz-keyframes blink {
-    from,to{color:transparent}50%{color:#ffe500}}
-@-webkit-keyframes blink {
-    from,to{color:transparent}50%{color:#ffe500}}
+
+/*@keyframes blink{*/
+    /*from,to{background-color:transparent}*/
+    /*50%{background-color:#ffe500}}*/
+/*@-moz-keyframes blink {*/
+    /*from,to{background-color:transparent}50%{background-color:#ffe500}}*/
+/*@-webkit-keyframes blink {*/
+    /*from,to{background-color:transparent}50%{background-color:#ffe500}}*/
 /*@-ms-keyframes "blink"{*/
     /*from,to{color:transparent}50%{color:#ffe500}}*/
-@-o-keyframes blink {
-    from,to{color:transparent}50%{color:#ffe500}}
+/*@-o-keyframes blink {*/
+    /*from,to{background-color:transparent}50%{background-color:#ffe500}}*/
 
 .text-wrapper {
     direction: rtl;

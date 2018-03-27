@@ -47,6 +47,7 @@ export default class Home extends Component {
             .catch(function(err) {
                 console.log('Fetch Error :-S', err);
             });
+
     }
     componentWillMount() {
         this.fetchConsultants();
@@ -56,8 +57,8 @@ export default class Home extends Component {
         if (this.state.consultants.length > 0) {
             if (mobile) {
                 setTimeout(() => this.props.history.push({
-                    pathname: '/chat/',
-                    state: {consultants: this.state.consultants, mobile: mobile}
+                    pathname: '/chat',
+                    state: {mobile: mobile, consultants: this.state.consultants}
                 }), 1700);
             } else {
                 setTimeout( () => this.props.history.push({pathname:'/chat/' + consultant.name,
