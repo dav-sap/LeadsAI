@@ -30,8 +30,8 @@ export default class ChatBox extends Component {
     isDate = null;
     textInputRef = null;
     mobile = false;
-    borderTagHighOpacity = <img className="submit-border-image" alt="submit-border" src={sendButtonBorderHigh}/>;
-    borderTagLowOpacity = <img className="submit-border-image" alt="submit-border" src={sendButtonBorderLow}/>;
+    borderTagHighOpacity = <img className="submit-border-image" alt="" src={sendButtonBorderHigh}/>;
+    borderTagLowOpacity = <img className="submit-border-image" alt="" src={sendButtonBorderLow}/>;
 
     createUser = async (name) => {
         try {

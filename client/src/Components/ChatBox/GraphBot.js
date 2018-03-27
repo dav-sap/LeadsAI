@@ -12,8 +12,8 @@ const YES_STR = "כן!";
 const END_STR = "מעולה! היועץ שלנו יצור איתך בקרוב.";
 const YOUR_NUM_STR_AFTER_DATE = "תאריך חלום ";
 const NO_PRESSURE_STR = "אין לחץ ";
-const WINK = " 😉";
-const HEART_EYES = " 😍";
+const WINK = " 😉 ";
+const HEART_EYES = " 😍 ";
 const GET_CONSULTANT = "כל המומחים שלנו בעלי ניסיון של שנים והשירות הינו ללא תשלום. בחרו את הצלם איתו תרצו להתייעץ";
 const END_YOUR_NUMBER_STR = "מה מספר הטלפון שלך?";
 

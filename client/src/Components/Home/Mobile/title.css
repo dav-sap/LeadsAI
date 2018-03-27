@@ -78,3 +78,8 @@
     margin: auto;
     display: block;
 }
+@media only screen and (max-height: 450px) {
+    .mobile-title {
+        margin-top: 10%;
+    }
+}

@@ -237,18 +237,31 @@ fieldset {
     100% {
         opacity: 1; }
 }
+@-o-keyframes blink {
+    0% {
+        opacity: 1; }
+    50% {
+        opacity: 0; }
+    100% {
+        opacity: 1; }
+}
+@-webkit-keyframes blink {
+    0% {
+        opacity: 1; }
+    50% {
+        opacity: 0; }
+    100% {
+        opacity: 1; }
+}
+@-moz-keyframes blink {
+    0% {
+        opacity: 1; }
+    50% {
+        opacity: 0; }
+    100% {
+        opacity: 1; }
+}
 
-/*@keyframes blink{*/
-    /*from,to{background-color:transparent}*/
-    /*50%{background-color:#ffe500}}*/
-/*@-moz-keyframes blink {*/
-    /*from,to{background-color:transparent}50%{background-color:#ffe500}}*/
-/*@-webkit-keyframes blink {*/
-    /*from,to{background-color:transparent}50%{background-color:#ffe500}}*/
-/*@-ms-keyframes "blink"{*/
-    /*from,to{color:transparent}50%{color:#ffe500}}*/
-/*@-o-keyframes blink {*/
-    /*from,to{background-color:transparent}50%{background-color:#ffe500}}*/
 
 .text-wrapper {
     direction: rtl;
@@ -293,5 +306,26 @@ textarea {
     }
     .input-wrapper {
         margin-top: 75px;
+    }
+}
+@media only screen and (max-height: 650px) {
+    .text-wrapper {
+
+        padding-top: 15%;
+    }
+}
+@media only screen and (max-height: 510px) {
+    .text-wrapper {
+
+        padding-top: 10%;
+    }
+    .input-wrapper {
+        margin-top: 25px;
+    }
+}
+@media only screen and (max-height: 450px) {
+
+    .mobile-title {
+        margin-top: 10%;
     }
 }
