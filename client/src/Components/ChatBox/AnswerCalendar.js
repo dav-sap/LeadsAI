@@ -34,8 +34,8 @@ export default class AnswerCalendar extends Component {
         }
         return (
             <div className="calendar-wrapper">
-                { !this.state.sendLoading ?
-                    <div>
+
+                    <div style={{visibility: this.state.sendLoading ? "hidden" :"visible"}}>
                         <div className="choose-month-wrapper">
                             <th className="calendar-arrow left" onClick={() => this.changeMonth(-1)}/>
                             <th className="choose-month">{this.state.currentDateShowing.toLocaleDateString('en-EN', options).toUpperCase()}</th>
@@ -44,8 +44,10 @@ export default class AnswerCalendar extends Component {
                         <table>
                         <tbody className="calendar">{weeks}</tbody>
                         </table>
-                    </div>:
-                <Loader/>}
+                    </div>
+                    <div className="loader-wrapper" style={{visibility: !this.state.sendLoading ? "hidden" :"visible"}}>
+                        <Loader/>
+                    </div>
             </div>
         )
     }

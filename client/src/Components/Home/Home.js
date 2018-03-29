@@ -94,10 +94,11 @@ export default class Home extends Component {
                         <MobileTitle/>
                         <MobileFooter closeScreen={this.closeScreen} />
                     </div> :
-
+                    <div className="home-web-wrapper">
                     <div className="home-web">
                         <Title/>
                         <ConsultantsBody closeScreen={this.closeScreen} consultants={this.state.consultants} history={this.props.history}/>
+                    </div>
                     </div>
                 }
             </div>

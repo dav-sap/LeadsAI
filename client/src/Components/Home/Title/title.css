@@ -21,7 +21,7 @@
     margin-right: auto;
     margin-left: auto;
     margin-bottom: 20px;
-    margin-top: 130px;
+    /*margin-top: 130px;*/
     direction: rtl;
 
 }
@@ -39,7 +39,7 @@
     color: #ffffff;
     margin-right: auto;
     margin-left: auto;
-    padding-bottom: 100px;
+    padding-bottom: 86px;
     direction: rtl;
 }
 @media only screen and (min-width: 1400px)

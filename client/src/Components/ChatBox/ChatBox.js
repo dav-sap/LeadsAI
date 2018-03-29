@@ -111,6 +111,7 @@ export default class ChatBox extends Component {
         })
     }
     componentWillUpdate(nextProps, nextState) {
+        console.log(nextState.showAnswers);
         if (nextState.currentNode.data().getName) {
             nextState.currentNode.data().name = this.dbUser.name;
 
@@ -121,35 +122,53 @@ export default class ChatBox extends Component {
     onFinishType = () => {
         this.setState({showAnswers:true});
     };
+    getAnswerStyle() {
+        if (this.state.showAnswers) {
+            return {
+                visibility:"visible",
+                opacity:"1",
+                top:"0",
 
+            }
+        } else {
+            return {
+                visibility:"hidden",
+                opacity:"0",
+                top:"10px",
+                transitionProperty: "none",
+            }
+        }
+    }
 
     render() {
         let answerNode = this.state.currentNode && this.state.currentNode.childNodes()[0] ? this.state.currentNode.childNodes()[0] : null;
         return (
-            <div className="chat-box">
-                {this.mobile ? <MobileHeader/> : ""}
-                <div className="text-wrapper"  style={{direction: this.state.currentNode.data().dir ? this.state.currentNode.data().dir : "rtl"}}>
-                    <Typist key={this.state.nodeIndex} avgTypingDelay={25} className="text-typer" startDelay={1500} onTypingDone={this.onFinishType} cycleType="reset">
-                        {this.state.currentNode.data().content}
-                    </Typist>
+            <div className="chat-box-wrapper">
+                <div className="chat-box">
+                    {this.mobile ? <MobileHeader/> : ""}
+                    <div className="text-wrapper"  style={{direction: this.state.currentNode.data().dir ? this.state.currentNode.data().dir : "rtl"}}>
+                        <Typist key={this.state.nodeIndex} avgTypingDelay={25} className="text-typer" startDelay={1500} onTypingDone={this.onFinishType} cycleType="reset">
+                            {this.state.currentNode.data().content}
+                        </Typist>
 
+                    </div>
+                    <div className="answer-wrapper" style={this.getAnswerStyle()}>
+                        {answerNode && answerNode.data().type === ANSWER_PIC_OPTIONS?
+                            <AnswerPicOptions answerNode={answerNode} data={ this.props.location.state.consultants} history={this.props.history} currentNode={this.state.currentNode} chooseConsultant={this.chooseConsultant}/> : ""}
+                        {answerNode && answerNode.data().type === ANSWER_INPUT ?
+                            <AnswerInput answerNode={answerNode} currentNode={this.state.currentNode} addDataToDB={this.addDataToDB} createUser={this.createUser}/> : ""}
+                        {answerNode && answerNode.data().type === ANSWER_CALENDAR?
+                            <AnswerCalendar addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} /> : ""}
+                        {answerNode && answerNode.data().type === ANSWER_OPTION?
+                           <AnswerOptions bot={this.bot} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} /> : ""}
+                    </div>
+                    {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
+                    <div>
+                        <Confetti width={document.body.clientWidth - 3} height={document.body.clientHeight -3} numberOfPieces={250} recycle={false} gravity={0.18}/>
+                        <Confetti width={document.body.clientWidth - 3} height={document.body.clientHeight -3} numberOfPieces={250} recycle={false} gravity={0.18}/>
+                    </div>
+                    : ""}
                 </div>
-                    <div className="answer-wrapper">
-                    {answerNode && answerNode.data().type === ANSWER_PIC_OPTIONS && this.state.showAnswers?
-                        <AnswerPicOptions answerNode={answerNode} data={ this.props.location.state.consultants} history={this.props.history} currentNode={this.state.currentNode} chooseConsultant={this.chooseConsultant}/> : ""}
-                    {answerNode && answerNode.data().type === ANSWER_INPUT && this.state.showAnswers?
-                        <AnswerInput answerNode={answerNode} currentNode={this.state.currentNode} addDataToDB={this.addDataToDB} createUser={this.createUser}/> : ""}
-                    {answerNode && answerNode.data().type === ANSWER_CALENDAR && this.state.showAnswers ?
-                        <AnswerCalendar addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} /> : ""}
-                    {answerNode && answerNode.data().type === ANSWER_OPTION && this.state.showAnswers?
-                       <AnswerOptions bot={this.bot} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} /> : ""}
-                </div>
-                {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
-                <div>
-                    <Confetti width={document.body.clientWidth} height={document.body.clientHeight} numberOfPieces={250} recycle={false} gravity={0.18}/>
-                    <Confetti width={document.body.clientWidth} height={document.body.clientHeight} numberOfPieces={250} recycle={false} gravity={0.18}/>
-                </div>
-                : ""}
             </div>
         );
     }

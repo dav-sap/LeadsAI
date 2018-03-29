@@ -18,12 +18,12 @@
     letter-spacing: 2.8px;
     text-align: right;
     color: #ffffff;
-    padding-bottom: 50px;
+    padding-bottom: 45px;
     margin: auto;
     display: flex;
     flex-direction: row;
     direction: rtl;
-    margin-bottom: 23px;
+    /*margin-bottom: 23px;*/
 
 }
 .arrow {
