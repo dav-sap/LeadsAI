@@ -1,9 +1,18 @@
 .mobile-title {
-    margin-top: 40%;
+    margin-top: auto;
+    margin-bottom: auto;
     margin-left: auto;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
-    position: relative;
-    margin-right: 34px;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 50%;
+    /* margin-right: 34px; */
+    right: 34px;
+    transform: translate(0, -60%);
 }
 .mobile-top-title {
     /*margin-top: 40%;*/

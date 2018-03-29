@@ -1,15 +1,12 @@
 {
-  "main.css": "static/css/main.e1c50851.css",
-  "main.css.map": "static/css/main.e1c50851.css.map",
-  "main.js": "static/js/main.f5bd8808.js",
-  "main.js.map": "static/js/main.f5bd8808.js.map",
+  "main.css": "static/css/main.424461a0.css",
+  "main.css.map": "static/css/main.424461a0.css.map",
+  "main.js": "static/js/main.9c4f16d7.js",
+  "main.js.map": "static/js/main.9c4f16d7.js.map",
   "static\\media\\Alef-Bold.ttf": "static/media/Alef-Bold.42297036.ttf",
   "static\\media\\Alef-Bold.woff": "static/media/Alef-Bold.bd85ffea.woff",
   "static\\media\\Alef-Regular.ttf": "static/media/Alef-Regular.fce9cab7.ttf",
   "static\\media\\Alef-Regular.woff": "static/media/Alef-Regular.2b4308b1.woff",
   "static\\media\\HelveticaNeue.ttf": "static/media/HelveticaNeue.c7dc8910.ttf",
-  "static\\media\\HelveticaNeue.woff": "static/media/HelveticaNeue.ab1a472f.woff",
-  "static\\media\\answer-option-border.png": "static/media/answer-option-border.14bc202c.png",
-  "static\\media\\send-button-wrapper-lower-opa.png": "static/media/send-button-wrapper-lower-opa.aae57049.png",
-  "static\\media\\send-button-wrapper.png": "static/media/send-button-wrapper.3a1aac28.png"
+  "static\\media\\HelveticaNeue.woff": "static/media/HelveticaNeue.ab1a472f.woff"
 }

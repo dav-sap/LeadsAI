@@ -7,6 +7,23 @@
 
 }
 
+.border-rect-option{
+    width: 123px;
+    height: 51.8px;
+    fill:rgba(0, 0, 0,0);
+    stroke:url(#borderGradient);
+    stroke-width:2;
+}
+.border-rect-next{
+    width: 201px;
+    height: 51.8px;
+    fill:rgba(0, 0, 0,0);
+    stroke:url(#borderGradient);
+    stroke-width:2;
+}
+/*.hover-group:hover {*/
+    /*fill:white*/
+/*}*/
 .answer-options-wrapper {
 
     margin-top: 100px;
@@ -17,8 +34,9 @@
     /*justify-content: space-between;*/
 }
 .answer-options {
-    width: 123px;
-    height: 51.8px;
+    /*width: 123px;*/
+    height: 54px;
+    padding: 5px;
     object-fit: contain;
     border-radius: 18px;
     font-size: 25px;
@@ -27,24 +45,42 @@
     position: relative;
     margin-left: 15px;
     margin-right: 15px;
-    color: white;
     -webkit-animation: 0.5s move-input ease-in-out;
     -moz-animation: 0.5s move-input ease-in-out;
     -o-animation: 0.5s move-input ease-in-out;
     animation: 0.5s move-input ease-in-out;
     animation-fill-mode:forwards;
+    /*color: white;*/
 }
-.answer-options:hover {
-    background-color: rgba(255, 255, 255, 0.9) !important;
-    color: #022b56;
-}
+/*.border-rect-option:hover {*/
+    /*fill: rgba(255, 255, 255, 0.9);*/
+/*}*/
+/*.border-rect-option:hover {*/
+    /*fill: rgba(255, 255, 255, 0.9);*/
+/*}*/
+
+/*.answer-options:hover {*/
+    /*color:#022b56;*/
+/*}*/
+/*.button-text {*/
+    /*position: absolute;*/
+    /*left: 50%;*/
+    /*top: 50%;*/
+    /*transform: translate(-50%, -50%);*/
+    /*font-family: Heebo, Alef-Regular, sans-serif;*/
+    /*font-size: 18.8px;*/
+    /*direction: rtl;*/
+    /*z-index: 3;*/
+/*}*/
+
+
 .answer-border {
     height: 100%;
     width: 100%;
+
 }
 .input-wrapper {
     width: fit-content;
-    margin-top: 100px;
     margin-right: auto;
     margin-left: auto;
 }
@@ -109,6 +145,10 @@ user-input:-ms-input-placeholder { /* Microsoft Edge */
 fieldset {
     border: 0;
 }
+.svg-border {
+    padding: 3px;
+    z-index: 3;
+}
 .submit-button {
     cursor: pointer;
     font-family: Heebo, Alef-Regular, sans-serif;
@@ -116,11 +156,10 @@ fieldset {
     text-align: center;
     position: relative;
     width: 201px;
-    height: 51.8px;
+    height: 57px;
     margin-top: 18px;
     margin-right: auto;
     margin-left: auto;
-    border-radius: 18px;
     -webkit-animation: 0.5s move-button-send ease-in-out;
     -moz-animation: 0.5s move-button-send ease-in-out;
     -o-animation: 0.5s move-button-send ease-in-out;
@@ -278,16 +317,7 @@ fieldset {
 textarea {
     resize: none;
 }
-.button-text {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    /*color: white;*/
-    font-family: Heebo, Alef-Regular, sans-serif;
-    font-size: 18.8px;
-    direction: rtl;
-}
+
 
 @media only screen and (max-width: 500px) {
     .chat-box {
@@ -307,6 +337,73 @@ textarea {
     .input-wrapper {
         margin-top: 75px;
     }
+}
+.choose-month {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15.4px;
+    letter-spacing: 0.5px;
+    width: fit-content;
+    margin: auto;
+}
+.week {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15.4px;
+    letter-spacing: 0.5px;
+    color: #8b8b8e;
+
+}
+.day {
+    padding: 10px;
+    font-weight: 300;
+    cursor: pointer;
+}
+.day:hover {
+    border-radius: 19.5px;
+    background-color: #fee404;
+    color: #000061;
+}
+.calendar-wrapper {
+
+}
+.calendar-arrow {
+    border: solid #545456;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    cursor: pointer;
+}
+.calendar-arrow:hover {
+    border: solid white;
+    border-width: 0 3px 3px 0;
+}
+.pics-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.right {
+    position: absolute;
+    right: 20px;
+    top: 5px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    position: absolute;
+    left: 17px;
+    top: 5px;
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+.answer-wrapper {
+    width: fit-content;
+    margin:65px auto auto auto;
+}
+.choose-month-wrapper {
+    display: flex;
+    flex-direction: row;
+    position: relative;
 }
 @media only screen and (max-height: 650px) {
     .text-wrapper {

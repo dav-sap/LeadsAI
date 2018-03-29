@@ -9,7 +9,7 @@ export default class MobileFooter extends Component {
                 <div className="next-button" onClick={() => this.props.closeScreen(true)}>
                     <div className="next-button-wrapper">
                     <div className="next-button-text">
-                        התחל ייעוץ
+                        התחל ייעוץ בחינם
                     </div>
                     <img className="arrow-next" src="/images/arrow_mobile.png"/>
                     </div>

@@ -80,7 +80,7 @@ export default class Home extends Component {
                     cssRule: {bottom: '0%'},
                     ease: Power2.easeOut
                 }, '-=0.25', 'open')
-                .to($('.between-loader'), 0.25, {opacity: 0}, '-=0.25');
+                .to($('.between-loader'), 0.25, {opacity: 0, zIndex: 0}, '-=0.25');
         } else {
             console.error("No Consultants");
         }

@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Heebo:100,300,400,500,700&subset=hebrew');
-@import url("https://afeld.github.io/emoji-css/emoji.css");
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700');
 @font-face {
     font-family: 'Alef-Bold';
     src: local('Alef-Bold'), url(./fonts/Alef-Bold.woff) format('woff');
@@ -16,11 +16,6 @@
     src: local('HelveticaNeue'), url(./fonts/HelveticaNeue.ttf) format('truetype');
 }
 
-/*body {*/
-  /*margin: 0;*/
-  /*padding: 0;*/
-  /*font-family: 'Heebo', sans-serif;*/
-/*}*/
 #root {
     height: 100%;
     width: 100%;
