@@ -11,12 +11,12 @@ const MALE = "Male";
 const NOT_YET_STR = "עוד לא";
 const YES_STR = "כן!";
 const END_STR = "מעולה! היועץ שלנו יצור איתך בקרוב.";
-const YOUR_NUM_STR_AFTER_DATE = "תאריך חלום ";
-const WHEN_WED_QUESTION = "קולולו!!! מתי מתחתנים?"
+const YOUR_NUM_STR_AFTER_DATE = "תאריך חלום! ";
+const WHEN_WED_QUESTION = "קולולו!!! מתי מתחתנים?";
 const NO_PRESSURE_STR = "אין לחץ ";
 const WINK = " 😉 ";
 const HEART_EYES = " 😍 ";
-const GET_CONSULTANT = "המומחים הטובים בתחום צילום החתונות עומדים לרשותכם. בחרו את היועץ איתו תרצו להתכתב";
+const GET_CONSULTANT = "המומחים הטובים ביותר בתחום צילום החתונות עומדים לרשותכם. בחרו את היועץ איתו תרצו להתכתב:";
 const END_YOUR_NUMBER_STR = "מה מספר הטלפון שלך?";
 
 
@@ -52,7 +52,9 @@ let get_name_input = {
     createUser : true,
     placeholder: "שם מלא |",
     changeString: function (oldInput, newInput) {
-        return newInput;
+        let retInput = newInput;
+
+        return retInput.replace(/[0-9./-]/g, "").replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/\n]/gi, '');;
     },
     validator: function (value) {
         // let reg = /^([^0-9]*)$/;

@@ -99,6 +99,10 @@ export default class ChatBox extends Component {
     };
 
     componentWillMount(){
+        if (!this.props.location.state) {
+            this.props.history.push({pathname:'/'})
+            return;
+        }
         if (this.props.location.state && this.props.location.state.mobile) {
             this.bot = MOBILE_BOT;
             this.mobile = true;
@@ -111,7 +115,6 @@ export default class ChatBox extends Component {
         })
     }
     componentWillUpdate(nextProps, nextState) {
-        console.log(nextState.showAnswers);
         if (nextState.currentNode.data().getName) {
             nextState.currentNode.data().name = this.dbUser.name;
 
@@ -142,6 +145,9 @@ export default class ChatBox extends Component {
 
     render() {
         let answerNode = this.state.currentNode && this.state.currentNode.childNodes()[0] ? this.state.currentNode.childNodes()[0] : null;
+        if (!this.props.location.state) {
+            return <div></div>
+        }
         return (
             <div className="chat-box-wrapper">
                 <div className="chat-box">
@@ -161,11 +167,18 @@ export default class ChatBox extends Component {
                             <AnswerCalendar addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} /> : ""}
                         {answerNode && answerNode.data().type === ANSWER_OPTION?
                            <AnswerOptions bot={this.bot} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} /> : ""}
+                        {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
+                            <div className="end-image-wrapper">
+                                <div className="glow-image-end"/>
+                                <img className="end-img" alt="" src="/images/hands.png"/>
+                            </div>: ""}
+
                     </div>
                     {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
                     <div>
                         <Confetti width={document.body.clientWidth - 3} height={document.body.clientHeight -3} numberOfPieces={250} recycle={false} gravity={0.18}/>
                         <Confetti width={document.body.clientWidth - 3} height={document.body.clientHeight -3} numberOfPieces={250} recycle={false} gravity={0.18}/>
+
                     </div>
                     : ""}
                 </div>

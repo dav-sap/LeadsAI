@@ -20,6 +20,12 @@ export default class AnswerInput extends Component {
 
         }
     };
+    isFirefox() {
+        return typeof InstallTrigger !== 'undefined';
+    }
+    isChrome() {
+        return !!window.chrome && !!window.chrome.webstore;
+    }
     handleKeyDown = (event) => {
         if ((event.which === 13 || event.keyCode === 13) && this.props.answerNode.data().validateSubmit(this.state.inputText)) {
             this.disableInput = true;
@@ -47,7 +53,7 @@ export default class AnswerInput extends Component {
                                               onFocus={() => this.setState({textFocus: true})} onBlur={() => this.setState({textFocus: false})}
                                               placeholder={this.state.textFocus ? "" : this.props.currentNode.childNodes()[0].data().placeholder}
                                               value={this.state.inputText}
-                                              className={"user-input"} onKeyDown={this.handleKeyDown}
+                                              className="user-input" onKeyDown={this.handleKeyDown}
                                               onChange={this.inputChange} id="textbox"/>
                     </form>
                 </div>
@@ -66,7 +72,7 @@ export default class AnswerInput extends Component {
                                 </linearGradient>
                             </defs>
                             <rect className="border-rect-next" rx="18" ry="18" x="1" y="1" height="51.8" width="201" stroke="url(#borderGradient)" style={{fill: (this.isValidAndHover() ? "rgba(255, 255, 255, 0.9)" : "")}}/>
-                            <text x="50%" y="50%"  textAnchor="middle" alignmentBaseline="middle" fontFamily="Heebo" fontSize="18.8" fill={this.isValidAndHover() ? "#022b56" :"white"}>הבא</text>
+                            <text x="50%" y={this.isFirefox() ? "60%" : "50%"}  textAnchor="middle" alignmentBaseline="middle" fontFamily="Heebo" fontSize="18.8" fill={this.isValidAndHover() ? "#022b56" :"white"}>הבא</text>
                         </svg>
                     </div>
 
