@@ -21,15 +21,15 @@ export default class AnswerInput extends Component {
         }
     };
     handleKeyDown = (event) => {
-        if (event.which === 13 || event.keyCode === 13) {
+        if ((event.which === 13 || event.keyCode === 13) && this.props.answerNode.data().validateSubmit(this.state.inputText)) {
             this.disableInput = true;
             this.handleSubmit()
         }
     };
     inputChange = (event) => {
-        if (!this.disableInput && this.props.currentNode.childNodes()[0].data().validator(event.target.value)) {
+        if (!this.disableInput && this.props.answerNode.data().validator(event.target.value)) {
             this.setState({
-                inputText: this.props.currentNode.childNodes()[0].data().changeString(this.state.inputText, event.target.value)
+                inputText: this.props.answerNode.data().changeString(this.state.inputText, event.target.value)
             })
         }
 

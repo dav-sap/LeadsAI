@@ -147,7 +147,7 @@ export default class ChatBox extends Component {
                 <div className="chat-box">
                     {this.mobile ? <MobileHeader/> : ""}
                     <div className="text-wrapper"  style={{direction: this.state.currentNode.data().dir ? this.state.currentNode.data().dir : "rtl"}}>
-                        <Typist key={this.state.nodeIndex} avgTypingDelay={25} className="text-typer" startDelay={1500} onTypingDone={this.onFinishType} cycleType="reset">
+                        <Typist key={this.state.nodeIndex} avgTypingDelay={35} stdTypingDelay={0} className="text-typer" startDelay={1500} onTypingDone={this.onFinishType} cycleType="reset">
                             {this.state.currentNode.data().content}
                         </Typist>
 

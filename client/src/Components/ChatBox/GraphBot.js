@@ -16,7 +16,7 @@ const WHEN_WED_QUESTION = "קולולו!!! מתי מתחתנים?"
 const NO_PRESSURE_STR = "אין לחץ ";
 const WINK = " 😉 ";
 const HEART_EYES = " 😍 ";
-const GET_CONSULTANT = "כל המומחים שלנו בעלי ניסיון של שנים והשירות הינו ללא תשלום. בחרו את הצלם איתו תרצו להתייעץ";
+const GET_CONSULTANT = "המומחים הטובים בתחום צילום החתונות עומדים לרשותכם. בחרו את היועץ איתו תרצו להתכתב";
 const END_YOUR_NUMBER_STR = "מה מספר הטלפון שלך?";
 
 
@@ -97,16 +97,7 @@ let get_wed_date_input = {
     get placeholder() {
         return "הכנס תאריך"
     },
-    validator: function (value) {
 
-        return true;
-    },
-    validateSubmit: function (value) {
-        return value.length >= 1;
-    },
-    changeString: function (oldInput, newInput) {
-        return newInput;
-    },
 }
 
 let get_cell_num_input = {
@@ -169,7 +160,7 @@ function getMobileBot() {
     let hello_get_name_node_mobile = mobileBot.insertToNode(get_consultant_options_node, hello_get_name);
     let get_name_input_node_mobile = mobileBot.insertToNode(hello_get_name_node_mobile, get_name_input);
     let is_wed_date_node_mobile = mobileBot.insertToNode(get_name_input_node_mobile, is_wed_date);
-
+    let is_wed_date_no_node_mobile = mobileBot.insertToNode(is_wed_date_node_mobile, is_wed_date_no);
     let is_wed_date_yes_node_mobile = mobileBot.insertToNode(is_wed_date_node_mobile, is_wed_date_yes);
     let get_wed_date_node_mobile = mobileBot.insertToNode(is_wed_date_yes_node_mobile, get_wed_date);
     let get_wed_date_input_node_mobile = mobileBot.insertToNode(get_wed_date_node_mobile, get_wed_date_input );
@@ -178,7 +169,7 @@ function getMobileBot() {
     mobileBot.insertToNode(get_cell_num_input_node_mobile_1, end );
 
 
-    let is_wed_date_no_node_mobile = mobileBot.insertToNode(is_wed_date_node_mobile, is_wed_date_no);
+
     let get_cell_num_no_date_node_mobile = mobileBot.insertToNode(is_wed_date_no_node_mobile, get_cell_num_no_date);
     let get_cell_num_input_node_mobile_2 = mobileBot.insertToNode(get_cell_num_no_date_node_mobile, get_cell_num_input);
     mobileBot.insertToNode(get_cell_num_input_node_mobile_2, end);
@@ -189,7 +180,7 @@ function getWebBot() {
     let hello_get_name_node_mobile = webBot.insert(hello_get_name);
     let get_name_input_node_mobile = webBot.insertToNode(hello_get_name_node_mobile, get_name_input);
     let is_wed_date_node_mobile = webBot.insertToNode(get_name_input_node_mobile, is_wed_date);
-
+    let is_wed_date_no_node_mobile = webBot.insertToNode(is_wed_date_node_mobile, is_wed_date_no);
     let is_wed_date_yes_node_mobile = webBot.insertToNode(is_wed_date_node_mobile, is_wed_date_yes);
     let get_wed_date_node_mobile = webBot.insertToNode(is_wed_date_yes_node_mobile, get_wed_date);
     let get_wed_date_input_node_mobile = webBot.insertToNode(get_wed_date_node_mobile, get_wed_date_input );
@@ -198,7 +189,7 @@ function getWebBot() {
     webBot.insertToNode(get_cell_num_input_node_mobile_1, end );
 
 
-    let is_wed_date_no_node_mobile = webBot.insertToNode(is_wed_date_node_mobile, is_wed_date_no);
+
     let get_cell_num_no_date_node_mobile = webBot.insertToNode(is_wed_date_no_node_mobile, get_cell_num_no_date);
     let get_cell_num_input_node_mobile_2 = webBot.insertToNode(get_cell_num_no_date_node_mobile, get_cell_num_input);
     webBot.insertToNode(get_cell_num_input_node_mobile_2, end);
