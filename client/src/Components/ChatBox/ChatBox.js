@@ -14,6 +14,15 @@ import AnswerOptions from "./AnswerOptions";
 import AnswerCalendar from "./AnswerCalendar";
 import AnswerPicOptions from "./AnswerPicOptions";
 
+import Confetti2 from 'react-dom-confetti';
+
+const config = {
+    angle: 90,
+    spread: 60,
+    startVelocity: 20,
+    elementCount: 40,
+    decay: 0.95
+};
 export default class ChatBox extends Component {
 
     state = {
@@ -22,6 +31,7 @@ export default class ChatBox extends Component {
         showAnswers: false,
         nodeIndex: 0,
         hoveringSubmitButton: false,
+        shootConfetti: false,
     };
 
     dbUser = null;
@@ -61,7 +71,13 @@ export default class ChatBox extends Component {
             console.error(error);
         }
     };
-
+    changeShootConfetti = ()=> {
+        this.setState({
+            shootConfetti: true
+        }, () => this.setState({
+            shootConfetti: false
+        }))
+    }
     addDataToDB = async (question, answer, newNode) => {
         try {
             let data = {
@@ -125,8 +141,17 @@ export default class ChatBox extends Component {
     onFinishType = () => {
         this.setState({showAnswers:true});
     };
-    getAnswerStyle() {
+    getAnswerStyle(answerNode) {
         if (this.state.showAnswers) {
+            if (answerNode.data().type === ANSWER_CALENDAR) {
+                return {
+                    visibility:"visible",
+                    opacity:"1",
+                    top:"0",
+                    paddingBottom: "0"
+
+                }
+            }
             return {
                 visibility:"visible",
                 opacity:"1",
@@ -153,24 +178,27 @@ export default class ChatBox extends Component {
                 <div className="chat-box">
                     {this.mobile ? <MobileHeader/> : ""}
                     <div className="text-wrapper"  style={{direction: this.state.currentNode.data().dir ? this.state.currentNode.data().dir : "rtl"}}>
-                        <Typist key={this.state.nodeIndex} avgTypingDelay={35} stdTypingDelay={0} className="text-typer" startDelay={1500} onTypingDone={this.onFinishType} cycleType="reset">
-                            {this.state.currentNode.data().content}
+                        <Typist key={this.state.nodeIndex} avgTypingDelay={35} stdTypingDelay={0} className="text-typer" startDelay={1500} onTypingDone={this.onFinishType} >
+                            <div>{this.state.currentNode.data().content}</div>
                         </Typist>
 
                     </div>
-                    <div className="answer-wrapper" style={this.getAnswerStyle()}>
+                    <div className="answer-wrapper" style={this.getAnswerStyle(answerNode)}>
                         {answerNode && answerNode.data().type === ANSWER_PIC_OPTIONS?
-                            <AnswerPicOptions answerNode={answerNode} data={ this.props.location.state.consultants} history={this.props.history} currentNode={this.state.currentNode} chooseConsultant={this.chooseConsultant}/> : ""}
+                            <AnswerPicOptions showing={this.state.showAnswers}  answerNode={answerNode} data={ this.props.location.state.consultants} history={this.props.history} currentNode={this.state.currentNode} chooseConsultant={this.chooseConsultant}/> : ""}
                         {answerNode && answerNode.data().type === ANSWER_INPUT ?
-                            <AnswerInput answerNode={answerNode} currentNode={this.state.currentNode} addDataToDB={this.addDataToDB} createUser={this.createUser}/> : ""}
+                            <AnswerInput showing={this.state.showAnswers} answerNode={answerNode} currentNode={this.state.currentNode} addDataToDB={this.addDataToDB} createUser={this.createUser}/> : ""}
                         {answerNode && answerNode.data().type === ANSWER_CALENDAR?
-                            <AnswerCalendar addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} /> : ""}
+                            <AnswerCalendar showing={this.state.showAnswers}  addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} /> : ""}
                         {answerNode && answerNode.data().type === ANSWER_OPTION?
-                           <AnswerOptions bot={this.bot} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} /> : ""}
+                           <AnswerOptions showing={this.state.showAnswers}  bot={this.bot} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} /> : ""}
                         {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
-                            <div className="end-image-wrapper">
+                            <div className="end-image-wrapper" onClick={this.changeShootConfetti}>
                                 <div className="glow-image-end"/>
-                                <img className="end-img" alt="" src="/images/hands.png"/>
+                                <img className="end-img" alt="" src="/images/hands.png" />
+                                <div style={{position: "absolute", top: "50%", left: "50%"}}>
+                                <Confetti2 active={ this.state.shootConfetti } config={ config } />
+                                </div>
                             </div>: ""}
 
                     </div>

@@ -62,7 +62,7 @@ export default class AnswerInput extends Component {
                     <div className="submit-button" onClick={this.handleSubmit}
                          onMouseLeave={() => this.setState({hoveringSubmitButton: false})}
                          onMouseEnter={() => this.setState({hoveringSubmitButton: true})}
-                         style={{cursor: this.isValidAndHover() ? "pointer" : "not-allowed", visibility: this.state.sendLoading ? "hidden" :"visible"}}>
+                         style={{cursor: this.isValidAndHover() ? "pointer" : !this.props.showing ? "none" : "not-allowed", visibility: this.state.sendLoading ? "hidden" :"visible"}}>
                         <svg className="svg-border" width="203" height="54" opacity={this.props.answerNode.data().validateSubmit(this.state.inputText) ? "1" : "0.5"}>
                             <defs>
                                 <linearGradient id="borderGradient">

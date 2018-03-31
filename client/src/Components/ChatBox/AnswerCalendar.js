@@ -12,14 +12,14 @@ export default class AnswerCalendar extends Component {
         dateStr: dateStateStr,
         calendarVisible: false,
         hoveringSubmitButton: false,
-        dayChosen: 0,
     };
+    prevChosenDate = null;
     changeMonth = (increment) => {
 
         let copyDate = new Date(this.state.currentDateShowing);
         copyDate.setMonth(this.state.currentDateShowing.getMonth() + increment);
         this.setState({
-            currentDateShowing: copyDate
+            currentDateShowing: copyDate,
         })
     }
     chooseDate = (day) => {
@@ -27,10 +27,10 @@ export default class AnswerCalendar extends Component {
         copyDate.setDate(day);
         let options = { year: 'numeric', month: 'numeric', day: 'numeric' };
         this.setState({
-            dayChosen: day,
             dateStr:copyDate.toLocaleDateString('he-IL', options),
             calendarVisible: false
-        })
+        });
+        this.prevChosenDate = copyDate;
     }
     handleSubmit = () => {
         //this.state.currentDateShowing.toLocaleDateString('en-EN', options).toUpperCase() + " " + i.toString()
@@ -54,6 +54,12 @@ export default class AnswerCalendar extends Component {
     isChrome() {
         return !!window.chrome && !!window.chrome.webstore;
     }
+    componentWillUpdate(nextProps, nextState) {
+        if (nextState.currentDateShowing !== this.state.currentDateShowing) {
+
+        }
+
+    }
     render() {
         let options = {month: 'short', year: 'numeric'};
         let copyDate = new Date(this.state.currentDateShowing);
@@ -64,7 +70,8 @@ export default class AnswerCalendar extends Component {
         let days = [];
 
         for (let i = 1; i <= lastDay; ++i) {
-            days.push(<th className="day" onClick={() => this.chooseDate(i)} style={{backgroundColor: this.state.dayChosen === i ? "white" : ""}}>
+            days.push(<th className="day" onClick={() => this.chooseDate(i)} style={{backgroundColor: this.prevChosenDate && this.prevChosenDate.getDate() === i &&
+                this.prevChosenDate.getMonth() === this.state.currentDateShowing.getMonth() && this.prevChosenDate.getFullYear() === this.state.currentDateShowing.getFullYear()? "white" : ""}}>
                 {i}</th>)
         }
         for (let i = 0; i < weeksToCreate; ++i) {
@@ -73,57 +80,50 @@ export default class AnswerCalendar extends Component {
         return (
 
             <div className="calendar-wrapper">
-
-
-                        <div className="text-input-date" onClick={this.openDate}>
-                            <div className="user-input">
-                                {this.state.dateStr}
-                            </div>
-                            <div className="arrow-open-date"/>
-
+                <div className="text-input-date" onClick={this.openDate}>
+                    <div className="user-input">
+                        {this.state.dateStr}
+                    </div>
+                    <div className="arrow-open-date"/>
+                </div>
+                {this.state.calendarVisible ?
+                <div className="table-calendar" >
+                    <div className="choose-month-wrapper">
+                        <div className="arrow-clickable-area left-arrow-container" onClick={() => this.changeMonth(-1)}>
+                        <i className="calendar-arrow left"/>
                         </div>
+                        <div className="choose-month">{this.state.currentDateShowing.toLocaleDateString('he-IL', options).toUpperCase()}</div>
+                        <div className="arrow-clickable-area right-arrow-container" onClick={() => this.changeMonth(1)}>
+                        <i className="calendar-arrow right" />
+                        </div>
+                    </div>
+                    <table>
+                        <tbody className="calendar">{weeks}</tbody>
+                    </table>
+                </div> :
 
-
-                        {this.state.calendarVisible ?
-                        <div className="table-calendar" >
-                            <div className="choose-month-wrapper">
-                                <div className="arrow-clickable-area left-arrow-container" onClick={() => this.changeMonth(1)}>
-                                <i className="calendar-arrow left"/>
-                                </div>
-                                <div className="choose-month">{this.state.currentDateShowing.toLocaleDateString('he-IL', options).toUpperCase()}</div>
-                                <div className="arrow-clickable-area right-arrow-container" onClick={() => this.changeMonth(-1)}>
-                                <i className="calendar-arrow right" />
-                                </div>
-                            </div>
-                            <table>
-                                <tbody className="calendar">{weeks}</tbody>
-                            </table>
-                        </div> :
-
-                        this.isValidInput() ?
-                        <div style={{position: "relative"}}>
-                            <div className="submit-button" onClick={this.handleSubmit}
-                                      onMouseLeave={() => this.setState({hoveringSubmitButton: false})}
-                                      onMouseEnter={() => this.setState({hoveringSubmitButton: true})}
-                                      style={{cursor: this.isValidAndHover() ? "pointer" : "not-allowed", visibility: this.state.sendLoading ? "hidden" :"visible"}}>
-                                <svg className="svg-border" width="203" height="54" opacity={this.isValidInput() ? "1" : "0.5"}>
-                                    <defs>
-                                        <linearGradient id="borderGradient">
-                                            <stop offset="0%"  stopColor="#02c0fd"/>
-                                            <stop offset="30%" stopColor="#fecf03"/>
-                                            <stop offset="100%" stopColor="#fd504f"/>
-                                        </linearGradient>
-                                    </defs>
-                                    <rect className="border-rect-next" rx="18" ry="18" x="1" y="1" height="51.8" width="201" stroke="url(#borderGradient)" style={{fill: (this.isValidAndHover() ? "rgba(255, 255, 255, 0.9)" : "")}}/>
-                                    <text  x="50%" y={this.isFirefox() ? "60%" : "50%"}  textAnchor="middle" alignmentBaseline="middle" fontFamily="Heebo" fontSize="18.8" fill={this.isValidAndHover() ? "#022b56" :"white"}>הבא</text>
-                                </svg>
-                            </div>
-                            <div className="loader-wrapper" style={{visibility: !this.state.sendLoading ? "hidden" :"visible"}}>
-                                <Loader/>
-                            </div>
-                        </div> : ""}
-
-
+                this.isValidInput() ?
+                <div style={{position: "relative"}}>
+                    <div className="submit-button" onClick={this.handleSubmit}
+                              onMouseLeave={() => this.setState({hoveringSubmitButton: false})}
+                              onMouseEnter={() => this.setState({hoveringSubmitButton: true})}
+                              style={{cursor: this.isValidAndHover() ? "pointer" : !this.props.showing ? "none" : "not-allowed", visibility: this.state.sendLoading ? "hidden" :"visible"}}>
+                        <svg className="svg-border" width="203" height="54" opacity={this.isValidInput() ? "1" : "0.5"}>
+                            <defs>
+                                <linearGradient id="borderGradient">
+                                    <stop offset="0%"  stopColor="#02c0fd"/>
+                                    <stop offset="30%" stopColor="#fecf03"/>
+                                    <stop offset="100%" stopColor="#fd504f"/>
+                                </linearGradient>
+                            </defs>
+                            <rect className="border-rect-next" rx="18" ry="18" x="1" y="1" height="51.8" width="201" stroke="url(#borderGradient)" style={{fill: (this.isValidAndHover() ? "rgba(255, 255, 255, 0.9)" : "")}}/>
+                            <text  x="50%" y={this.isFirefox() ? "60%" : "50%"}  textAnchor="middle" alignmentBaseline="middle" fontFamily="Heebo" fontSize="18.8" fill={this.isValidAndHover() ? "#022b56" :"white"}>הבא</text>
+                        </svg>
+                    </div>
+                    <div className="loader-wrapper" style={{visibility: !this.state.sendLoading ? "hidden" :"visible"}}>
+                        <Loader/>
+                    </div>
+                </div> : ""}
             </div>
         )
     }
