@@ -1,10 +1,11 @@
-.border-rect-next{
-    width: 201px;
+.border-rect{
+
     height: 51.8px;
     fill:rgba(0, 0, 0,0);
     stroke:url(#borderGradient);
     stroke-width:2;
 }
+
 .submit-button {
     background-color: transparent;
     border: transparent;
@@ -15,14 +16,10 @@
     font-family: Heebo, Alef-Regular, sans-serif;
     font-size: 18.8px;
     text-align: center;
-    width: 203px;
     height: 57px;
     margin-right: auto;
     margin-left: auto;
 }
-/*.submit-button[disabled]:hover {*/
-
-/*}*/
 .submit-button:hover:not([disabled])  > svg g:hover text{
     display: block;
     fill: #022b56;
@@ -33,4 +30,11 @@
 button:focus {outline:0;}
 .text-tag-rect {
     fill: #ffffff;
+}
+.svg-border {
+    height:54px;
+}
+.input-button-wrapper {
+    position: relative;
+    margin-top: 5px;
 }

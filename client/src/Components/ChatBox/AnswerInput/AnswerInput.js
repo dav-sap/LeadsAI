@@ -7,7 +7,6 @@ export default class AnswerInput extends Component {
         inputText: "",
         enterClicked: false
     };
-    textInputRef = null;
 
     handleKeyDown = (event) => {
         if ((event.which === 13 || event.keyCode === 13) && this.props.answerNode.data().validateSubmit(this.state.inputText)) {
@@ -30,7 +29,7 @@ export default class AnswerInput extends Component {
         return <div className="input-wrapper" >
             <fieldset>
 
-                <textarea type="text" ref={(input) => {this.textInputRef = input;}}
+                <textarea type="text"
                           placeholder={this.state.textFocus ? "" : this.props.currentNode.childNodes()[0].data().placeholder}
                           value={this.state.inputText}
                           className="user-input" onKeyDown={this.handleKeyDown}
@@ -39,7 +38,7 @@ export default class AnswerInput extends Component {
                 <div className="text-input" style={{direction: this.props.answerNode.data().dir ? this.props.answerNode.data().dir : "rtl"}}/>
             </fieldset>
             <NextButton showing={this.props.showing} inputText={this.state.inputText} currentNode={this.props.currentNode} nextButton={true} content={"הבא"} error={this.props.error}
-                        answerNode={this.props.answerNode} textInputRef={this.textInputRef} createUser={this.props.createUser} addDataToDB={this.props.addDataToDB} enterClicked={this.state.enterClicked}/>
+                        answerNode={this.props.answerNode} createUser={this.props.createUser} addDataToDB={this.props.addDataToDB} enterClicked={this.state.enterClicked}/>
 
         </div>
     }

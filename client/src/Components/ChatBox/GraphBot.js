@@ -73,7 +73,7 @@ let is_wed_date = {
     getName: true,
     get content() {
         let start = "נעים מאוד ";
-        let end = ". יש תאריך לחתונה?";
+        let end = ". יש כבר תאריך לחתונה?";
         return start + this.name.split(" ")[0] + end;
     }
 }
@@ -81,11 +81,17 @@ let is_wed_date = {
 let is_wed_date_no = {
     type: ANSWER_OPTION,
     content:NOT_YET_STR,
+    validateSubmit: function (value) {
+        return true
+    }
 };
 
 let is_wed_date_yes = {
     type: ANSWER_OPTION,
     content: YES_STR,
+    validateSubmit: function (value) {
+        return true
+    }
 };
 
 
@@ -99,6 +105,9 @@ let get_wed_date_input = {
     get placeholder() {
         return "הכנס תאריך"
     },
+    validateSubmit: function (value) {
+        return true
+    }
 
 }
 
@@ -108,8 +117,7 @@ let get_cell_num_input = {
     dir:"ltr",
     changeString: function (oldInput, newInput) {
         let retInput = newInput;
-        // if (oldInput.length === 2 && newInput.length === 3) {
-        //     retInput = newInput + "-";
+
         if (oldInput.length === 4 && newInput.length === 3) {
             retInput = newInput.slice(0, -1);
         }
@@ -121,9 +129,6 @@ let get_cell_num_input = {
     },
     validator: function (value) {
         return value !== undefined && value !== null && value.length <= 11;
-        // let reg = /\d/;
-        // let reg1 = /-/;
-        // return (reg.test(value[value.length - 1]) || reg1.test(value[value.length - 1])) && value.length <= 11;
     },
     validateSubmit: function (value) {
         return value && value.length === 11

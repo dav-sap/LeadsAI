@@ -10,7 +10,7 @@ import {ANSWER_OPTION, ANSWER_INPUT, WEB_BOT, MOBILE_BOT, ANSWER_CALENDAR, ANSWE
 import MobileHeader from "../Home/Mobile/MobileHeader";
 import Typist from 'react-typist';
 import AnswerInput from "./AnswerInput/AnswerInput";
-import AnswerOptions from "./AnswerOptions";
+import AnswerOptions from "./AnswerOptions/AnswerOptions";
 import AnswerCalendar from "./AnswerCalendar/AnswerCalendar";
 import AnswerPicOptions from "./AnswerPicOptions";
 
@@ -20,7 +20,7 @@ const config = {
     angle: 90,
     spread: 60,
     startVelocity: 20,
-    elementCount: 40,
+    elementCount: 200,
     decay: 0.95
 };
 export default class ChatBox extends Component {
@@ -63,26 +63,22 @@ export default class ChatBox extends Component {
                         currentNode: this.state.currentNode.childNodes()[0].childNodes()[0],
                         nodeIndex: this.state.nodeIndex + 1,
                     }), 2000);
-                    this.disableInput = false;
                 }
             } else {
                 this.setState({error: true});
-                this.disableInput = false;
                 console.error("Server Error");
             }
         } catch (error) {
             this.setState({error: true});
-            this.disableInput = false;
             console.error(error);
         }
     };
     changeShootConfetti = ()=> {
         this.setState({
             shootConfetti: true
-        }, () => this.setState({
-            shootConfetti: false
-        }))
-    }
+        }, () => {setTimeout( () => this.setState({shootConfetti: false}), 1500)}
+        )
+    };
     addDataToDB = async (question, answer, newNode) => {
         try {
             let data = {
@@ -96,18 +92,18 @@ export default class ChatBox extends Component {
             if (res && res.status === 200) {
                 let resJson = await res.json();
                 if (resJson && resJson.info) {
-
+                    if (newNode.data().completed) {
+                        setTimeout(() => {this.setState({showAnswers: false, currentNode: newNode,  nodeIndex: this.state.nodeIndex + 1});
+                            setTimeout(() => {console.log("COMPLETED!");this.changeShootConfetti()}, 3500);}, 2000);
+                    }
                     setTimeout(() => this.setState({showAnswers: false, currentNode: newNode,  nodeIndex: this.state.nodeIndex + 1,}), 2000);
-                    this.disableInput = false;
                 }
             } else {
                 this.setState({error: true});
-                this.disableInput = false;
                 console.error(res);
             }
         } catch(error) {
             this.setState({error: true});
-            this.disableInput = false;
             console.error(error);
         }
     };
@@ -148,7 +144,7 @@ export default class ChatBox extends Component {
     };
     getAnswerStyle(answerNode) {
         if (this.state.showAnswers) {
-            if (answerNode.data().type === ANSWER_CALENDAR) {
+            if ( answerNode && answerNode.data().type === ANSWER_CALENDAR) {
                 return {
                     visibility:"visible",
                     opacity:"1",
@@ -179,12 +175,12 @@ export default class ChatBox extends Component {
             return <div></div>
         }
         return (
-            <div className="chat-box-wrapper">
+            <div className="chat-box-wrapper" style={{overflowY: this.state.currentNode.data().completed ? "hidden" : "auto"}}>
                 <div className="chat-box">
                     {this.mobile ? <MobileHeader/> : ""}
                     <div className="text-wrapper"  style={{direction: this.state.currentNode.data().dir ? this.state.currentNode.data().dir : "rtl"}}>
                         <Typist key={this.state.nodeIndex} avgTypingDelay={35} stdTypingDelay={0} className="text-typer" startDelay={1500} onTypingDone={this.onFinishType} >
-                            <div>{this.state.currentNode.data().content}</div>
+                            {this.state.currentNode.data().content}
                         </Typist>
 
                     </div>
@@ -197,10 +193,11 @@ export default class ChatBox extends Component {
                             <AnswerInput showing={this.state.showAnswers} answerNode={answerNode} currentNode={this.state.currentNode} error={this.state.error}
                                          addDataToDB={this.addDataToDB} createUser={this.createUser} /> : ""}
                         {answerNode && answerNode.data().type === ANSWER_CALENDAR?
-                            <AnswerCalendar showing={this.state.showAnswers}  addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error}/> : ""}
+                            <AnswerCalendar showing={this.state.showAnswers} answerNode={answerNode} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error}/> : ""}
                         {answerNode && answerNode.data().type === ANSWER_OPTION?
-                           <AnswerOptions showing={this.state.showAnswers}  bot={this.bot} addDataToDB={this.addDataToDB} error={this.state.error} currentNode={this.state.currentNode} /> : ""}
-                        {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
+                           <AnswerOptions showing={this.state.showAnswers} answerNode={answerNode} bot={this.bot} addDataToDB={this.addDataToDB} error={this.state.error} currentNode={this.state.currentNode} /> : ""}
+
+                           {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
                             <div className="end-image-wrapper" onClick={this.changeShootConfetti}>
                                 <div className="glow-image-end"/>
                                 <img className="end-img" alt="" src="/images/hands.png" />
@@ -210,13 +207,6 @@ export default class ChatBox extends Component {
                             </div>: ""}
 
                     </div>
-                    {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
-                    <div>
-                        <Confetti width={document.body.clientWidth - 3} height={document.body.clientHeight -3} numberOfPieces={250} recycle={false} gravity={0.18}/>
-                        <Confetti width={document.body.clientWidth - 3} height={document.body.clientHeight -3} numberOfPieces={250} recycle={false} gravity={0.18}/>
-
-                    </div>
-                    : ""}
                 </div>
             </div>
         );

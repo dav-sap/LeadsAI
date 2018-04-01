@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Heebo:100,300,400,500,700&subset=hebrew');
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700');
+/*@media (orientation: landscape) {*/
+    /*body {*/
+        /*!*-webkit-transform: rotate(-90deg);*!*/
+        /*!*-moz-transform: rotate(-90deg);*!*/
+        /*!*-o-transform: rotate(-90deg);*!*/
+        /*!*-ms-transform: rotate(-90deg);*!*/
+        /*!*transform: rotate(-90deg);*!*/
+        /*!*position: absolute;*!*/
+        /*!*left: 100%;*!*/
+    /*}*/
+/*}*/
 @font-face {
     font-family: 'Alef-Bold';
     src: local('Alef-Bold'), url(./fonts/Alef-Bold.woff) format('woff');

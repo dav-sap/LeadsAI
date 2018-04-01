@@ -114,3 +114,11 @@ user-input:focus {
     transform: translate(-50%, -50%) rotate(135deg);
     -webkit-transform: translate(-50%, -50%) rotate(135deg);
 }
+.arrow-open-date-container {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    top: 50%;
+    transform: translate(0, -50%);
+    margin-left: 20px;
+}

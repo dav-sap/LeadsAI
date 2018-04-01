@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import React, {Component} from "react";
 import ChatBox from "./Components/ChatBox/ChatBox";
 import Home from "./Components/Home/Home";
+import './animations.css';
 
 export default class App extends Component {
     render() {
