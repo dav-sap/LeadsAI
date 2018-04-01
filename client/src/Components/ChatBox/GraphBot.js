@@ -59,7 +59,7 @@ let get_name_input = {
     validator: function (value) {
         // let reg = /^([^0-9]*)$/;
         // return reg.test(value);
-        return true;
+        return value.length <= 15;
     },
     validateSubmit: function (value) {
         return value.length >= 1

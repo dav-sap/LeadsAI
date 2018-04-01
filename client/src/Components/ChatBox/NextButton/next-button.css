@@ -1,0 +1,36 @@
+.border-rect-next{
+    width: 201px;
+    height: 51.8px;
+    fill:rgba(0, 0, 0,0);
+    stroke:url(#borderGradient);
+    stroke-width:2;
+}
+.submit-button {
+    background-color: transparent;
+    border: transparent;
+    display: block;
+    padding: 0px;
+    position: relative;
+    cursor: pointer;
+    font-family: Heebo, Alef-Regular, sans-serif;
+    font-size: 18.8px;
+    text-align: center;
+    width: 203px;
+    height: 57px;
+    margin-right: auto;
+    margin-left: auto;
+}
+/*.submit-button[disabled]:hover {*/
+
+/*}*/
+.submit-button:hover:not([disabled])  > svg g:hover text{
+    display: block;
+    fill: #022b56;
+}
+.submit-button:hover:not([disabled])  > svg g:hover  rect{
+    fill: rgba(255, 255, 255, 0.9);
+}
+button:focus {outline:0;}
+.text-tag-rect {
+    fill: #ffffff;
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {WHEN_WED_QUESTION} from './GraphBot';
-import Loader from "./Loader";
-
+import {WHEN_WED_QUESTION} from '../GraphBot';
+import Loader from "../Loader";
+import './answer-calendar.css'
 const dateStateStr = "בחר תאריך";
 
 export default class AnswerCalendar extends Component {
@@ -116,8 +116,10 @@ export default class AnswerCalendar extends Component {
                                     <stop offset="100%" stopColor="#fd504f"/>
                                 </linearGradient>
                             </defs>
-                            <rect className="border-rect-next" rx="18" ry="18" x="1" y="1" height="51.8" width="201" stroke="url(#borderGradient)" style={{fill: (this.isValidAndHover() ? "rgba(255, 255, 255, 0.9)" : "")}}/>
-                            <text  x="50%" y={this.isFirefox() ? "60%" : "50%"}  textAnchor="middle" alignmentBaseline="middle" fontFamily="Heebo" fontSize="18.8" fill={this.isValidAndHover() ? "#022b56" :"white"}>הבא</text>
+                            {/*<rect className="border-rect-option" height="51.8" x="1" y="1" width="123" rx="18" ry="18" />*/}
+                            {/*<text className="text-tag-rect" x="50%" y={this.isFirefox() ? "60%" : "50%"} direction="rtl" textAnchor="middle" alignmentBaseline="middle" fontFamily="Heebo" fontSize="18.8">*/}
+                            <rect className="border-rect-next" rx="18" ry="18" x="1" y="1" height="51.8" width="123" stroke="url(#borderGradient)"/>
+                            <text className="text-tag-rect" x="50%" y={this.isFirefox() ? "60%" : "50%"}  direction="rtl" textAnchor="middle" alignmentBaseline="middle" fontFamily="Heebo" fontSize="18.8" >הבא</text>
                         </svg>
                     </div>
                     <div className="loader-wrapper" style={{visibility: !this.state.sendLoading ? "hidden" :"visible"}}>

@@ -5,13 +5,13 @@ import "./loading-dots.css"
 // import TypeWriter from 'react-typewriter';
 import Confetti from 'react-confetti'
 // import BOT_LOGIC from './GraphBot';
-
+import {ERROR} from "../Consts";
 import {ANSWER_OPTION, ANSWER_INPUT, WEB_BOT, MOBILE_BOT, ANSWER_CALENDAR, ANSWER_PIC_OPTIONS} from './GraphBot';
 import MobileHeader from "../Home/Mobile/MobileHeader";
 import Typist from 'react-typist';
-import AnswerInput from "./AnswerInput";
+import AnswerInput from "./AnswerInput/AnswerInput";
 import AnswerOptions from "./AnswerOptions";
-import AnswerCalendar from "./AnswerCalendar";
+import AnswerCalendar from "./AnswerCalendar/AnswerCalendar";
 import AnswerPicOptions from "./AnswerPicOptions";
 
 import Confetti2 from 'react-dom-confetti';
@@ -27,11 +27,12 @@ export default class ChatBox extends Component {
 
     state = {
         currentNode: null,
-
+        error: false,
         showAnswers: false,
         nodeIndex: 0,
         hoveringSubmitButton: false,
         shootConfetti: false,
+
     };
 
     dbUser = null;
@@ -64,9 +65,13 @@ export default class ChatBox extends Component {
                     }), 2000);
                     this.disableInput = false;
                 }
+            } else {
+                this.setState({error: true});
+                this.disableInput = false;
+                console.error("Server Error");
             }
         } catch (error) {
-            this.setState({showAnswers: false});
+            this.setState({error: true});
             this.disableInput = false;
             console.error(error);
         }
@@ -96,12 +101,12 @@ export default class ChatBox extends Component {
                     this.disableInput = false;
                 }
             } else {
-                this.setState({showAnswers: false});
+                this.setState({error: true});
                 this.disableInput = false;
                 console.error(res);
             }
         } catch(error) {
-            this.setState({showAnswers: false});
+            this.setState({error: true});
             this.disableInput = false;
             console.error(error);
         }
@@ -184,14 +189,17 @@ export default class ChatBox extends Component {
 
                     </div>
                     <div className="answer-wrapper" style={this.getAnswerStyle(answerNode)}>
+                        {this.state.error ? <div className="error-msg">{ERROR}</div> : ""}
                         {answerNode && answerNode.data().type === ANSWER_PIC_OPTIONS?
-                            <AnswerPicOptions showing={this.state.showAnswers}  answerNode={answerNode} data={ this.props.location.state.consultants} history={this.props.history} currentNode={this.state.currentNode} chooseConsultant={this.chooseConsultant}/> : ""}
+                            <AnswerPicOptions showing={this.state.showAnswers}  answerNode={answerNode} data={ this.props.location.state.consultants}
+                                              history={this.props.history} currentNode={this.state.currentNode} chooseConsultant={this.chooseConsultant} error={this.state.error}/> : ""}
                         {answerNode && answerNode.data().type === ANSWER_INPUT ?
-                            <AnswerInput showing={this.state.showAnswers} answerNode={answerNode} currentNode={this.state.currentNode} addDataToDB={this.addDataToDB} createUser={this.createUser}/> : ""}
+                            <AnswerInput showing={this.state.showAnswers} answerNode={answerNode} currentNode={this.state.currentNode} error={this.state.error}
+                                         addDataToDB={this.addDataToDB} createUser={this.createUser} /> : ""}
                         {answerNode && answerNode.data().type === ANSWER_CALENDAR?
-                            <AnswerCalendar showing={this.state.showAnswers}  addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} /> : ""}
+                            <AnswerCalendar showing={this.state.showAnswers}  addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error}/> : ""}
                         {answerNode && answerNode.data().type === ANSWER_OPTION?
-                           <AnswerOptions showing={this.state.showAnswers}  bot={this.bot} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} /> : ""}
+                           <AnswerOptions showing={this.state.showAnswers}  bot={this.bot} addDataToDB={this.addDataToDB} error={this.state.error} currentNode={this.state.currentNode} /> : ""}
                         {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
                             <div className="end-image-wrapper" onClick={this.changeShootConfetti}>
                                 <div className="glow-image-end"/>

@@ -9,5 +9,5 @@ const TITLES = {
     MOBIE_MIDDLE:<div>כל הטיפים והסודות שחשוב שתדעו <br/>לפני שבוחרים צלם לחתונה.</div>,
     FREE_OF_CHARGE:<div>השירות ניתן ללא עלות.</div>,
 };
-
-export {TITLES}
+const ERROR = "אופס.. תקלה. נסו שוב בבקשה";
+export {TITLES, ERROR}
