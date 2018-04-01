@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prestart-windows": "start mongod --port 3006 --dbpath ./localDB ",
+    "prestart-windows": "start mongod --port 3006 --dbpath ./localDB",
     "start-windows": "set PORT=3010 && nodemon ./StartServer.js",
     "poststart-windows": "mongo admin --eval 'db.shutdownServer()'",
-    "prestart-linux": "mongod --port 3006 --dbpath ./localDB --fork",
+    "prestart-linux": "service mongod start --port 3006 --dbpath ./localDB --fork --logpath ./log.log",
     "start-linux": "set PORT=3010 && node ./StartServer.js",
     "poststart-linux": "mongo admin --eval 'db.shutdownServer()'"
   },

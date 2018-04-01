@@ -2,33 +2,44 @@ import React, { Component } from 'react';
 import "./chat-box.css"
 import "./send-loader.css"
 import "./loading-dots.css"
-import Typing from 'react-typing-animation';
 // import TypeWriter from 'react-typewriter';
-import {TITLES} from './../Consts'
-import BOT_LOGIC from './BotLogic';
-import {QUESTION, ANSWER} from './BotLogic';
-const MOVES = {QUESTION: "question", ANSWERS: "answers", INPUT: "input"};
+import Confetti from 'react-confetti'
+// import BOT_LOGIC from './GraphBot';
 
+import {ANSWER_OPTION, ANSWER_INPUT, WEB_BOT, MOBILE_BOT, ANSWER_CALENDAR, ANSWER_PIC_OPTIONS} from './GraphBot';
+import MobileHeader from "../Home/Mobile/MobileHeader";
+import Typist from 'react-typist';
+import AnswerInput from "./AnswerInput";
+import AnswerOptions from "./AnswerOptions";
+import AnswerCalendar from "./AnswerCalendar";
+import AnswerPicOptions from "./AnswerPicOptions";
+
+import Confetti2 from 'react-dom-confetti';
+
+const config = {
+    angle: 90,
+    spread: 60,
+    startVelocity: 20,
+    elementCount: 40,
+    decay: 0.95
+};
 export default class ChatBox extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            chatStarting: false,
-            messages: [],
-            userInput: false,
-            answerOptions: false,
-            optionOne: "",
-            optionTwo: "",
-            currentNode: null,
-            inputText: "",
-            sendLoading: false,
-            msgLetter: 0
-        };
 
-        this.dbUser = null;
-        this.bot = null;
+    state = {
+        currentNode: null,
 
-    }
+        showAnswers: false,
+        nodeIndex: 0,
+        hoveringSubmitButton: false,
+        shootConfetti: false,
+    };
+
+    dbUser = null;
+    bot = null;
+    chatStartDate = null;
+    isDate = null;
+
+    mobile = false;
 
     createUser = async (name) => {
         try {
@@ -39,20 +50,35 @@ export default class ChatBox extends Component {
                 },
                 method: 'POST',
             };
-            let res = await fetch("/users/add_user",data);
+            let res = await fetch("/users/add_user", data);
             if (res && res.status === 200) {
                 let resJson = await res.json();
                 if (resJson && resJson.user) {
                     this.dbUser = resJson.user;
                     this.chatStartDate = resJson.chatStartDate;
-                    console.log(resJson.user);
+                    console.log(resJson.user.name);
+                    setTimeout(() => this.setState({
+                        showAnswers: false,
+                        currentNode: this.state.currentNode.childNodes()[0].childNodes()[0],
+                        nodeIndex: this.state.nodeIndex + 1,
+                    }), 2000);
+                    this.disableInput = false;
                 }
             }
-        } catch(error) {
+        } catch (error) {
+            this.setState({showAnswers: false});
+            this.disableInput = false;
             console.error(error);
         }
     };
-    addDataToDB = async (question, answer) => {
+    changeShootConfetti = ()=> {
+        this.setState({
+            shootConfetti: true
+        }, () => this.setState({
+            shootConfetti: false
+        }))
+    }
+    addDataToDB = async (question, answer, newNode) => {
         try {
             let data = {
                 body: JSON.stringify({_id: this.dbUser._id, startDate: this.chatStartDate, question:question, answer: answer}),
@@ -65,160 +91,125 @@ export default class ChatBox extends Component {
             if (res && res.status === 200) {
                 let resJson = await res.json();
                 if (resJson && resJson.info) {
-                    // console.log(resJson.info);
+
+                    setTimeout(() => this.setState({showAnswers: false, currentNode: newNode,  nodeIndex: this.state.nodeIndex + 1,}), 2000);
+                    this.disableInput = false;
                 }
             } else {
-                throw {status: res.status, error: res}
+                this.setState({showAnswers: false});
+                this.disableInput = false;
+                console.error(res);
             }
         } catch(error) {
+            this.setState({showAnswers: false});
+            this.disableInput = false;
             console.error(error);
         }
     };
-    addMsg = () => {
-        console.log("ADD MSG");
-        if (this.state.currentNode) {
-            if (this.state.currentNode.parentNode() && this.state.currentNode.parentNode().childNodes().length > 1 && this.state.currentNode.data().type === ANSWER) {
-                this.setState({
-                    answerOptions: true,
-                    optionOne: this.state.currentNode.parentNode().childNodes()[0].data().content,
-                    optionTwo: this.state.currentNode.parentNode().childNodes()[1].data().content,
-                })
-            } else if (this.state.currentNode.data().type === ANSWER && this.state.currentNode.data().content === "") {
-                this.setState({
-                    userInput: true
-                })
-            } else if (this.state.currentNode.data().type === QUESTION) {
-                this.setState({
-                    messages: [...this.state.messages, {
-                        type: this.state.currentNode.data().type,
-                        content: this.state.currentNode.data().content,
-                        close: this.state.currentNode.data().close,
 
-                    }],
-                    currentNode: this.state.currentNode.childNodes()[0],
-                    loadingMsg: true,
-                }, () => setTimeout(() => this.setState({loadingMsg: false}), 1800));
-            }
+
+
+    chooseConsultant = (name)=> {
+        this.consultantChosen = name;
+        setTimeout(() => this.setState({showAnswers: false, currentNode: this.state.currentNode.childNodes()[0].childNodes()[0], nodeIndex: this.state.nodeIndex + 1,}), 2000);
+    };
+
+    componentWillMount(){
+        if (!this.props.location.state) {
+            this.props.history.push({pathname:'/'})
+            return;
         }
-    };
-    goToChat = () => {
-        this.props.switchScreenFunc();
-        setTimeout(() => this.setState({chatStarting: true}), 2500);
-        setTimeout(() => this.addMsg(), 2800);
-    };
-    handleSubmit = () => {
-        this.setState({sendLoading: true});
-        if (this.state.currentNode.data().createUser) {
-            this.createUser(this.state.inputText);
+        if (this.props.location.state && this.props.location.state.mobile) {
+            this.bot = MOBILE_BOT;
+            this.mobile = true;
         } else {
-            this.addDataToDB(this.state.currentNode.parentNode().data().content, this.state.inputText)
+            this.consultantChosen = this.props.location.state.name;
+            this.bot = WEB_BOT;
         }
-        setTimeout(() => {
-            this.setState({
-                messages: [...this.state.messages, {type:ANSWER, content: this.state.inputText}],
-                currentNode: this.state.currentNode.childNodes()[0],
-            }, () => {
-            this.setState({userInput: false, inputText: "", sendLoading: false,});
-            this.disableInput = false;
-            this.addMsg()
-        })}, 1200);
-    };
-    handleKeyDown = (event) => {
-        if (event.which === 13 || event.keyCode === 13) {
-            this.disableInput = true;
-            this.handleSubmit()
-        }
-    };
-    inputChanged = (event) => {
-        // let val = "";
-        // let key = event.keyCode || event.charCode;
-        // if( key === 8 || key === 46 ) {
-        //     val = event.target.value
-        // } else {
-        //     val = event.target.value.replace("|", "") + " | ";
-        // }
-        if (!this.disableInput) {
-            this.setState({
-                inputText: event.target.value
-            });
-        }
-
-    };
-    answerClick = (answer) => {
-        this.addDataToDB(this.state.currentNode.parentNode().data().content, this.state.currentNode.parentNode().childNodes()[answer].data().content);
         this.setState({
-            messages: [...this.state.messages, {type:ANSWER, content: this.state.currentNode.parentNode().childNodes()[answer].data().content}],
-            currentNode: this.state.currentNode.parentNode().childNodes()[answer].childNodes()[0]
-        }, () => {
-             setTimeout(() => this.addMsg(), 2000);
-            this.setState({
-                answerOptions: false,
-                optionOne:"",
-                optionTwo:"",
-            })
-        })
-    };
-    componentDidMount() {
-        this.bot = BOT_LOGIC;
-        this.setState({
-            currentNode : BOT_LOGIC.rootNode()
+            currentNode : this.bot.rootNode()
         })
     }
+    componentWillUpdate(nextProps, nextState) {
+        if (nextState.currentNode.data().getName) {
+            nextState.currentNode.data().name = this.dbUser.name;
+
+        } if (nextState.currentNode.data().getConsultantName) {
+            nextState.currentNode.data().consultantName = this.consultantChosen === "טלי" ?  "טלי תיצור" : this.consultantChosen + " יצור";
+        }
+    }
     onFinishType = () => {
-        console.log("FINSIHED TYPE");
-        this.addMsg();
+        this.setState({showAnswers:true});
+    };
+    getAnswerStyle(answerNode) {
+        if (this.state.showAnswers) {
+            if (answerNode.data().type === ANSWER_CALENDAR) {
+                return {
+                    visibility:"visible",
+                    opacity:"1",
+                    top:"0",
+                    paddingBottom: "0"
+
+                }
+            }
+            return {
+                visibility:"visible",
+                opacity:"1",
+                top:"0",
+
+            }
+        } else {
+            return {
+                visibility:"hidden",
+                opacity:"0",
+                top:"10px",
+                transitionProperty: "none",
+            }
+        }
     }
 
     render() {
-
+        let answerNode = this.state.currentNode && this.state.currentNode.childNodes()[0] ? this.state.currentNode.childNodes()[0] : null;
+        if (!this.props.location.state) {
+            return <div></div>
+        }
         return (
-            <div  className="chat-box" ref="chatBox" id="chatBox"  style={this.state.chatStarting ? {height: "85%", top: "-600px"} : {}}>
-                <div className="start-convo-button" onClick={this.goToChat} id={this.state.chatStarting ? "start-convo-button" : ""}
-                     style={{top: this.state.chatStarting ? "0px" : this.props.chatClicked ? "-600px" : "-185px"}}>
+            <div className="chat-box-wrapper">
+                <div className="chat-box">
+                    {this.mobile ? <MobileHeader/> : ""}
+                    <div className="text-wrapper"  style={{direction: this.state.currentNode.data().dir ? this.state.currentNode.data().dir : "rtl"}}>
+                        <Typist key={this.state.nodeIndex} avgTypingDelay={35} stdTypingDelay={0} className="text-typer" startDelay={1500} onTypingDone={this.onFinishType} >
+                            <div>{this.state.currentNode.data().content}</div>
+                        </Typist>
 
-                    <div className="button-text">{TITLES.BUTTON_START_CONVO}</div>
-                    <div className="button-fade"/>
-                </div>
-                {this.state.messages.map((message, index) => {
-                    return <div className="msg-wrapper"><div key={index} className={"message " + (message.type === ANSWER ? "user-message " : "bot-message ")
-                                                    + (message.close ? "close-bot-message" : "")}>
-                            {this.state.loadingMsg && message.type === QUESTION && index === this.state.messages.length - 1? <div id="wave">
-                                <span className="dot"/>
-                                <span className="dot"/>
-                                <span className="dot"/>
-                            </div> : <p className="message-text">
-                                {message.type === ANSWER  ? <span>{message.content}</span> : <Typing onFinishedTyping={this.onFinishType}>
-                                <span>{message.content}</span>
-                                {/*<Typing.Backspace count={20} />*/}
-                            </Typing>}
-                            </p>}
-                    </div></div>
-                })}
-                {this.state.userInput ?
-                <fieldset className="input-wrapper">
-                    <div className="text-input">
-                        {/*<input placeholder={"שם מלא"} type="text" dir="rtl" className="user-input" onKeyDown={this.handleSubmit} onChange={this.inputChanged}/>*/}
-                        {/*<div className="input-text">שם מלא</div>*/}
-                        <form>
-                            <textarea type="text" placeholder="שם מלא |" dir="rtl"  value={this.state.inputText}
-                                      className="user-input" onKeyDown={this.handleKeyDown} onChange={this.inputChanged} id="textbox" />
-                        </form>
                     </div>
-                    <div className="submit-button" onClick={this.handleSubmit}>
-                        {!this.state.sendLoading ? <div>שלח</div> :
-                            <div className="loader">
-                                <svg className="circular" viewBox="25 25 50 50">
-                                <circle className="path" cx="50" cy="50" r="20"/>
-                                </svg>
-                            </div>}
-                        </div>
-                </fieldset> : ""}
-                {this.state.answerOptions ?
-                    <div className="answer-options-wrapper">
-                        <div className="option-1 answer-options" onClick={() => this.answerClick(0)}>{this.state.optionOne}</div>
-                        <div className="option-2 answer-options" onClick={() => this.answerClick(1)}>{this.state.optionTwo}</div>
-                    </div> : ""}
+                    <div className="answer-wrapper" style={this.getAnswerStyle(answerNode)}>
+                        {answerNode && answerNode.data().type === ANSWER_PIC_OPTIONS?
+                            <AnswerPicOptions showing={this.state.showAnswers}  answerNode={answerNode} data={ this.props.location.state.consultants} history={this.props.history} currentNode={this.state.currentNode} chooseConsultant={this.chooseConsultant}/> : ""}
+                        {answerNode && answerNode.data().type === ANSWER_INPUT ?
+                            <AnswerInput showing={this.state.showAnswers} answerNode={answerNode} currentNode={this.state.currentNode} addDataToDB={this.addDataToDB} createUser={this.createUser}/> : ""}
+                        {answerNode && answerNode.data().type === ANSWER_CALENDAR?
+                            <AnswerCalendar showing={this.state.showAnswers}  addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} /> : ""}
+                        {answerNode && answerNode.data().type === ANSWER_OPTION?
+                           <AnswerOptions showing={this.state.showAnswers}  bot={this.bot} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} /> : ""}
+                        {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
+                            <div className="end-image-wrapper" onClick={this.changeShootConfetti}>
+                                <div className="glow-image-end"/>
+                                <img className="end-img" alt="" src="/images/hands.png" />
+                                <div style={{position: "absolute", top: "50%", left: "50%"}}>
+                                <Confetti2 active={ this.state.shootConfetti } config={ config } />
+                                </div>
+                            </div>: ""}
 
+                    </div>
+                    {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
+                    <div>
+                        <Confetti width={document.body.clientWidth - 3} height={document.body.clientHeight -3} numberOfPieces={250} recycle={false} gravity={0.18}/>
+                        <Confetti width={document.body.clientWidth - 3} height={document.body.clientHeight -3} numberOfPieces={250} recycle={false} gravity={0.18}/>
+
+                    </div>
+                    : ""}
+                </div>
             </div>
         );
     }

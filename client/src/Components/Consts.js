@@ -1,10 +1,13 @@
 import React from 'react';
 
 const TITLES = {
-    TOP:<p> בוחרים יועץ חתונה <br/>ומקבלים עזרה בווטסאפ. קל</p>,
-    MIDDLE:<p> .צוות מומחים עם ניסיון של שנים בתחום צילום החתונות יישמח לייעץ לך <br/>בבחירת הצלם המושלם לחתונה שלכם . צ׳ט קליל קצר ומקצועי, בחינם,</p>,
-    // BOTTOM:<p></p>,
-    BUTTON_START_CONVO:<p className="start-convo-text"> התחל שיחה עכשיו</p>,
+    TOP:<div> בוחרים יועץ לחתונה <br/>ומקבלים טיפים בוואטסאפ.</div>,
+    CLICK_TITLE: <div>הקליקו על הצלם <br/> איתו תרצו להתייעץ.</div>,
+    MIDDLE:<div>כל הטיפים והסודות שחשוב שתדעו לפני שבוחרים צלם לחתונה.</div>,
+    CONSULTANT_TITLE: <div>בחר מומחה וקבל ייעוץ בחינם</div>,
+    // MOBILE_MAIN_TITLE: <div>בוחרים יועץ לחתונה<br/> ומקבלים המלצות בוואטסאפ</div>,
+    MOBIE_MIDDLE:<div>כל הטיפים והסודות שחשוב שתדעו <br/>לפני שבוחרים צלם לחתונה.</div>,
+    FREE_OF_CHARGE:<div>השירות ניתן ללא עלות.</div>,
 };
 
 export {TITLES}
