@@ -143,7 +143,7 @@ export default class ChatBox extends Component {
     };
     getAnswerStyle(answerNode) {
         if (this.state.showAnswers) {
-            if (answerNode.data().type === ANSWER_CALENDAR) {
+            if ( answerNode && answerNode.data().type === ANSWER_CALENDAR) {
                 return {
                     visibility:"visible",
                     opacity:"1",
