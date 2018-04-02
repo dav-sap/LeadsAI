@@ -4,7 +4,12 @@ import ChatBox from "./Components/ChatBox/ChatBox";
 import Home from "./Components/Home/Home";
 import './animations.css';
 
+
+
 export default class App extends Component {
+    componentWillMount() {
+
+    }
     render() {
         return (
             <div style={{width:"100%", height: "100%"}}>
