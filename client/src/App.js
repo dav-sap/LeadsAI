@@ -7,9 +7,7 @@ import './animations.css';
 
 
 export default class App extends Component {
-    componentWillMount() {
 
-    }
     render() {
         return (
             <div style={{width:"100%", height: "100%"}}>

@@ -48,7 +48,7 @@ let hello_get_name = {
 };
 
 let get_name_input = {
-    type: ANSWER_INPUT,
+    type: ANSWER_CALENDAR,
     createUser : true,
     placeholder: "שם מלא |",
     changeString: function (oldInput, newInput) {
@@ -62,6 +62,7 @@ let get_name_input = {
         return value.length <= 15;
     },
     validateSubmit: function (value) {
+        return true;
         return value.length >= 1
     }
 };

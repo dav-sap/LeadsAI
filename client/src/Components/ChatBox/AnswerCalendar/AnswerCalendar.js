@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import {WHEN_WED_QUESTION} from '../GraphBot';
-import Loader from "../Loader";
 import './answer-calendar.css'
 import NextButton from "../NextButton/NextButton";
 const dateStateStr = "בחר תאריך";
@@ -86,8 +84,8 @@ export default class AnswerCalendar extends Component {
 
                 this.isValidInput() ?
 
-                    <NextButton showing={this.props.showing} inputText={this.state.inputText} currentNode={this.props.currentNode} nextButton={true} content={"הבא"} error={this.props.error}
-                                answerNode={this.props.answerNode} createUser={this.props.createUser} addDataToDB={this.props.addDataToDB} enterClicked={this.state.enterClicked}/>
+                    <NextButton showing={this.props.showing} currentNode={this.props.currentNode} nextButton={true} content={"הבא"} error={this.props.error}
+                                answerNode={this.props.answerNode} createUser={this.props.createUser} addDataToDB={this.props.addDataToDB}/>
                  : ""}
             </div>
         )

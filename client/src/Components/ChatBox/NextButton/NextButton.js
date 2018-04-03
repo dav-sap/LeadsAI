@@ -26,9 +26,7 @@ export default class NextButton extends Component {
     isFirefox() {
         return typeof InstallTrigger !== 'undefined';
     }
-    isChrome() {
-        return !!window.chrome && !!window.chrome.webstore;
-    }
+
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.error) {

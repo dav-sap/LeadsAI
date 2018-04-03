@@ -8,6 +8,7 @@ export default class AnswerInput extends Component {
         enterClicked: false
     };
 
+
     handleKeyDown = (event) => {
         if ((event.which === 13 || event.keyCode === 13) && this.props.answerNode.data().validateSubmit(this.state.inputText)) {
             this.disableInput = true;
@@ -30,7 +31,7 @@ export default class AnswerInput extends Component {
             <fieldset>
 
                 <textarea type="text"
-                          placeholder={this.state.textFocus ? "" : this.props.currentNode.childNodes()[0].data().placeholder}
+                          placeholder={this.props.currentNode.childNodes()[0].data().placeholder}
                           value={this.state.inputText}
                           className="user-input" onKeyDown={this.handleKeyDown}
                           onChange={this.inputChange} id="textbox"/>

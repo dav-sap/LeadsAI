@@ -15,6 +15,8 @@ import AnswerCalendar from "./AnswerCalendar/AnswerCalendar";
 import AnswerPicOptions from "./AnswerPicOptions";
 
 import Confetti2 from 'react-dom-confetti';
+import AnswerCalendarMobile from "./AnswerCalendarMobile/AnswerCalendarMobile";
+import {isMobile} from "../Utils";
 
 const config = {
     angle: 90,
@@ -116,11 +118,14 @@ export default class ChatBox extends Component {
     };
 
     componentWillMount(){
-        if (!this.props.location.state) {
+        if (!this.props.location.state || (isMobile() && !this.props.location.state.consultants)) {
             this.props.history.push({pathname:'/'})
+            this.setState({
+                redirect: true
+            })
             return;
         }
-        if (this.props.location.state && this.props.location.state.mobile) {
+        if (isMobile()) {
             this.bot = MOBILE_BOT;
             this.mobile = true;
         } else {
@@ -171,7 +176,7 @@ export default class ChatBox extends Component {
 
     render() {
         let answerNode = this.state.currentNode && this.state.currentNode.childNodes()[0] ? this.state.currentNode.childNodes()[0] : null;
-        if (!this.props.location.state) {
+        if (this.state.redirect) {
             return <div></div>
         }
         return (
@@ -192,8 +197,10 @@ export default class ChatBox extends Component {
                         {answerNode && answerNode.data().type === ANSWER_INPUT ?
                             <AnswerInput showing={this.state.showAnswers} answerNode={answerNode} currentNode={this.state.currentNode} error={this.state.error}
                                          addDataToDB={this.addDataToDB} createUser={this.createUser} /> : ""}
-                        {answerNode && answerNode.data().type === ANSWER_CALENDAR?
-                            <AnswerCalendar showing={this.state.showAnswers} answerNode={answerNode} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error}/> : ""}
+                        {answerNode && answerNode.data().type === ANSWER_CALENDAR ?
+                            !this.mobile ?
+                            <AnswerCalendar showing={this.state.showAnswers} answerNode={answerNode} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error}/> :
+                            <AnswerCalendarMobile showing={this.state.showAnswers} answerNode={answerNode} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error}/> : ""}
                         {answerNode && answerNode.data().type === ANSWER_OPTION?
                            <AnswerOptions showing={this.state.showAnswers} answerNode={answerNode} bot={this.bot} addDataToDB={this.addDataToDB} error={this.state.error} currentNode={this.state.currentNode} /> : ""}
 
