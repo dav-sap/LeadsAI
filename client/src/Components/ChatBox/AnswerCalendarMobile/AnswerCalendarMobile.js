@@ -11,7 +11,6 @@ export default class AnswerCalendarMobile extends Component{
     dateChosen = (e) => {
         if (e.target.value === "") {
             this.setState({dateStr: ""});
-            return;
         } else {
             let copyDate = new Date(e.target.value);
             console.log(copyDate);
@@ -21,9 +20,13 @@ export default class AnswerCalendarMobile extends Component{
                 dateStr: copyDate.toLocaleDateString('he-IL', options),
             });
         }
+        document.getElementById("date-picker").blur();
+
+    }
+    onClose = () => {
+        document.getElementById("date-picker").blur();
     }
     openDate = () => {
-
         document.getElementById("date-picker").focus();
         document.getElementById("date-picker").click();
     }
@@ -32,17 +35,17 @@ export default class AnswerCalendarMobile extends Component{
         return (
 
         <div className="answer-calendar-mobile">
-            <div className="text-input-date" onClick={this.openDate}>
+            <button className="text-input-date no-select" onClick={this.openDate}>
                 <div className="user-input">
                     {this.state.dateStr === "" ? "הכנס תאריך" : this.state.dateStr}
                 </div>
                 <div className="arrow-open-date"/>
-            </div>
+            </button>
 
-            <input type="date" id="date-picker" onChange={this.dateChosen} />
+            <input type="date" id="date-picker" onChange={this.dateChosen} onSelect={this.onClose}  />
 
             { this.state.dateStr !== "" ?
-            <NextButton showing={this.props.showing} currentNode={this.props.currentNode} nextButton={true} content={"הבא"} error={this.props.error}
+            <NextButton currentNode={this.props.currentNode} nextButton={true} content={"הבא"} error={this.props.error}
             answerNode={this.props.answerNode} createUser={this.props.createUser} addDataToDB={this.props.addDataToDB} /> : ""}
         </div>
     )

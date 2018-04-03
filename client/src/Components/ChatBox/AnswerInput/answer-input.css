@@ -1,5 +1,5 @@
 .user-input {
-    margin-right: 45px;
+    margin-right: 30px;
     padding-top: 10px;
     width: 210.3px;
     height: 49.5px;
@@ -11,6 +11,7 @@
     line-height: normal;
     position: absolute;
     right: 0;
+    top:0;
     letter-spacing: 3px;
     color: #ffffff;
     background: transparent;

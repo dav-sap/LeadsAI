@@ -33,12 +33,13 @@ export default class AnswerInput extends Component {
                 <textarea type="text"
                           placeholder={this.props.currentNode.childNodes()[0].data().placeholder}
                           value={this.state.inputText}
+                          style={{direction: this.props.answerNode.data().dir ? this.props.answerNode.data().dir : "rtl"}}
                           className="user-input" onKeyDown={this.handleKeyDown}
                           onChange={this.inputChange} id="textbox"/>
 
-                <div className="text-input" style={{direction: this.props.answerNode.data().dir ? this.props.answerNode.data().dir : "rtl"}}/>
+                <div className="text-input" />
             </fieldset>
-            <NextButton showing={this.props.showing} inputText={this.state.inputText} currentNode={this.props.currentNode} nextButton={true} content={"הבא"} error={this.props.error}
+            <NextButton inputText={this.state.inputText} currentNode={this.props.currentNode} nextButton={true} content={"הבא"} error={this.props.error}
                         answerNode={this.props.answerNode} createUser={this.props.createUser} addDataToDB={this.props.addDataToDB} enterClicked={this.state.enterClicked}/>
 
         </div>

@@ -84,7 +84,7 @@ export default class AnswerCalendar extends Component {
 
                 this.isValidInput() ?
 
-                    <NextButton showing={this.props.showing} currentNode={this.props.currentNode} nextButton={true} content={"הבא"} error={this.props.error}
+                    <NextButton currentNode={this.props.currentNode} nextButton={true} content={"הבא"} error={this.props.error}
                                 answerNode={this.props.answerNode} createUser={this.props.createUser} addDataToDB={this.props.addDataToDB}/>
                  : ""}
             </div>

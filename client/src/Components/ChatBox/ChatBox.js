@@ -22,7 +22,7 @@ const config = {
     angle: 90,
     spread: 60,
     startVelocity: 20,
-    elementCount: 200,
+    elementCount: 30,
     decay: 0.95
 };
 export default class ChatBox extends Component {
@@ -76,10 +76,15 @@ export default class ChatBox extends Component {
         }
     };
     changeShootConfetti = ()=> {
-        this.setState({
-            shootConfetti: true
-        }, () => {setTimeout( () => this.setState({shootConfetti: false}), 1500)}
-        )
+        if (!this.state.shootConfetti) {
+            window.navigator.vibrate(60);
+            this.setState({
+                    shootConfetti: true
+                }, () => {
+                    setTimeout(() => this.setState({shootConfetti: false}), 1500)
+                }
+            )
+        }
     };
     addDataToDB = async (question, answer, newNode) => {
         try {
@@ -191,21 +196,21 @@ export default class ChatBox extends Component {
                     </div>
                     <div className="answer-wrapper" style={this.getAnswerStyle(answerNode)}>
                         {this.state.error ? <div className="error-msg">{ERROR}</div> : ""}
-                        {answerNode && answerNode.data().type === ANSWER_PIC_OPTIONS?
-                            <AnswerPicOptions showing={this.state.showAnswers}  answerNode={answerNode} data={ this.props.location.state.consultants}
+                        {answerNode && answerNode.data().type === ANSWER_PIC_OPTIONS && this.state.showAnswers?
+                            <AnswerPicOptions answerNode={answerNode} data={ this.props.location.state.consultants}
                                               history={this.props.history} currentNode={this.state.currentNode} chooseConsultant={this.chooseConsultant} error={this.state.error}/> : ""}
-                        {answerNode && answerNode.data().type === ANSWER_INPUT ?
-                            <AnswerInput showing={this.state.showAnswers} answerNode={answerNode} currentNode={this.state.currentNode} error={this.state.error}
+                        {answerNode && answerNode.data().type === ANSWER_INPUT  && this.state.showAnswers?
+                            <AnswerInput answerNode={answerNode} currentNode={this.state.currentNode} error={this.state.error}
                                          addDataToDB={this.addDataToDB} createUser={this.createUser} /> : ""}
-                        {answerNode && answerNode.data().type === ANSWER_CALENDAR ?
+                        {answerNode && answerNode.data().type === ANSWER_CALENDAR && this.state.showAnswers?
                             !this.mobile ?
-                            <AnswerCalendar showing={this.state.showAnswers} answerNode={answerNode} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error}/> :
-                            <AnswerCalendarMobile showing={this.state.showAnswers} answerNode={answerNode} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error}/> : ""}
-                        {answerNode && answerNode.data().type === ANSWER_OPTION?
-                           <AnswerOptions showing={this.state.showAnswers} answerNode={answerNode} bot={this.bot} addDataToDB={this.addDataToDB} error={this.state.error} currentNode={this.state.currentNode} /> : ""}
+                            <AnswerCalendar answerNode={answerNode} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error}/> :
+                            <AnswerCalendarMobile answerNode={answerNode} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error}/> : ""}
+                        {answerNode && answerNode.data().type === ANSWER_OPTION && this.state.showAnswers?
+                           <AnswerOptions answerNode={answerNode} bot={this.bot} addDataToDB={this.addDataToDB} error={this.state.error} currentNode={this.state.currentNode} /> : ""}
 
                            {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
-                            <div className="end-image-wrapper" onClick={this.changeShootConfetti}>
+                            <div className="end-image-wrapper no-select" onClick={this.changeShootConfetti}>
                                 <div className="glow-image-end"/>
                                 <img className="end-img" alt="" src="/images/hands.png" />
                                 <div style={{position: "absolute", top: "50%", left: "50%"}}>

@@ -46,6 +46,7 @@ export default class Home extends Component {
     }
 
     closeScreen = (mobile, consultant) => {
+        window.navigator.vibrate(60);
         if (this.state.consultants.length > 0) {
             if (mobile) {
                 setTimeout(() => this.props.history.push({

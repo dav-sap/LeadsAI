@@ -17,73 +17,6 @@
     left: 50%;
     transform: translate(-50%);
 }
-/*.border-rect-option{*/
-    /*width: 123px;*/
-    /*height: 51.8px;*/
-    /*fill:rgba(0, 0, 0,0);*/
-    /*stroke:url(#borderGradient);*/
-    /*stroke-width:2;*/
-/*}*/
-
-/*.hover-group:hover {*/
-    /*fill:white*/
-/*}*/
-
-/*.answer-option {*/
-
-    /*height: 54px;*/
-    /*padding: 5px;*/
-    /*object-fit: contain;*/
-    /*border-radius: 18px;*/
-    /*font-size: 25px;*/
-    /*text-align: center;*/
-    /*cursor: pointer;*/
-    /*position: relative;*/
-    /*margin-left: 15px;*/
-    /*margin-right: 15px;*/
-
-/*}*/
-
-/*.answer-option:hover {*/
-    /*background-color: rgba(255, 255, 255, 0.9);*/
-/*}*/
-
-/*.text-tag-rect:hover ~ .border-rect-option{*/
-    /*fill: rgba(255, 255, 255, 0.9);*/
-/*}*/
-/*.border-rect-option:hover + .text-tag-rect {*/
-/**/
-/*}*/
-/*.border-rect-option:hover  ~ .text-tag-rect {*/
-    /*fill: #022b56;*/
-/*}*/
-/*border-rect-option:hover > .text-tag-rect {*/
-    /* code */
-/*}*/
-/*.border-rect-option:hover {*/
-    /*fill: rgba(255, 255, 255, 0.9);*/
-/*}*/
-
-/*.answer-options:hover {*/
-    /*color:#022b56;*/
-/*}*/
-/*.button-text {*/
-    /*position: absolute;*/
-    /*left: 50%;*/
-    /*top: 50%;*/
-    /*transform: translate(-50%, -50%);*/
-    /*font-family: Heebo, Alef-Regular, sans-serif;*/
-    /*font-size: 18.8px;*/
-    /*direction: rtl;*/
-    /*z-index: 3;*/
-/*}*/
-
-
-/*.answer-border {*/
-    /*height: 100%;*/
-    /*width: 100%;*/
-
-/*}*/
 
 textarea:focus {
     outline:none;
@@ -107,6 +40,7 @@ textarea:focus {
     width: 100%;
     position: relative;
     left: -12px;
+    margin-left: 12px;
     /*margin: auto;*/
 }
 
@@ -124,101 +58,10 @@ textarea:focus {
     transform: translate(-50%, -50%);
     z-index: 1;
 }
-
-/*.user-input {*/
-    /*position: relative;*/
-    /*width: 257.3px;*/
-    /*height: 49.5px;*/
-    /*border-radius: 26.3px;*/
-    /*border: solid 1px rgba(255, 255, 255, .5);*/
-/*}*/
-
-
 fieldset {
     border: 0;
+    padding: 0;
 }
-
-
-/*@keyframes move-button-send {*/
-    /*from {*/
-        /*top: 10px;*/
-        /*opacity: 0;*/
-    /*}*/
-    /*to {*/
-        /*top: 0;*/
-        /*opacity: 1;*/
-    /*}*/
-/*}*/
-/*@-moz-keyframes move-button-send {*/
-    /*from {*/
-        /*top: 10px;*/
-        /*opacity: 0;*/
-    /*}*/
-    /*to {*/
-        /*top: 0;*/
-        /*opacity: 1;*/
-    /*}*/
-/*}*/
-/*@-webkit-keyframes move-button-send {*/
-    /*from {*/
-        /*top: 10px;*/
-        /*opacity: 0;*/
-    /*}*/
-    /*to {*/
-        /*top: 0;*/
-        /*opacity: 1;*/
-    /*}*/
-/*}*/
-/*@-o-keyframes move-button-send {*/
-    /*from {*/
-        /*top: 10px;*/
-        /*opacity: 0;*/
-    /*}*/
-    /*to {*/
-        /*top: 0;*/
-        /*opacity: 1;*/
-    /*}*/
-/*}*/
-/*@keyframes move-input {*/
-    /*from {*/
-        /*top: 10px;*/
-        /*opacity: 0;*/
-    /*}*/
-    /*to {*/
-        /*top: 0;*/
-        /*opacity: 1;*/
-    /*}*/
-/*}*/
-/*@-moz-keyframes move-input {*/
-    /*from {*/
-        /*top: 10px;*/
-        /*opacity: 0;*/
-    /*}*/
-    /*to {*/
-        /*top: 0;*/
-        /*opacity: 1;*/
-    /*}*/
-/*}*/
-/*@-webkit-keyframes move-input {*/
-    /*from {*/
-        /*top: 10px;*/
-        /*opacity: 0;*/
-    /*}*/
-    /*to {*/
-        /*top: 0;*/
-        /*opacity: 1;*/
-    /*}*/
-/*}*/
-/*@-o-keyframes move-input {*/
-    /*from {*/
-        /*top: 10px;*/
-        /*opacity: 0;*/
-    /*}*/
-    /*to {*/
-        /*top: 0;*/
-        /*opacity: 1;*/
-    /*}*/
-/*}*/
 
 .Cursor {
     background-color: #ffe500;
@@ -286,11 +129,17 @@ textarea {
         /*padding-top: 35%;*/
     }
 }
+
 @media only screen and (max-height: 450px) {
-    .chat-box {
-        position: relative;
+
+    .chat-box-wrapper {
         background-color: #272727;
         background-image: none;
+    }
+    .chat-box {
+        position: relative;
+
+
     }
     .text-wrapper {
         font-family: Alef-Regular, sans-serif;
@@ -322,16 +171,18 @@ textarea {
     height: 49.5px;
     border-radius: 26.3px;
     border: solid 1px transparent;
-    font-size: 18.8px;
+    font-size: 38.8px;
     font-family: Heebo, Alef-Regular, sans-serif;
     font-weight: 300;
-    color: transparent;
+    color: black;
     position: absolute;
-    top:0;
-    opacity: 0.7;
+    top: 0;
     cursor: pointer;
     background-color: transparent;
-    visibility: hidden;
+    /*visibility: hidden;*/
+    opacity: 0;
+    left: 0;
+    z-index: 2;
 }
 input{
     outline:none;
@@ -368,31 +219,4 @@ input[type=date] {
     .answer-wrapper {
         padding-bottom: 5%;
     }
-}
-[type="date"] {
-    background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
-}
-[type="date"]::-webkit-inner-spin-button {
-    display: none;
-}
-[type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
-}
-
-/* custom styles */
-body {
-    padding: 4em;
-    background: #e5e5e5;
-    font: 13px/1.4 Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
-}
-label {
-    display: block;
-}
-input {
-    border: 1px solid #c4c4c4;
-    border-radius: 5px;
-    background-color: #fff;
-    padding: 3px 5px;
-    box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
-    width: 190px;
 }
