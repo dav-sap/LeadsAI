@@ -10,6 +10,7 @@ import CSSRulePlugin from "gsap/CSSRulePlugin";
 import TimelineMax from 'gsap/TimelineMax';
 import {isMobile} from './../Utils'
 import Power2 from 'gsap'
+import mixpanel from 'mixpanel-browser'
 
 import ConsultantsBody from "./ConsultantsBody/ConsultantsBody";
 
@@ -42,11 +43,20 @@ export default class Home extends Component {
 
     }
     componentWillMount() {
+        mixpanel.init("51c48d0df1de5595d3eec4fe1add3518");
         this.fetchConsultants();
     }
 
     closeScreen = (mobile, consultant) => {
-        window.navigator.vibrate(60);
+        // if (window.navigator.vibrate) {
+        //     window.navigator.vibrate(60);
+        // }
+        if (isMobile()) {
+            mixpanel.track("Moved to 2nd Screen MOBILE");
+        } else {
+            mixpanel.track("Moved to 2nd Screen WEB");
+        }
+        
         if (this.state.consultants.length > 0) {
             if (mobile) {
                 setTimeout(() => this.props.history.push({
