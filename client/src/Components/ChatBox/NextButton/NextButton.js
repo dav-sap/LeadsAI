@@ -4,23 +4,28 @@ import './next-button.css'
 
 export default class NextButton extends Component {
     state = {
-
         sendLoading: false,
     };
 
     handleSubmit = () => {
-        if (this.props.onClick) {
-            this.props.onClick();
-        } else {
-            if (this.props.inputText !== "") {
-                this.setState({sendLoading: true});
-                if (this.props.currentNode.childNodes()[0].data().createUser) {
-                    this.props.createUser(this.props.inputText);
-                } else {
-                    this.props.addDataToDB(this.props.currentNode.data().content, this.props.inputText, this.props.currentNode.childNodes()[0].childNodes()[0]);
-                }
+        try {
+            let audio = document.getElementById("audio-next");
+            audio.play();
+            if (this.props.onClick) {
+                this.props.onClick();
+            } else {
+                if (this.props.inputText !== "") {
+                    this.setState({sendLoading: true});
+                    if (this.props.currentNode.childNodes()[0].data().createUser) {
+                        this.props.createUser(this.props.inputText);
+                    } else {
+                        this.props.addDataToDB(this.props.currentNode.data().content, this.props.inputText, this.props.currentNode.childNodes()[0].childNodes()[0]);
+                    }
 
+                }
             }
+        } catch (err) {
+            console.error(err);
         }
     };
     isFirefox() {
@@ -28,13 +33,13 @@ export default class NextButton extends Component {
     }
 
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {        
         if (nextProps.error) {
             this.setState({
                 sendLoading: false
             })
         }
-        if (nextProps.enterClicked) {
+        if (nextProps.enterClicked && !nextProps.error) {
             this.handleSubmit();
         }
 

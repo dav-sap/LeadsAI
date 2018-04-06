@@ -15,6 +15,7 @@ export default class AnswerInput extends Component {
             this.setState({
                 enterClicked: true
             })
+            document.getElementById("textbox").blur()
         }
     };
     inputChange = (event) => {

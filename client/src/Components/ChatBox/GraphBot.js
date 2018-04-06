@@ -11,13 +11,11 @@ const MALE = "Male";
 const NOT_YET_STR = "עוד לא";
 const YES_STR = "כן!";
 const END_STR = "מעולה! היועץ שלנו יצור איתך בקרוב.";
-const YOUR_NUM_STR_AFTER_DATE = "תאריך חלום! ";
+const YOUR_NUM_STR_AFTER_DATE = <span>תאריך חלום! 😍 שאלה אחרונה.<br/> מה מספר הטלפון שלך?</span>
+const YOUR_NUM_STR_AFTER_NO_DATE = <span>אין לחץ 😉 שאלה אחרונה.<br/> מה מספר הטלפון שלך?</span>
 const WHEN_WED_QUESTION = "קולולו!!! מתי מתחתנים?";
-const NO_PRESSURE_STR = "אין לחץ ";
-const WINK = " 😉 ";
-const HEART_EYES = " 😍 ";
-const GET_CONSULTANT = "המומחים הטובים ביותר בתחום צילום החתונות עומדים לרשותכם. בחרו את היועץ איתו תרצו להתכתב:";
-const END_YOUR_NUMBER_STR = "מה מספר הטלפון שלך?";
+const GET_CONSULTANT = <span>המומחים הטובים ביותר בתחום <br/> צילום החתונות עומדים לרשותכם. <br/> בחרו את היועץ איתו תרצו להתכתב:</span>
+const END_YOUR_NUMBER_STR = <span>שאלה אחרונה.<br/>מה מספר הטלפון שלך?</span>
 
 
 let get_consultant = {
@@ -54,7 +52,7 @@ let get_name_input = {
     changeString: function (oldInput, newInput) {
         let retInput = newInput;
 
-        return retInput.replace(/[0-9./-]/g, "").replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/\n]/gi, '');;
+        return retInput.replace(/[0-9./-]/g, "").replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/\n]/gi, '');
     },
     validator: function (value) {
         // let reg = /^([^0-9]*)$/;
@@ -72,9 +70,18 @@ let is_wed_date = {
     name: "",
     getName: true,
     get content() {
-        let start = "נעים מאוד ";
-        let end = ". יש כבר תאריך לחתונה?";
-        return start + this.name.split(" ")[0] + end;
+        // let start = "נעים מאוד ";
+        let name = " " + this.name.split(" ")[0];
+        // let end = ". יש כבר תאריך לחתונה?";
+        
+        return (
+            <span> נעים מאוד
+            <span>{name}</span>
+            .
+            <br/>
+            יש כבר תאריך לחתונה?
+            </span>
+        )
     }
 }
 
@@ -136,11 +143,11 @@ let get_cell_num_input = {
 };
 let get_cell_num_with_date =  {
     type: QUESTION,
-    content: YOUR_NUM_STR_AFTER_DATE + HEART_EYES +END_YOUR_NUMBER_STR,
+    content: YOUR_NUM_STR_AFTER_DATE
 };
 let get_cell_num_no_date = {
     type: QUESTION,
-    content: NO_PRESSURE_STR + WINK + " " + END_YOUR_NUMBER_STR,
+    content: YOUR_NUM_STR_AFTER_NO_DATE,
     // dir:"ltr",
 };
 

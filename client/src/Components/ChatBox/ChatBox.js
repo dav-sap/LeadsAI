@@ -77,7 +77,7 @@ export default class ChatBox extends Component {
     };
     changeShootConfetti = ()=> {
         if (!this.state.shootConfetti) {
-            window.navigator.vibrate(60);
+            // window.navigator.vibrate(60);
             this.setState({
                     shootConfetti: true
                 }, () => {
@@ -88,6 +88,7 @@ export default class ChatBox extends Component {
     };
     addDataToDB = async (question, answer, newNode) => {
         try {
+            
             let data = {
                 body: JSON.stringify({_id: this.dbUser._id, startDate: this.chatStartDate, question:question, answer: answer}),
                 headers: {
@@ -147,10 +148,18 @@ export default class ChatBox extends Component {
 
         } if (nextState.currentNode.data().getConsultantName) {
             nextState.currentNode.data().consultantName = this.consultantChosen === "טלי" ?  "טלי תיצור" : this.consultantChosen + " יצור";
-        }
+        } 
     }
     onFinishType = () => {
         this.setState({showAnswers:true});
+        if (this.state.currentNode.data().completed) {
+            try {
+                let audio = document.getElementById("audio-end");
+                audio.play();
+            } catch (err) {
+                console.error(err);
+            }
+        }
     };
     getAnswerStyle(answerNode) {
         if (this.state.showAnswers) {
@@ -178,7 +187,7 @@ export default class ChatBox extends Component {
             }
         }
     }
-
+    
     render() {
         let answerNode = this.state.currentNode && this.state.currentNode.childNodes()[0] ? this.state.currentNode.childNodes()[0] : null;
         if (this.state.redirect) {
@@ -186,18 +195,26 @@ export default class ChatBox extends Component {
         }
         return (
             <div className="chat-box-wrapper" style={{overflowY: this.state.currentNode.data().completed ? "hidden" : "auto"}}>
+                <audio id="audio-next">
+                    <source src="/sounds/CardSwipe.wav" type="audio/wav"/>
+                </audio>
+                <audio id="audio-end">
+                    <source src="/sounds/completed.wav" type="audio/wav"/>
+                </audio>
                 <div className="chat-box">
                     {this.mobile ? <MobileHeader/> : ""}
-                    <div className="text-wrapper"  style={{direction: this.state.currentNode.data().dir ? this.state.currentNode.data().dir : "rtl"}}>
+                    <div className="text-wrapper" style={{direction: this.state.currentNode.data().dir ? this.state.currentNode.data().dir : "rtl"}} >
                         <Typist key={this.state.nodeIndex} avgTypingDelay={35} stdTypingDelay={0} className="text-typer" startDelay={1500} onTypingDone={this.onFinishType} >
+                        <span>
                             {this.state.currentNode.data().content}
+                        </span>
                         </Typist>
 
                     </div>
                     <div className="answer-wrapper" style={this.getAnswerStyle(answerNode)}>
                         {this.state.error ? <div className="error-msg">{ERROR}</div> : ""}
-                        {answerNode && answerNode.data().type === ANSWER_PIC_OPTIONS && this.state.showAnswers?
-                            <AnswerPicOptions answerNode={answerNode} data={ this.props.location.state.consultants}
+                        {answerNode && answerNode.data().type === ANSWER_PIC_OPTIONS ?
+                            <AnswerPicOptions answerNode={answerNode} data={ this.props.location.state.consultants} showing={this.state.showAnswers}
                                               history={this.props.history} currentNode={this.state.currentNode} chooseConsultant={this.chooseConsultant} error={this.state.error}/> : ""}
                         {answerNode && answerNode.data().type === ANSWER_INPUT  && this.state.showAnswers?
                             <AnswerInput answerNode={answerNode} currentNode={this.state.currentNode} error={this.state.error}
@@ -210,6 +227,7 @@ export default class ChatBox extends Component {
                            <AnswerOptions answerNode={answerNode} bot={this.bot} addDataToDB={this.addDataToDB} error={this.state.error} currentNode={this.state.currentNode} /> : ""}
 
                            {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
+                            
                             <div className="end-image-wrapper no-select" onClick={this.changeShootConfetti}>
                                 <div className="glow-image-end"/>
                                 <img className="end-img" alt="" src="/images/hands.png" />
