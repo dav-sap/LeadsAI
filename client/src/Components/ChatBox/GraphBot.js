@@ -72,13 +72,13 @@ let is_wed_date = {
     getName: true,
     get content() {
         // let start = "נעים מאוד ";
-        let name = " " + this.name.split(" ")[0];
+        let name = " " + this.name.split(" ")[0] + " ";
         // let end = ". יש כבר תאריך לחתונה?";
         
         return (
             <span> נעים מאוד
             <span>{name}</span>
-             . 😃
+            💐
             <br/>
             יש כבר תאריך לחתונה?
             </span>

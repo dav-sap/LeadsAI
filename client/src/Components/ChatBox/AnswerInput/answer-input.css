@@ -1,8 +1,7 @@
 .user-input {
     margin-right: 30px;
-    /* padding-top: 10px; */
     width: 210.3px;
-    height: 49.5px;
+    /* height: 49.5px; */
     font-family: Heebo, Alef-Regular, sans-serif;
     font-size: 18.8px;
     font-weight: 300;
@@ -11,7 +10,8 @@
     line-height: normal;
     position: absolute;
     right: 0;
-    top:0;
+    top: 50%;
+    transform: translate(0, -50%);
     letter-spacing: 3px;
     color: #ffffff;
     background: transparent;

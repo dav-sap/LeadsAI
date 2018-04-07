@@ -5,7 +5,8 @@ import NextButton from "../NextButton/NextButton";
 export default class AnswerInput extends Component {
     state = {
         inputText: "",
-        enterClicked: false
+        enterClicked: false,
+        focus: false,
     };
 
 
@@ -18,6 +19,7 @@ export default class AnswerInput extends Component {
             document.getElementById("textbox").blur()
         }
     };
+    
     inputChange = (event) => {
         if (!this.disableInput && this.props.answerNode.data().validator(event.target.value)) {
             this.setState({
@@ -38,12 +40,13 @@ export default class AnswerInput extends Component {
     };
 
     render() {
+    
         return <div className="input-wrapper" >
-            <fieldset style={{marginBottom: "25px"}}>
+            <fieldset style={{position: "relative", marginBottom: "25px"}}>
 
                 <input type={this.props.currentNode.childNodes()[0].data().inputType}
-                          placeholder={this.props.currentNode.childNodes()[0].data().placeholder}
-                          value={this.state.inputText}
+                          placeholder={this.state.focus ? "" : this.props.currentNode.childNodes()[0].data().placeholder}
+                          value={this.state.inputText} onFocus={() => this.setState({focus: true})} onBlur={() => this.setState({focus: false})}
                           style={{direction: this.props.answerNode.data().dir ? this.props.answerNode.data().dir : "rtl"}}
                           className="user-input" onKeyDown={this.handleKeyDown}
                           onChange={this.inputChange} id="textbox"/>

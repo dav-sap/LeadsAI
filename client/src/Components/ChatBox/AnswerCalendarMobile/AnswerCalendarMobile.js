@@ -40,15 +40,15 @@ export default class AnswerCalendarMobile extends Component{
 
         <div className="answer-calendar-mobile">
             
-            <div className="calendar-placeholder">
+            <div className="calendar-placeholder date-location">
                 {this.state.dateStr === "" ? "בחר תאריך" : this.state.dateStr}
                 <div className="arrow-open-date-mobile-picker"/>
             </div>            
-            <input type="date" id="date-picker" onChange={this.dateChosen} onSelect={this.onClose}/>
+            <input type="date" id="date-picker" className="date-location" onChange={this.dateChosen} onSelect={this.onClose}/>
             
 
             { this.state.dateStr !== "" ?
-            <NextButton currentNode={this.props.currentNode} nextButton={true} content={"הבא"} error={this.props.error} disableError={this.props.disableError}
+            <NextButton currentNode={this.props.currentNode} nextButton={true} loc="80px" content={"הבא"} error={this.props.error} disableError={this.props.disableError}
                         answerNode={this.props.answerNode} createUser={this.props.createUser} addDataToDB={this.props.addDataToDB} /> : ""}
         </div>
     )

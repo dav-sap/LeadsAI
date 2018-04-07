@@ -1,8 +1,7 @@
 .chat-box-wrapper {
-    background-image: radial-gradient(circle at 52% 93%, #023365, #000000);
-    min-height: 350px;
     overflow-y: auto;
     height: 100%;
+    width: 100%;
 }
 .chat-box{
     position: relative;
@@ -31,17 +30,18 @@ textarea:focus {
     width: 84px;
     height: 84px;
     object-fit: contain;
+}
 
-
+.answer-wrapper {
+    width: fit-content;
+    margin:65px auto auto auto;
+    padding-bottom: 15%;
+    position: relative;
+    transition: opacity 0.5s ease-in-out, top 0.5s ease-in-out ;
 }
 .text-typer {
-    /*display: flex;*/
-    /*justify-content: center;*/
     width: 100%;
     position: relative;
-    /* left: -12px; */
-    /* margin-left: 12px; */
-    /*margin: auto;*/
 }
 
 
@@ -84,9 +84,6 @@ fieldset {
     font-family: Heebo, Alef-Regular, sans-serif;
     font-size: 10px;
     font-weight: 300;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
     letter-spacing: 3px;
     text-align: center;
     color: #ef4444;
@@ -100,8 +97,7 @@ fieldset {
 
 .text-wrapper {
     direction: rtl;
-    padding-top: 20%;
-    /* padding-top: 15%; */
+    padding-top: 15%;
     margin-right: auto;
     margin-left: auto;
     font-family: Alef-Regular, sans-serif;
@@ -109,7 +105,6 @@ fieldset {
     line-height: 1.32;
     text-align: center;
     color: #ffffff;
-    /*height: 200px;*/
 }
 textarea {
     resize: none;
@@ -117,11 +112,6 @@ textarea {
 
 
 @media only screen and (max-width: 500px) {
-    .chat-box {
-        position: relative;
-        background-color: #272727;
-        background-image: none;
-    }
     .text-wrapper {
         font-family: Alef-Regular, sans-serif;
         font-size: 19px;
@@ -129,32 +119,27 @@ textarea {
         text-align: right;
         margin-right: 34px;
         margin-left: 34px;
-        /*padding-top: 35%;*/
+    }
+    .text-wrapper {
+        padding-top: 90px;
+        
     }
 }
 
-@media only screen and (max-height: 450px) {
-
-    .chat-box-wrapper {
-        background-color: #272727;
-        background-image: none;
-    }
-    .chat-box {
-        position: relative;
-
-
-    }
+@media only screen and (max-height: 530px) {
     .text-wrapper {
         font-family: Alef-Regular, sans-serif;
         font-size: 19px;
         line-height: 1.45;
-        /* text-align: center; */
         margin-right: 34px;
         margin-left: 34px;
-        /*padding-top: 35%;*/
+        padding-top: 65px;
+        
+    }
+    .answer-wrapper {
+        padding-bottom: 65px;
     }
 }
-
 
 .pics-wrapper {
     display: flex;
@@ -162,13 +147,6 @@ textarea {
     justify-content: space-between;
 }
 
-.answer-wrapper {
-    width: fit-content;
-    margin:65px auto auto auto;
-    padding-bottom: 15%;
-    position: relative;
-    transition: opacity 0.5s ease-in-out, top 0.5s ease-in-out ;
-}
 
 input{
     outline:none;
@@ -178,35 +156,4 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     /* color: rgba(0, 0, 0, 0); */
     opacity: 0;
     visibility: hidden;
-}
-@media only screen and (max-height: 650px) {
-    .text-wrapper {
-
-        /* padding-top: 65px; */
-    }
-    .answer-wrapper {
-        /*padding-bottom: 15%;*/
-    }
-}
-@media only screen and (max-height: 510px) {
-    .text-wrapper {
-
-        padding-top: 65px;
-    }
-    .answer-wrapper {
-        padding-bottom: 10%;
-    }
-}
-@media only screen and (max-height: 450px) {
-
-    .mobile-title {
-        margin-top: 10%;
-    }
-    .text-wrapper {
-
-        padding-top: 65px;
-    }
-    .answer-wrapper {
-        padding-bottom: 5%;
-    }
 }

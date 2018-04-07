@@ -49,9 +49,9 @@ export default class NextButton extends Component {
     render() {
         let width = this.props.nextButton ? 203 : 123;
         let margin = this.props.nextButton ? "auto" : "15px";
-
+        let loc = this.props.loc ? this.props.loc : "0";
         return (
-            <div className="input-button-wrapper">
+            <div className="input-button-wrapper" style={{top: loc}}>
                 {!this.props.answerNode ? <div></div> :
                 <div style={{position: "relative",margin: "auto", visibility: this.state.sendLoading ? "hidden" :"visible",
                             height: "54px", width:(width + 2).toString() + "px", marginRight: margin, marginLeft: margin}}>
