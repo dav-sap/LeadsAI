@@ -42,7 +42,6 @@ export default class ChatBox extends Component {
     chatStartDate = null;
     isDate = null;
 
-    mobile = false;
     disableError = () => {
         this.setState({
             error: false
@@ -81,8 +80,11 @@ export default class ChatBox extends Component {
     };
     changeShootConfetti = ()=> {
         if (!this.state.shootConfetti) {
-            if (window.navigator.vibrate) {
+            
+            try {
                 window.navigator.vibrate(40);
+            } catch (err) {
+                console.error(err);
             }
             this.setState({
                     shootConfetti: true
@@ -139,7 +141,6 @@ export default class ChatBox extends Component {
         }
         if (isMobile()) {
             this.bot = MOBILE_BOT;
-            this.mobile = true;
         } else {
             this.consultantChosen = this.props.location.state.name;
             this.bot = WEB_BOT;
@@ -159,12 +160,14 @@ export default class ChatBox extends Component {
     onFinishType = () => {
         this.setState({showAnswers:true});
         if (this.state.currentNode.data().completed) {
-            try {
-                let audio = document.getElementById("audio-end");
-                audio.play();
-            } catch (err) {
+            let audio = document.getElementById("audio-end");
+            audio.play().then(() => {
+                console.log("Playing...")
+            }).
+            catch((err) => {
                 console.error(err);
-            }
+            }) 
+            
         }
     };
     getAnswerStyle(answerNode) {
@@ -200,11 +203,15 @@ export default class ChatBox extends Component {
             return <div></div>
         }
         return (
-            <div className="chat-box-wrapper" style={{overflowY: this.state.currentNode.data().completed ? "hidden" : "auto"}}>
+            <div className="chat-box-wrapper" style={{
+                backgroundColor: isMobile() ? "#272727" : "", 
+                backgroundImage: !isMobile() ? "radial-gradient(circle at 52% 93%, #023365, #000000)" : "",
+                minHeight: isMobile() ? "350px" : "450px",
+                overflowY: this.state.currentNode.data().completed ? "hidden" : "auto"}}>
                 
                 <img  alt="" src="/images/hands.png" style={{display:"none"}}/>
                 <div className="chat-box">
-                    {this.mobile ? <MobileHeader/> : ""}
+                    {isMobile() ? <MobileHeader/> : ""}
                     <div className="text-wrapper" style={{direction: this.state.currentNode.data().dir ? this.state.currentNode.data().dir : "rtl"}} >
                         <Typist key={this.state.nodeIndex} avgTypingDelay={35} stdTypingDelay={0} className="text-typer" startDelay={1500} onTypingDone={this.onFinishType} >
                         <span>
@@ -222,7 +229,7 @@ export default class ChatBox extends Component {
                             <AnswerInput answerNode={answerNode} currentNode={this.state.currentNode} error={this.state.error} disableError={this.disableError}
                                          addDataToDB={this.addDataToDB} createUser={this.createUser} /> : ""}
                         {answerNode && answerNode.data().type === ANSWER_CALENDAR && this.state.showAnswers?
-                            !this.mobile ?
+                            !isMobile() ?
                             <AnswerCalendar answerNode={answerNode} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error} disableError={this.disableError}/> :
                             <AnswerCalendarMobile answerNode={answerNode} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error} disableError={this.disableError}/> : ""}
                         {answerNode && answerNode.data().type === ANSWER_OPTION && this.state.showAnswers?

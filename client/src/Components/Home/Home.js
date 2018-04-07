@@ -57,6 +57,13 @@ export default class Home extends Component {
         this.setState({error: true});
     };
     componentWillMount() {
+        $(window).bind(
+            'touchmove',
+             function(e) {
+              e.preventDefault();
+            }
+          );
+        // document.addEventListener('gesturestart', function(e){ e.preventDefault(); });
         let tl = new TimelineMax();
         
         tl.to(CSSRulePlugin.getRule('body:before'), 0.1, {cssRule: {top: '50%'}, ease: Power2.easeOut}, 'close')

@@ -12,6 +12,8 @@
     top: 50%;
     /* margin-right: 34px; */
     right: 34px;
+    overflow-y: auto;
+    /* min-height: 500px; */
     transform: translate(0, -60%);
 }
 .mobile-top-title {

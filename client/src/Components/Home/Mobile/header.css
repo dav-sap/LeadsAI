@@ -59,3 +59,8 @@
     flex-direction: row;
 
 }
+@media only screen and (max-height: 450px) {
+    .mobile-title {
+        margin-top: 10%;
+    }
+}

@@ -61,7 +61,7 @@ export default class AnswerCalendar extends Component {
 
             <div className="calendar-wrapper">
                 <div className="text-input-date" onClick={this.openDate}>
-                    <div className="calendar-placeholder">
+                    <div className="user-input">
                         {this.state.dateStr}
                     </div>
                     <div className="arrow-open-date"/>
@@ -84,7 +84,7 @@ export default class AnswerCalendar extends Component {
 
                 this.isValidInput() ?
 
-                    <NextButton currentNode={this.props.currentNode} nextButton={true} content={"הבא"} disableError={this.props.disableError} error={this.props.error}
+                    <NextButton currentNode={this.props.currentNode} nextButton={true} content={"הבא"} loc="25px" disableError={this.props.disableError} error={this.props.error}
                                 answerNode={this.props.answerNode} createUser={this.props.createUser} addDataToDB={this.props.addDataToDB}/>
                  : ""}
             </div>

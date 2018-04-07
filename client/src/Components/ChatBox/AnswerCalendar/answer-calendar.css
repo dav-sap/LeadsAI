@@ -42,8 +42,19 @@
     cursor: pointer;
     background-color: transparent;
 }
-#date-picker {
+.answer-calendar-mobile {
+    position: relative;
+    height: 50px;
+}
+.date-location {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     width: 257.3px;
+    
+}
+#date-picker {
     height: 49.5px;
     border-radius: 26.3px;
     border: solid 1px rgba(255, 255, 255, .5);
@@ -51,10 +62,7 @@
     font-family: Heebo, Alef-Regular, sans-serif;
     letter-spacing: 0.6px;
     font-weight: 300;
-    color: #ffffff;
-    position: relative;
-    /* top:-2px; */
-    margin: auto;
+    color: #ffffff;    
     cursor: pointer;
     color: transparent;
     background-color: transparent;
@@ -62,16 +70,12 @@
     z-index: 2;
 }
 .calendar-placeholder {
-    margin-right: 30px;
-    width: 210.3px;
-    height:fit-content;
+    padding-right: 30px;
+    
+    height: fit-content;
     font-family: Heebo, Alef-Regular, sans-serif;
     font-size: 18.8px;
     font-weight: 300;
-    position: absolute;
-    right: 0;
-    top:0;
-    transform: translate(0, 35%);
     letter-spacing: 3px;
     color: #ffffff;
     background: transparent;
@@ -90,10 +94,7 @@
     top: 44%;
     border-radius: 2px;
     left:0;
-    margin-left:0px;
-    -webkit-transform: translate(0, -50%);
-    -ms-transform: translate(0, -50%);
-    transform: translate(0, -50%);
+    margin-left:40px;
 }
 user-input:focus {
     border: solid 1px rgba(255, 255, 255, 1);
