@@ -1,6 +1,6 @@
 .chat-box-wrapper {
     background-image: radial-gradient(circle at 52% 93%, #023365, #000000);
-    min-height: 430px;
+    min-height: 350px;
     overflow-y: auto;
     height: 100%;
 }
@@ -100,8 +100,8 @@ fieldset {
 
 .text-wrapper {
     direction: rtl;
-    /*padding-top: 20%;*/
-    padding-top: 15%;
+    padding-top: 20%;
+    /* padding-top: 15%; */
     margin-right: auto;
     margin-left: auto;
     font-family: Alef-Regular, sans-serif;
@@ -148,7 +148,7 @@ textarea {
         font-family: Alef-Regular, sans-serif;
         font-size: 19px;
         line-height: 1.45;
-        text-align: right;
+        /* text-align: center; */
         margin-right: 34px;
         margin-left: 34px;
         /*padding-top: 35%;*/
@@ -173,21 +173,6 @@ textarea {
 input{
     outline:none;
 }
-/* input[type="date"]::before {
-	color: #999999;
-	content: attr(placeholder);
-}
-input[type="date"] {
-	color: #ffffff;
-}
-input[type="date"]:focus,
-input[type="date"]:valid {
-	color: #666666;
-}
-input[type="date"]:focus::before,
-input[type="date"]:valid::before {
-	content: "" !important;
-} */
 input[type="date"]::-webkit-calendar-picker-indicator {
 
     /* color: rgba(0, 0, 0, 0); */
@@ -197,7 +182,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 @media only screen and (max-height: 650px) {
     .text-wrapper {
 
-        /*padding-top: 15%;*/
+        /* padding-top: 65px; */
     }
     .answer-wrapper {
         /*padding-bottom: 15%;*/
@@ -206,7 +191,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 @media only screen and (max-height: 510px) {
     .text-wrapper {
 
-        padding-top: 10%;
+        padding-top: 65px;
     }
     .answer-wrapper {
         padding-bottom: 10%;
@@ -219,7 +204,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
     .text-wrapper {
 
-        padding-top: 5%;
+        padding-top: 65px;
     }
     .answer-wrapper {
         padding-bottom: 5%;

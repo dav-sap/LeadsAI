@@ -53,21 +53,31 @@
     font-weight: 300;
     color: #ffffff;
     position: relative;
-    top:-2px;
+    /* top:-2px; */
     margin: auto;
     cursor: pointer;
     color: transparent;
     background-color: transparent;
     font-size: 15px;
-    /* position: absolute; */
-    /* position: relative; */
-    /* top: 0; */
-    /* cursor: pointer; */
-    /* background-color: transparent; */
-    /* background-color: #ffe500; */
-    /*visibility: hidden;*/
-    /* opacity: 0; */
-    /* left: 0; */
+    z-index: 2;
+}
+.calendar-placeholder {
+    margin-right: 30px;
+    width: 210.3px;
+    height:fit-content;
+    font-family: Heebo, Alef-Regular, sans-serif;
+    font-size: 18.8px;
+    font-weight: 300;
+    position: absolute;
+    right: 0;
+    top:0;
+    transform: translate(0, 35%);
+    letter-spacing: 3px;
+    color: #ffffff;
+    background: transparent;
+    text-align: right;
+    border: transparent;
+    direction: rtl;
     z-index: 2;
 }
 .arrow-open-date-mobile-picker {
@@ -77,7 +87,7 @@
     border-right: 5px solid transparent;
     border-top: 9px solid rgba(255,255,255, 1);
     position: absolute;
-    top: 39.5%;
+    top: 44%;
     border-radius: 2px;
     left:0;
     margin-left:0px;

@@ -22,6 +22,16 @@ export default class AnswerInput extends Component {
         if (!this.disableInput && this.props.answerNode.data().validator(event.target.value)) {
             this.setState({
                 inputText: this.props.answerNode.data().changeString(this.state.inputText, event.target.value)
+            }, () => {
+                let el = document.getElementById("textbox");
+                if (typeof el.selectionStart == "number") {
+                    el.selectionStart = el.selectionEnd = el.value.length;
+                } else if (typeof el.createTextRange !== "undefined") {
+                    el.focus();
+                    var range = el.createTextRange();
+                    range.collapse(false);
+                    range.select();
+                }
             })
         }
 
@@ -29,9 +39,9 @@ export default class AnswerInput extends Component {
 
     render() {
         return <div className="input-wrapper" >
-            <fieldset>
+            <fieldset style={{marginBottom: "25px"}}>
 
-                <textarea type="text"
+                <input type={this.props.currentNode.childNodes()[0].data().inputType}
                           placeholder={this.props.currentNode.childNodes()[0].data().placeholder}
                           value={this.state.inputText}
                           style={{direction: this.props.answerNode.data().dir ? this.props.answerNode.data().dir : "rtl"}}
@@ -40,7 +50,7 @@ export default class AnswerInput extends Component {
 
                 <div className="text-input" />
             </fieldset>
-            <NextButton inputText={this.state.inputText} currentNode={this.props.currentNode} nextButton={true} content={"הבא"} error={this.props.error}
+            <NextButton inputText={this.state.inputText} currentNode={this.props.currentNode} disableError={this.props.disableError} nextButton={true} content={"הבא"} error={this.props.error}
                         answerNode={this.props.answerNode} createUser={this.props.createUser} addDataToDB={this.props.addDataToDB} enterClicked={this.state.enterClicked}/>
 
         </div>

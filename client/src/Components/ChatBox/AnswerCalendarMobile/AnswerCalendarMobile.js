@@ -35,16 +35,12 @@ export default class AnswerCalendarMobile extends Component{
         // document.getElementById("date-picker").click();
     }
 
-//<div className="arrow-open-date"/>
-// </button>
-// <input type="date" id="date-picker" onChange={this.dateChosen} onSelect={this.onClose} 
-//             value={this.state.dateStr === "" ? "הכנס תאריך" : this.state.dateStr}  />
     render() {
         return (
 
         <div className="answer-calendar-mobile">
             
-            <div className="user-input">
+            <div className="calendar-placeholder">
                 {this.state.dateStr === "" ? "בחר תאריך" : this.state.dateStr}
                 <div className="arrow-open-date-mobile-picker"/>
             </div>            
@@ -52,7 +48,7 @@ export default class AnswerCalendarMobile extends Component{
             
 
             { this.state.dateStr !== "" ?
-            <NextButton currentNode={this.props.currentNode} nextButton={true} content={"הבא"} error={this.props.error}
+            <NextButton currentNode={this.props.currentNode} nextButton={true} content={"הבא"} error={this.props.error} disableError={this.props.disableError}
                         answerNode={this.props.answerNode} createUser={this.props.createUser} addDataToDB={this.props.addDataToDB} /> : ""}
         </div>
     )

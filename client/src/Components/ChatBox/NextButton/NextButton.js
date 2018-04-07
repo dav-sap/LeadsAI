@@ -11,6 +11,7 @@ export default class NextButton extends Component {
         try {
             let audio = document.getElementById("audio-next");
             audio.play();
+            this.props.disableError();
             if (this.props.onClick) {
                 this.props.onClick();
             } else {
@@ -39,7 +40,7 @@ export default class NextButton extends Component {
                 sendLoading: false
             })
         }
-        if (nextProps.enterClicked && !nextProps.error) {
+        if (nextProps.enterClicked && !nextProps.error && !this.state.sendLoading) {
             this.handleSubmit();
         }
 
@@ -52,7 +53,7 @@ export default class NextButton extends Component {
         return (
             <div className="input-button-wrapper">
                 {!this.props.answerNode ? <div></div> :
-                <div style={{position: "relative", top: "25px", margin: "auto", visibility: this.state.sendLoading ? "hidden" :"visible",
+                <div style={{position: "relative",margin: "auto", visibility: this.state.sendLoading ? "hidden" :"visible",
                             height: "54px", width:(width + 2).toString() + "px", marginRight: margin, marginLeft: margin}}>
                 <button className="submit-button no-select" onClick={this.handleSubmit} disabled={!this.props.answerNode.data().validateSubmit(this.props.inputText)}
                      style={{cursor: this.props.answerNode.data().validateSubmit(this.props.inputText)? "pointer" :  "not-allowed",

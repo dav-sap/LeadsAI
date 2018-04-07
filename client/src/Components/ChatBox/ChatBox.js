@@ -43,7 +43,11 @@ export default class ChatBox extends Component {
     isDate = null;
 
     mobile = false;
-
+    disableError = () => {
+        this.setState({
+            error: false
+        })
+    }
     createUser = async (name) => {
         try {
             let data = {
@@ -77,11 +81,13 @@ export default class ChatBox extends Component {
     };
     changeShootConfetti = ()=> {
         if (!this.state.shootConfetti) {
-            // window.navigator.vibrate(60);
+            if (window.navigator.vibrate) {
+                window.navigator.vibrate(40);
+            }
             this.setState({
                     shootConfetti: true
                 }, () => {
-                    setTimeout(() => this.setState({shootConfetti: false}), 1500)
+                    setTimeout(() => this.setState({shootConfetti: false}), 1000)
                 }
             )
         }
@@ -195,12 +201,8 @@ export default class ChatBox extends Component {
         }
         return (
             <div className="chat-box-wrapper" style={{overflowY: this.state.currentNode.data().completed ? "hidden" : "auto"}}>
-                <audio id="audio-next">
-                    <source src="/sounds/CardSwipe.wav" type="audio/wav"/>
-                </audio>
-                <audio id="audio-end">
-                    <source src="/sounds/completed.wav" type="audio/wav"/>
-                </audio>
+                
+                <img  alt="" src="/images/hands.png" style={{display:"none"}}/>
                 <div className="chat-box">
                     {this.mobile ? <MobileHeader/> : ""}
                     <div className="text-wrapper" style={{direction: this.state.currentNode.data().dir ? this.state.currentNode.data().dir : "rtl"}} >
@@ -214,23 +216,24 @@ export default class ChatBox extends Component {
                     <div className="answer-wrapper" style={this.getAnswerStyle(answerNode)}>
                         {this.state.error ? <div className="error-msg">{ERROR}</div> : ""}
                         {answerNode && answerNode.data().type === ANSWER_PIC_OPTIONS ?
-                            <AnswerPicOptions answerNode={answerNode} data={ this.props.location.state.consultants} showing={this.state.showAnswers}
+                            <AnswerPicOptions answerNode={answerNode} data={ this.props.location.state.consultants} showing={this.state.showAnswers} disableError={this.disableError}
                                               history={this.props.history} currentNode={this.state.currentNode} chooseConsultant={this.chooseConsultant} error={this.state.error}/> : ""}
                         {answerNode && answerNode.data().type === ANSWER_INPUT  && this.state.showAnswers?
-                            <AnswerInput answerNode={answerNode} currentNode={this.state.currentNode} error={this.state.error}
+                            <AnswerInput answerNode={answerNode} currentNode={this.state.currentNode} error={this.state.error} disableError={this.disableError}
                                          addDataToDB={this.addDataToDB} createUser={this.createUser} /> : ""}
                         {answerNode && answerNode.data().type === ANSWER_CALENDAR && this.state.showAnswers?
                             !this.mobile ?
-                            <AnswerCalendar answerNode={answerNode} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error}/> :
-                            <AnswerCalendarMobile answerNode={answerNode} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error}/> : ""}
+                            <AnswerCalendar answerNode={answerNode} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error} disableError={this.disableError}/> :
+                            <AnswerCalendarMobile answerNode={answerNode} addDataToDB={this.addDataToDB} currentNode={this.state.currentNode} error={this.state.error} disableError={this.disableError}/> : ""}
                         {answerNode && answerNode.data().type === ANSWER_OPTION && this.state.showAnswers?
-                           <AnswerOptions answerNode={answerNode} bot={this.bot} addDataToDB={this.addDataToDB} error={this.state.error} currentNode={this.state.currentNode} /> : ""}
+                           <AnswerOptions answerNode={answerNode} bot={this.bot} addDataToDB={this.addDataToDB} error={this.state.error} disableError={this.disableError} currentNode={this.state.currentNode} /> : ""}
 
                            {this.state.currentNode && this.state.currentNode.data().completed && this.state.showAnswers?
                             
                             <div className="end-image-wrapper no-select" onClick={this.changeShootConfetti}>
                                 <div className="glow-image-end"/>
                                 <img className="end-img" alt="" src="/images/hands.png" />
+                                
                                 <div style={{position: "absolute", top: "50%", left: "50%"}}>
                                 <Confetti2 active={ this.state.shootConfetti } config={ config } />
                                 </div>

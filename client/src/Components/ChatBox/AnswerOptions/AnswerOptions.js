@@ -21,7 +21,7 @@ export default class AnswerOptions extends Component {
                 {!this.state.sendLoading ?
                     <div style={{display: "flex",flexDirection: "row",}}>
                         {this.props.currentNode.childNodes().map((node, index) => {
-                            return <NextButton currentNode={this.props.currentNode}
+                            return <NextButton currentNode={this.props.currentNode} disableError={this.props.disableError}
                                                nextButton={false} content={node.data().content} key={index}
                                                onClick={() => this.answerClicked(node.data().content)}
                                                answerNode={this.props.answerNode} createUser={this.props.createUser}

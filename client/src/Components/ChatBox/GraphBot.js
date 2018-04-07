@@ -49,6 +49,7 @@ let get_name_input = {
     type: ANSWER_INPUT,
     createUser : true,
     placeholder: "שם מלא |",
+    inputType: "text",
     changeString: function (oldInput, newInput) {
         let retInput = newInput;
 
@@ -77,7 +78,7 @@ let is_wed_date = {
         return (
             <span> נעים מאוד
             <span>{name}</span>
-            .
+             . 😃
             <br/>
             יש כבר תאריך לחתונה?
             </span>
@@ -122,6 +123,7 @@ let get_cell_num_input = {
     type: ANSWER_INPUT,
     placeholder: "הכנס מספר נייד",
     dir:"ltr",
+    inputType: "tel",
     changeString: function (oldInput, newInput) {
         let retInput = newInput;
 
@@ -163,7 +165,16 @@ let end = {
         let EX = "! ";
         let consultant = this.consultantName;
         let END = " איתך קשר בקרוב";
-        return MAZAL_TOV+name + EX + consultant + END
+        return (
+            <span>
+            <span>{MAZAL_TOV}</span>
+            <span>{name}</span>
+            !
+            <br/>
+            <span>{consultant}</span>
+            <span>{END}</span>
+            </span>
+        )
     },
     completed: true
 };
