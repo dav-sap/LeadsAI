@@ -11,13 +11,11 @@ const MALE = "Male";
 const NOT_YET_STR = "עוד לא";
 const YES_STR = "כן!";
 const END_STR = "מעולה! היועץ שלנו יצור איתך בקרוב.";
-const YOUR_NUM_STR_AFTER_DATE = "תאריך חלום! ";
+const YOUR_NUM_STR_AFTER_DATE = <span>תאריך חלום! 😍 שאלה אחרונה.<br/> מה מספר הטלפון שלך?</span>
+const YOUR_NUM_STR_AFTER_NO_DATE = <span>אין לחץ 😉 שאלה אחרונה.<br/> מה מספר הטלפון שלך?</span>
 const WHEN_WED_QUESTION = "קולולו!!! מתי מתחתנים?";
-const NO_PRESSURE_STR = "אין לחץ ";
-const WINK = " 😉 ";
-const HEART_EYES = " 😍 ";
-const GET_CONSULTANT = "המומחים הטובים ביותר בתחום צילום החתונות עומדים לרשותכם. בחרו את היועץ איתו תרצו להתכתב:";
-const END_YOUR_NUMBER_STR = "מה מספר הטלפון שלך?";
+const GET_CONSULTANT = <span>המומחים הטובים ביותר בתחום <br/> צילום החתונות עומדים לרשותכם. <br/> בחרו את היועץ איתו תרצו להתכתב:</span>
+const END_YOUR_NUMBER_STR = <span>שאלה אחרונה.<br/>מה מספר הטלפון שלך?</span>
 
 
 let get_consultant = {
@@ -51,15 +49,16 @@ let get_name_input = {
     type: ANSWER_INPUT,
     createUser : true,
     placeholder: "שם מלא |",
+    inputType: "text",
     changeString: function (oldInput, newInput) {
         let retInput = newInput;
 
-        return retInput.replace(/[0-9./-]/g, "").replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/\n]/gi, '');;
+        return retInput.replace(/[0-9./-]/g, "").replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/\n]/gi, '');
     },
     validator: function (value) {
         // let reg = /^([^0-9]*)$/;
         // return reg.test(value);
-        return true;
+        return value.length <= 15;
     },
     validateSubmit: function (value) {
         return value.length >= 1
@@ -72,20 +71,35 @@ let is_wed_date = {
     name: "",
     getName: true,
     get content() {
-        let start = "נעים מאוד ";
-        let end = ". יש תאריך לחתונה?";
-        return start + this.name.split(" ")[0] + end;
+        // let start = "נעים מאוד ";
+        let name = " " + this.name.split(" ")[0];
+        // let end = ". יש כבר תאריך לחתונה?";
+        
+        return (
+            <span> נעים מאוד
+            <span>{name}</span>
+             . 😃
+            <br/>
+            יש כבר תאריך לחתונה?
+            </span>
+        )
     }
 }
 
 let is_wed_date_no = {
     type: ANSWER_OPTION,
     content:NOT_YET_STR,
+    validateSubmit: function (value) {
+        return true
+    }
 };
 
 let is_wed_date_yes = {
     type: ANSWER_OPTION,
     content: YES_STR,
+    validateSubmit: function (value) {
+        return true
+    }
 };
 
 
@@ -99,6 +113,9 @@ let get_wed_date_input = {
     get placeholder() {
         return "הכנס תאריך"
     },
+    validateSubmit: function (value) {
+        return true
+    }
 
 }
 
@@ -106,10 +123,10 @@ let get_cell_num_input = {
     type: ANSWER_INPUT,
     placeholder: "הכנס מספר נייד",
     dir:"ltr",
+    inputType: "tel",
     changeString: function (oldInput, newInput) {
         let retInput = newInput;
-        // if (oldInput.length === 2 && newInput.length === 3) {
-        //     retInput = newInput + "-";
+
         if (oldInput.length === 4 && newInput.length === 3) {
             retInput = newInput.slice(0, -1);
         }
@@ -121,9 +138,6 @@ let get_cell_num_input = {
     },
     validator: function (value) {
         return value !== undefined && value !== null && value.length <= 11;
-        // let reg = /\d/;
-        // let reg1 = /-/;
-        // return (reg.test(value[value.length - 1]) || reg1.test(value[value.length - 1])) && value.length <= 11;
     },
     validateSubmit: function (value) {
         return value && value.length === 11
@@ -131,11 +145,11 @@ let get_cell_num_input = {
 };
 let get_cell_num_with_date =  {
     type: QUESTION,
-    content: YOUR_NUM_STR_AFTER_DATE + HEART_EYES +END_YOUR_NUMBER_STR,
+    content: YOUR_NUM_STR_AFTER_DATE
 };
 let get_cell_num_no_date = {
     type: QUESTION,
-    content: NO_PRESSURE_STR + WINK + " " + END_YOUR_NUMBER_STR,
+    content: YOUR_NUM_STR_AFTER_NO_DATE,
     // dir:"ltr",
 };
 
@@ -151,7 +165,16 @@ let end = {
         let EX = "! ";
         let consultant = this.consultantName;
         let END = " איתך קשר בקרוב";
-        return MAZAL_TOV+name + EX + consultant + END
+        return (
+            <span>
+            <span>{MAZAL_TOV}</span>
+            <span>{name}</span>
+            !
+            <br/>
+            <span>{consultant}</span>
+            <span>{END}</span>
+            </span>
+        )
     },
     completed: true
 };

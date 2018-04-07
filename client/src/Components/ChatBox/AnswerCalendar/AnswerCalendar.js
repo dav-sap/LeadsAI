@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
-import {WHEN_WED_QUESTION} from './GraphBot';
-import Loader from "./Loader";
-
+import './answer-calendar.css'
+import NextButton from "../NextButton/NextButton";
 const dateStateStr = "בחר תאריך";
 
 export default class AnswerCalendar extends Component {
 
     state = {
-        sendLoading: false,
         currentDateShowing: new Date(),
         dateStr: dateStateStr,
         calendarVisible: false,
-        hoveringSubmitButton: false,
     };
     prevChosenDate = null;
     changeMonth = (increment) => {
@@ -32,34 +29,17 @@ export default class AnswerCalendar extends Component {
         });
         this.prevChosenDate = copyDate;
     }
-    handleSubmit = () => {
-        //this.state.currentDateShowing.toLocaleDateString('en-EN', options).toUpperCase() + " " + i.toString()
-        this.setState({sendLoading: true});
-        this.props.addDataToDB(WHEN_WED_QUESTION, this.state.dateStr, this.props.currentNode.childNodes()[0].childNodes()[0]);
-    };
+
     openDate = () => {
         this.setState({
             calendarVisible: !this.state.calendarVisible
         })
     }
-    isValidAndHover() {
-        return this.state.hoveringSubmitButton && !this.mobile && this.state.dateStr !== dateStateStr;
-    }
+
     isValidInput() {
         return this.state.dateStr !== dateStateStr;
     }
-    isFirefox() {
-        return typeof InstallTrigger !== 'undefined';
-    }
-    isChrome() {
-        return !!window.chrome && !!window.chrome.webstore;
-    }
-    componentWillUpdate(nextProps, nextState) {
-        if (nextState.currentDateShowing !== this.state.currentDateShowing) {
 
-        }
-
-    }
     render() {
         let options = {month: 'short', year: 'numeric'};
         let copyDate = new Date(this.state.currentDateShowing);
@@ -81,7 +61,7 @@ export default class AnswerCalendar extends Component {
 
             <div className="calendar-wrapper">
                 <div className="text-input-date" onClick={this.openDate}>
-                    <div className="user-input">
+                    <div className="calendar-placeholder">
                         {this.state.dateStr}
                     </div>
                     <div className="arrow-open-date"/>
@@ -103,27 +83,10 @@ export default class AnswerCalendar extends Component {
                 </div> :
 
                 this.isValidInput() ?
-                <div style={{position: "relative"}}>
-                    <div className="submit-button" onClick={this.handleSubmit}
-                              onMouseLeave={() => this.setState({hoveringSubmitButton: false})}
-                              onMouseEnter={() => this.setState({hoveringSubmitButton: true})}
-                              style={{cursor: this.isValidAndHover() ? "pointer" : !this.props.showing ? "none" : "not-allowed", visibility: this.state.sendLoading ? "hidden" :"visible"}}>
-                        <svg className="svg-border" width="203" height="54" opacity={this.isValidInput() ? "1" : "0.5"}>
-                            <defs>
-                                <linearGradient id="borderGradient">
-                                    <stop offset="0%"  stopColor="#02c0fd"/>
-                                    <stop offset="30%" stopColor="#fecf03"/>
-                                    <stop offset="100%" stopColor="#fd504f"/>
-                                </linearGradient>
-                            </defs>
-                            <rect className="border-rect-next" rx="18" ry="18" x="1" y="1" height="51.8" width="201" stroke="url(#borderGradient)" style={{fill: (this.isValidAndHover() ? "rgba(255, 255, 255, 0.9)" : "")}}/>
-                            <text  x="50%" y={this.isFirefox() ? "60%" : "50%"}  textAnchor="middle" alignmentBaseline="middle" fontFamily="Heebo" fontSize="18.8" fill={this.isValidAndHover() ? "#022b56" :"white"}>הבא</text>
-                        </svg>
-                    </div>
-                    <div className="loader-wrapper" style={{visibility: !this.state.sendLoading ? "hidden" :"visible"}}>
-                        <Loader/>
-                    </div>
-                </div> : ""}
+
+                    <NextButton currentNode={this.props.currentNode} nextButton={true} content={"הבא"} disableError={this.props.disableError} error={this.props.error}
+                                answerNode={this.props.answerNode} createUser={this.props.createUser} addDataToDB={this.props.addDataToDB}/>
+                 : ""}
             </div>
         )
     }

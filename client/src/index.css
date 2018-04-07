@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Heebo:100,300,400,500,700&subset=hebrew');
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700');
+
 @font-face {
     font-family: 'Alef-Bold';
     src: local('Alef-Bold'), url(./fonts/Alef-Bold.woff) format('woff');
@@ -16,15 +17,44 @@
     src: local('HelveticaNeue'), url(./fonts/HelveticaNeue.ttf) format('truetype');
 }
 
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
 #root {
     height: 100%;
     width: 100%;
+    user-drag: none; 
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    resize: none;
+  
 }
 html{
     height: 100%;
     width: 100%;
+    user-drag: none; 
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    resize: none;
 }
 body{
     height: 100%;
     width: 100%;
+}
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }

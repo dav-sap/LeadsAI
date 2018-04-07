@@ -89,6 +89,7 @@
 }
 @media only screen and (max-height: 450px) {
     .mobile-title {
-        margin-top: 10%;
+        top: 50%;
+
     }
 }

@@ -19,11 +19,11 @@
     }
 }
 body {
-    font-size: 1.6rem;
-    font-family: "Open Sans", sans-serif;
-    color: #4089a6;
-    background-color: #ffffff;
-    -webkit-font-smoothing: antialiased;
+    /* font-size: 1.6rem; */
+    /* font-family: "Open Sans", sans-serif; */
+    /* color: #4089a6; */
+    /* background-color: #ffffff; */
+    /* -webkit-font-smoothing: antialiased; */
     /*&.is-changing{
       &:before,
       &:after{
@@ -86,8 +86,8 @@ body:after {
     left: 50%;
     -webkit-transform: translateY(-50%) translateX(-50%);
     transform: translateY(-50%) translateX(-50%);
-    /*z-index: 500;*/
-    opacity: 0;
+    z-index: 0;
+    opacity:0;
 }
 .between-loader > div {
     height: 100%;

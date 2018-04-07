@@ -2,7 +2,7 @@
     position: fixed;
     bottom: 0;
     height: 10%;
-    min-height: 40px;
+    min-height: 50px;
     max-height: 70px;
     width: 100%;
 
@@ -22,19 +22,22 @@
     letter-spacing: 0.3px;
     text-align: right;
     color: #ffffff;
+    width: fit-content;
 }
 .next-button-wrapper {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: row;
     flex-direction: row;
-    width: fit-content;
+    /*width: fit-content;*/
     height: fit-content;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     direction: rtl;
+    width: 100%;
+    justify-content: center;
 }
 .arrow-next {
     width: 15px !important;

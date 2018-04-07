@@ -6,14 +6,13 @@
     "data-tree": "^1.2.4",
     "gsap": "^1.20.4",
     "jquery": "^3.3.1",
+    "mixpanel-browser": "^2.19.0",
     "react": "^16.1.1",
     "react-confetti": "^2.0.2",
     "react-dom": "^16.1.1",
     "react-dom-confetti": "0.0.8",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
-    "react-type": "^0.1.0",
-    "react-typing-animation": "^1.2.1",
     "react-typist": "^2.0.4"
   },
   "scripts": {
